@@ -33,7 +33,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_w_loadButton_clicked()
 {
 	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-	db.setDatabaseName("D:\\Data\\j216.sqlite");
+	db.setDatabaseName("j216.sqlite");
 	if (db.open())
 	{
 		QSqlQuery query(db);
@@ -56,7 +56,7 @@ void MainWindow::on_w_loadButton_clicked()
 void MainWindow::on_w_loadButton_2_clicked()
 {
 	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-	db.setDatabaseName("D:\\Data\\j216.sqlite");
+	db.setDatabaseName("j216.sqlite");
 	if (db.open())
 	{
 		QSqlQuery query(db);

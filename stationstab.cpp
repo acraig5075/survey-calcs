@@ -21,7 +21,7 @@ StationsTab::~StationsTab()
 void StationsTab::on_w_loadButton_clicked()
 {
 	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-	db.setDatabaseName("D:\\Data\\j216.sqlite");
+	db.setDatabaseName("j216.sqlite");
 	if (db.open())
 	{
 		QSqlQuery query(db);
