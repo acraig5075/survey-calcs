@@ -1,16 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "calc.h"
-#include "calcfactory.h"
+#include "coordstab.h"
 #include "stationstab.h"
+#include "calcstab.h"
 #include "plantab.h"
-#include "calcslistmodel.h"
-#include "coordquerymodel.h"
-#include "QtSql/QSqlDatabase"
-#include "QtSql/QSqlQuery"
-#include "QtSql/QSqlQueryModel"
-#include "QtSql/QSqlError"
+#include "QFileDialog"
 #include "QDebug"
+#include "QErrorMessage"
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -18,10 +14,27 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	auto pStationsTab = new StationsTab(this);
-	ui->w_stationsLayout->addWidget(pStationsTab);
-	auto pPlanTab = new PlanTab(this);
-	ui->w_planLayout->addWidget(pPlanTab);
+	m_db = QSqlDatabase::addDatabase("QSQLITE");
+
+	m_pCoordsTab = new CoordsTab(this);
+	m_pStationsTab = new StationsTab(this);
+	m_pCalcsTab = new CalcsTab(this);
+	m_pPlanTab = new PlanTab(this);
+
+	ui->w_coordsLayout->addWidget(m_pCoordsTab);
+	ui->w_stationsLayout->addWidget(m_pStationsTab);
+	ui->w_calcsLayout->addWidget(m_pCalcsTab);
+	ui->w_planLayout->addWidget(m_pPlanTab);
+
+	connect(this, SIGNAL(databaseChanged()), m_pCoordsTab, SLOT(onLoad()));
+	connect(this, SIGNAL(databaseChanged()), m_pStationsTab, SLOT(onLoad()));
+	connect(this, SIGNAL(databaseChanged()), m_pCalcsTab, SLOT(onLoad()));
+	connect(this, SIGNAL(databaseChanged()), m_pPlanTab, SLOT(onLoad()));
+
+	connect(this, SIGNAL(databaseClosed()), m_pCoordsTab, SLOT(onClear()));
+	connect(this, SIGNAL(databaseClosed()), m_pStationsTab, SLOT(onClear()));
+	connect(this, SIGNAL(databaseClosed()), m_pCalcsTab, SLOT(onClear()));
+	connect(this, SIGNAL(databaseClosed()), m_pPlanTab, SLOT(onClear()));
 }
 
 MainWindow::~MainWindow()
@@ -29,56 +42,33 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
-
-void MainWindow::on_w_loadButton_clicked()
+void MainWindow::on_actionOpen_triggered()
 {
-	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-	db.setDatabaseName("j216.sqlite");
-	if (db.open())
+	auto filename = QFileDialog::getOpenFileName(this,
+		tr("Open File"), "", tr("sqlite3 database (*.sqlite)"));
+
+	if (!filename.isEmpty())
 	{
-		QSqlQuery query(db);
-		query.prepare("SELECT name AS Name, y AS Y, x AS X, h AS H, desc AS Desc FROM coord ORDER BY class, name");
-		query.exec();
+		if (m_db.isOpen())
+			m_db.close();
 
-		auto pModel = new CoordQueryModel(this);
-		pModel->setQuery(query);
-		if (pModel->lastError().isValid())
-			qDebug() << pModel->lastError();
+		emit databaseClosed();
 
-		ui->w_tableView->setModel(pModel);
-		ui->w_tableView->show();
-		db.close();
+		m_db.setDatabaseName(filename);
+		if (m_db.open())
+		{
+			emit databaseChanged();
+		}
+		else
+		{
+			QErrorMessage msg(this);
+			msg.showMessage(QString("Could not open database %1").arg(filename));
+			m_db.setDatabaseName("");
+		}
 	}
-	else
-		qDebug() << "Failed to open QSqlDatabase";
 }
 
-void MainWindow::on_w_loadButton_2_clicked()
+void MainWindow::on_actionClose_triggered()
 {
-	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-	db.setDatabaseName("j216.sqlite");
-	if (db.open())
-	{
-		QSqlQuery query(db);
-		query.prepare("SELECT type FROM calcs ORDER BY `order`");
-		query.exec();
-
-		QStringList descList;
-		while (query.next())
-		{
-			int calcType = query.value("type").toInt();
-			auto pCalc = CalcFactory::Instance(calcType);
-			descList.push_back(pCalc->desc());
-			delete pCalc;
-		}
-
-		auto pModel = new CalcsListModel(this);
-		pModel->addDesc(descList);
-		ui->w_listView->setModel(pModel);
-		ui->w_listView->show();
-		db.close();
-	}
-	else
-		qDebug() << "Failed to open QSqlDatabase";
-
+	emit databaseClosed();
 }

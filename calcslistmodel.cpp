@@ -34,3 +34,8 @@ void CalcsListModel::addDesc(const QStringList &descList)
 		++row;
 	}
 }
+
+void CalcsListModel::clear()
+{
+	m_stringList.clear();
+}

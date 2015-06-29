@@ -15,7 +15,7 @@ public:
 	explicit PlanTab(QWidget *parent = 0);
 	~PlanTab();
 
-private slots:
+public slots:
 	void on_w_loadButton_clicked();
 
 private:

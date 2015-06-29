@@ -21,7 +21,9 @@ SOURCES += main.cpp\
     plantab.cpp \
     calcslistmodel.cpp \
     coordquerymodel.cpp \
-    glwidget.cpp
+    glwidget.cpp \
+    coordstab.cpp \
+    calcstab.cpp
 
 HEADERS  += mainwindow.h \
     calc.h \
@@ -31,8 +33,12 @@ HEADERS  += mainwindow.h \
     plantab.h \
     coordquerymodel.h \
     calcslistmodel.h \
-    glwidget.h
+    glwidget.h \
+    coordstab.h \
+    calcstab.h
 
 FORMS    += mainwindow.ui \
     stationstab.ui \
-    plantab.ui
+    plantab.ui \
+    coordstab.ui \
+    calcstab.ui

@@ -1,37 +1,38 @@
-#include "stationstab.h"
-#include "ui_stationstab.h"
-#include "stationsquerymodel.h"
+#include "coordstab.h"
+#include "ui_coordstab.h"
+#include "coordquerymodel.h"
 #include "QtSql/QSqlDatabase"
 #include "QtSql/QSqlQuery"
 #include "QtSql/QSqlError"
 #include "QDebug"
 
-StationsTab::StationsTab(QWidget *parent) :
+CoordsTab::CoordsTab(QWidget *parent) :
 	QWidget(parent),
-	ui(new Ui::StationsTab)
+	ui(new Ui::CoordsTab)
 {
 	ui->setupUi(this);
-	m_pModel = new StationsQueryModel(this);
+	m_pModel = new CoordQueryModel(this);
 }
 
-StationsTab::~StationsTab()
+
+CoordsTab::~CoordsTab()
 {
 	delete ui;
 }
 
-void StationsTab::onClear()
+void CoordsTab::onClear()
 {
 	m_pModel->clear();
 	ui->w_tableView->setModel(nullptr);
 }
 
-void StationsTab::onLoad()
+void CoordsTab::onLoad()
 {
 	QSqlDatabase db = QSqlDatabase::database();
 	if (db.isOpen())
 	{
 		QSqlQuery query(db);
-		query.prepare("SELECT station AS Name, setupno AS Setup, insthgt AS `Instr. hgt`, date AS Date FROM occupied ORDER BY station, setupno");
+		query.prepare("SELECT name AS Name, y AS Y, x AS X, h AS H, desc AS Desc FROM coord ORDER BY class, name");
 		query.exec();
 
 		m_pModel->setQuery(query);
@@ -43,7 +44,7 @@ void StationsTab::onLoad()
 	}
 }
 
-void StationsTab::on_w_loadButton_clicked()
+void CoordsTab::on_w_loadButton_clicked()
 {
 	onLoad();
 }

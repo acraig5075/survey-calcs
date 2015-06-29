@@ -14,6 +14,8 @@ public:
 
 	void addDesc(const QStringList &descList);
 
+	void clear();
+
 private:
 	QStringList m_stringList;
 };

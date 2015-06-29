@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+class StationsQueryModel;
+
 namespace Ui {
 class StationsTab;
 }
@@ -16,10 +18,15 @@ public:
 	~StationsTab();
 
 private slots:
+	void onClear();
+	void onLoad();
+
+public slots:
 	void on_w_loadButton_clicked();
 
 private:
 	Ui::StationsTab *ui;
+	StationsQueryModel *m_pModel;
 };
 
 #endif // STATIONSTAB_H
