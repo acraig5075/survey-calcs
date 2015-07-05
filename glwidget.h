@@ -11,6 +11,8 @@ public:
 	GLWidget(QWidget *parent = 0);
 
 	void SetOrtho(const QRectF &extents, const QPointF &lookAt);
+	void SetPointList(const std::vector<QPointF> &points);
+
 	void initializeGL() override;
 	void paintGL() override;
 	//void resizeGL(int w, int h) override;
@@ -18,6 +20,7 @@ public:
 private:
 	QRectF m_extents;
 	QPointF m_lookAt;
+	std::vector<QPointF> m_pointList;
 };
 
 #endif // GLWIDGET_H
