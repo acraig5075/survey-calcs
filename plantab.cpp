@@ -17,6 +17,11 @@ PlanTab::~PlanTab()
 	delete ui;
 }
 
+QString PlanTab::GetStatus() const
+{
+	return QString("View ready");
+}
+
 void PlanTab::on_w_loadButton_clicked()
 {
 	QSqlDatabase db = QSqlDatabase::database();

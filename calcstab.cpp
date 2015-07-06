@@ -22,6 +22,12 @@ CalcsTab::~CalcsTab()
 	delete ui;
 }
 
+QString CalcsTab::GetStatus() const
+{
+	int rowCount = m_pModel->rowCount();
+	return QString("%1 calculations").arg(rowCount);
+}
+
 void CalcsTab::onClear()
 {
 	qDebug() << "in CalcsTab::onClear()";

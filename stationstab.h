@@ -17,6 +17,8 @@ public:
 	explicit StationsTab(QWidget *parent = 0);
 	~StationsTab();
 
+	QString GetStatus() const;
+
 private slots:
 	void onClear();
 	void onLoad();

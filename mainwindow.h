@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "QSqlDatabase"
+#include "QLabel"
 
 class CoordsTab;
 class StationsTab;
@@ -21,11 +22,15 @@ public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
-
+	void writePositionSettings();
+	void readPositionSettings();
+protected:
+	void closeEvent(QCloseEvent *);
 private slots:
 	void on_actionOpen_triggered();
-
 	void on_actionClose_triggered();
+
+	void on_w_tabs_currentChanged(int index);
 
 signals:
 	void databaseChanged();
@@ -38,6 +43,7 @@ private:
 	StationsTab *m_pStationsTab;
 	CalcsTab *m_pCalcsTab;
 	PlanTab *m_pPlanTab;
+	QLabel *m_statusLabel;
 };
 
 #endif // MAINWINDOW_H

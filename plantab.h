@@ -15,6 +15,8 @@ public:
 	explicit PlanTab(QWidget *parent = 0);
 	~PlanTab();
 
+	QString GetStatus() const;
+
 public slots:
 	void on_w_loadButton_clicked();
 

@@ -12,12 +12,19 @@ CoordsTab::CoordsTab(QWidget *parent) :
 {
 	ui->setupUi(this);
 	m_pModel = new CoordQueryModel(this);
+	ui->w_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 }
 
 
 CoordsTab::~CoordsTab()
 {
 	delete ui;
+}
+
+QString CoordsTab::GetStatus() const
+{
+	int rowCount = m_pModel->rowCount();
+	return QString("%1 coordinates").arg(rowCount);
 }
 
 void CoordsTab::onClear()
@@ -41,6 +48,7 @@ void CoordsTab::onLoad()
 
 		ui->w_tableView->setModel(m_pModel);
 		ui->w_tableView->show();
+
 	}
 }
 

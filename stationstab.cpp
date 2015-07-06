@@ -12,11 +12,18 @@ StationsTab::StationsTab(QWidget *parent) :
 {
 	ui->setupUi(this);
 	m_pModel = new StationsQueryModel(this);
+	ui->w_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 }
 
 StationsTab::~StationsTab()
 {
 	delete ui;
+}
+
+QString StationsTab::GetStatus() const
+{
+	int rowCount = m_pModel->rowCount();
+	return QString("%1 stations").arg(rowCount);
 }
 
 void StationsTab::onClear()

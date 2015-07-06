@@ -11,21 +11,23 @@ class CalcsTab;
 
 class CalcsTab : public QWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit CalcsTab(QWidget *parent = 0);
-    ~CalcsTab();
+	explicit CalcsTab(QWidget *parent = 0);
+	~CalcsTab();
+
+	QString GetStatus() const;
 
 public slots:
 	void onClear();
 	void onLoad();
 
 private slots:
-    void on_w_loadButton_clicked();
+	void on_w_loadButton_clicked();
 
 private:
-    Ui::CalcsTab *ui;
+	Ui::CalcsTab *ui;
 	CalcsListModel *m_pModel;
 };
 

@@ -11,11 +11,13 @@ class CoordsTab;
 
 class CoordsTab : public QWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit CoordsTab(QWidget *parent = 0);
-    ~CoordsTab();
+	explicit CoordsTab(QWidget *parent = 0);
+	~CoordsTab();
+
+	QString GetStatus() const;
 
 public slots:
 	void onClear();
