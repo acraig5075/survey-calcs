@@ -61,6 +61,7 @@ void MainWindow::on_actionOpen_triggered()
 		if (m_db.open())
 		{
 			emit databaseChanged();
+			on_w_tabs_currentChanged(ui->w_tabs->currentIndex());
 		}
 		else
 		{
@@ -74,7 +75,9 @@ void MainWindow::on_actionOpen_triggered()
 void MainWindow::on_actionClose_triggered()
 {
 	emit databaseClosed();
+	on_w_tabs_currentChanged(ui->w_tabs->currentIndex());
 }
+
 
 void MainWindow::writePositionSettings()
 {
@@ -122,10 +125,10 @@ void MainWindow::on_w_tabs_currentChanged(int index)
 		m_statusLabel->setText(m_pCoordsTab->GetStatus());
 		break;
 	case 1:
-		m_statusLabel->setText(m_pStationsTab->GetStatus());
+		m_statusLabel->setText(m_pCalcsTab->GetStatus());
 		break;
 	case 2:
-		m_statusLabel->setText(m_pCalcsTab->GetStatus());
+		m_statusLabel->setText(m_pStationsTab->GetStatus());
 		break;
 	case 3:
 		m_statusLabel->setText(m_pPlanTab->GetStatus());
