@@ -1,9 +1,10 @@
 #ifndef GLWIDGET_H
 #define GLWIDGET_H
 
-#include <QGLWidget>
+#include "QWidget"
+#include "QVector"
 
-class GLWidget : public QGLWidget
+class GLWidget : public QWidget
 {
 	Q_OBJECT
 
@@ -11,16 +12,13 @@ public:
 	GLWidget(QWidget *parent = 0);
 
 	void SetOrtho(const QRectF &extents, const QPointF &lookAt);
-	void SetPointList(const std::vector<QPointF> &points);
+	void SetPointList(QVector<QPointF> &points);
 
-	void initializeGL() override;
-	void paintGL() override;
-	//void resizeGL(int w, int h) override;
-
+	void paintEvent(QPaintEvent *);
 private:
 	QRectF m_extents;
 	QPointF m_lookAt;
-	std::vector<QPointF> m_pointList;
+	QVector<QPointF> m_pointList;
 };
 
 #endif // GLWIDGET_H

@@ -3,7 +3,7 @@
 #include "QSqlDatabase"
 #include "QSqlQuery"
 #include "QDebug"
-#include <vector>
+#include <QVector>
 
 PlanTab::PlanTab(QWidget *parent) :
 	QWidget(parent),
@@ -50,7 +50,7 @@ void PlanTab::on_w_loadButton_clicked()
 		query2.prepare("SELECT y AS easting, x AS northing FROM coord");
 		query2.exec();
 
-		std::vector<QPointF> points;
+		QVector<QPointF> points;
 
 		while (query2.next())
 		{

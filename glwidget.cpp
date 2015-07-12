@@ -1,8 +1,8 @@
 #include "glwidget.h"
-#include <QtOpenGL>
+#include "QPainter"
 
 GLWidget::GLWidget(QWidget *parent)
-	: QGLWidget(parent)
+	: QWidget(parent)
 {
 
 }
@@ -11,30 +11,34 @@ void GLWidget::SetOrtho(const QRectF &extents, const QPointF &lookAt)
 {
 	m_extents = extents;
 	m_lookAt = lookAt;
-	initializeGL();
+
+	int wSide = static_cast<int>(qMax(extents.width(), extents.height()));
+	QPointF wCenter = extents.center();
+	int wLeft = static_cast<int>(wCenter.x()) + wSide / 2;
+	int wTop = static_cast<int>(wCenter.y()) - wSide / 2;
+
+	int vSide = std::min(width(), height());
+	int vLeft = (width() - vSide / 2);
+	int vTop = (height() - vSide / 2);
+
+	QPainter painter(this);
+	painter.setWindow(wLeft, wTop, wSide, wSide);
+	painter.setViewport(vLeft, vTop, vSide, vSide);
 }
 
-void GLWidget::SetPointList(const std::vector<QPointF> &points)
+void GLWidget::SetPointList(QVector<QPointF> &points)
 {
 	m_pointList.clear();
 	m_pointList = points;
 }
 
-void GLWidget::initializeGL()
+void GLWidget::paintEvent(QPaintEvent *)
 {
-	glClearColor(1, 1, 0, 1);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(m_extents.left(), m_extents.right(), m_extents.bottom(), m_extents.top(), -1.0, 1.0);
-}
+	QPainter painter(this);
+	painter.setPen(Qt::blue);
+	painter.setFont(QFont("Arial", 30));
+	painter.drawText(rect(), Qt::AlignCenter, "Qt");
 
-void GLWidget::paintGL()
-{
-	glClear(GL_COLOR_BUFFER_BIT);
-	glBegin(GL_POINTS);
-	glPointSize(0.2f);
-	for (auto qp : m_pointList)
-		glVertex2f(qp.x(), qp.y());
-	glEnd();
-
+	if (!m_pointList.empty())
+		painter.drawPoints(&m_pointList.at(0), m_pointList.size());
 }
