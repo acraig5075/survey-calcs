@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PlanWidget</class>
- <widget class="QWidget" name="PlanWidget">
+ <class>PlanTab</class>
+ <widget class="QWidget" name="PlanTab">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,23 +13,21 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="GLWidget" name="w_glWidget" native="true"/>
+      <widget class="PlotWidget" name="w_plotWidget" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="w_loadButton">
@@ -44,7 +42,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>GLWidget</class>
+   <class>PlotWidget</class>
    <extends>QWidget</extends>
    <header>glwidget.h</header>
    <container>1</container>

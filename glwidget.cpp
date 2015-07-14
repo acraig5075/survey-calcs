@@ -1,44 +1,53 @@
 #include "glwidget.h"
 #include "QPainter"
+#include "QDebug"
 
-GLWidget::GLWidget(QWidget *parent)
+PlotWidget::PlotWidget(QWidget *parent)
 	: QWidget(parent)
 {
 
 }
 
-void GLWidget::SetOrtho(const QRectF &extents, const QPointF &lookAt)
+void PlotWidget::SetOrtho(const QRectF &extents, const QPointF &lookAt)
 {
 	m_extents = extents;
 	m_lookAt = lookAt;
 
-	int wSide = static_cast<int>(qMax(extents.width(), extents.height()));
-	QPointF wCenter = extents.center();
-	int wLeft = static_cast<int>(wCenter.x()) + wSide / 2;
-	int wTop = static_cast<int>(wCenter.y()) - wSide / 2;
-
-	int vSide = std::min(width(), height());
-	int vLeft = (width() - vSide / 2);
-	int vTop = (height() - vSide / 2);
-
-	QPainter painter(this);
-	painter.setWindow(wLeft, wTop, wSide, wSide);
-	painter.setViewport(vLeft, vTop, vSide, vSide);
+	m_hasExtents = true;
 }
 
-void GLWidget::SetPointList(QVector<QPointF> &points)
+void PlotWidget::SetPointList(QVector<QPointF> &points)
 {
 	m_pointList.clear();
 	m_pointList = points;
 }
 
-void GLWidget::paintEvent(QPaintEvent *)
+void PlotWidget::paintEvent(QPaintEvent *)
 {
-	QPainter painter(this);
-	painter.setPen(Qt::blue);
-	painter.setFont(QFont("Arial", 30));
-	painter.drawText(rect(), Qt::AlignCenter, "Qt");
+	if (m_hasExtents)
+	{
+		int wSide = static_cast<int>(qMax(m_extents.width(), m_extents.height()));
+		QPointF wCenter = m_extents.center();
+		int wLeft = static_cast<int>(wCenter.x()) - wSide / 2;
+		int wTop = static_cast<int>(wCenter.y()) - wSide / 2;
+		int wRight = static_cast<int>(wCenter.x()) + wSide / 2;
+		int wBottom = static_cast<int>(wCenter.y()) + wSide / 2;
 
-	if (!m_pointList.empty())
-		painter.drawPoints(&m_pointList.at(0), m_pointList.size());
+		int vSide = std::min(width(), height());
+		int vLeft = ((width() - vSide) / 2);
+		int vTop = ((height() - vSide) / 2);
+
+		QPainter painter(this);
+		painter.setViewport(vLeft, vTop, vSide, vSide);
+		painter.setWindow(wLeft, wTop, wSide, wSide);
+
+		painter.fillRect(wLeft, wTop, wSide, wSide, Qt::lightGray);
+
+		painter.setPen(Qt::blue);
+		painter.setFont(QFont("Arial", 300));
+		painter.drawText(rect(), Qt::AlignCenter, "Qt");
+
+		if (!m_pointList.empty())
+			painter.drawPoints(&m_pointList.at(0), m_pointList.size());
+	}
 }

@@ -4,7 +4,7 @@
 #include <QWidget>
 
 namespace Ui {
-class PlanWidget;
+class PlanTab;
 }
 
 class PlanTab : public QWidget
@@ -18,10 +18,14 @@ public:
 	QString GetStatus() const;
 
 public slots:
+	void onClear();
+	void onLoad();
+
+private slots:
 	void on_w_loadButton_clicked();
 
 private:
-	Ui::PlanWidget *ui;
+	Ui::PlanTab *ui;
 };
 
 #endif // PLANWIDGET_H
