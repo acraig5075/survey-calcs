@@ -29,6 +29,11 @@ QVariant CoordQueryModel::data(const QModelIndex& index, int role) const
 			QVariant d = QSqlQueryModel::data(index, role);
 			return static_cast<QVariant>(QString::number(d.toDouble(), 'f', 2));
 		}
+		case 6:
+		{
+			QVariant d = QSqlQueryModel::data(index, role);
+			return static_cast<QVariant>(d.isNull() ? "No" : "Yes");
+		}
 		default:
 			break;
 		}

@@ -31,7 +31,7 @@ void PlanTab::onLoad()
 	QSqlDatabase db = QSqlDatabase::database();
 	if (db.isOpen())
 	{
-		QString whereFilter = "WHERE class IN ('WS', 'LAND', 'BP', 'BF')";
+		QString whereFilter = "WHERE plot IS NOT NULL";
 
 		QSqlQuery query1(db);
 		query1.prepare(QString("SELECT MIN(y) AS lowEasting, MAX(y) AS highEasting, MIN(x) AS lowNorthing, MAX(x) AS highNorthing, AVG(y) AS midEasting, AVG(x) AS midNorthing FROM coord %1").arg(whereFilter));
@@ -67,7 +67,6 @@ void PlanTab::onLoad()
 		}
 
 		ui->w_plotWidget->SetPointList(points);
-		qDebug() << points.size() << " points copied to plotWindow";
 	}
 
 }

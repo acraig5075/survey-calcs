@@ -24,10 +24,15 @@ public slots:
 	void onLoad();
 
 private slots:
-    void on_w_loadButton_clicked();
+	void on_w_loadButton_clicked();
+	void onCustomContextMenuRequested(QPoint pos);
+	void onTogglePlot();
+
+signals:
+	void coordPlotChanged();
 
 private:
-    Ui::CoordsTab *ui;
+	Ui::CoordsTab *ui;
 	CoordQueryModel *m_pModel;
 };
 

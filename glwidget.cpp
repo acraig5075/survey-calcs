@@ -30,8 +30,6 @@ void PlotWidget::paintEvent(QPaintEvent *)
 		QPointF wCenter = m_extents.center();
 		int wLeft = static_cast<int>(wCenter.x()) - wSide / 2;
 		int wTop = static_cast<int>(wCenter.y()) - wSide / 2;
-		int wRight = static_cast<int>(wCenter.x()) + wSide / 2;
-		int wBottom = static_cast<int>(wCenter.y()) + wSide / 2;
 
 		int vSide = std::min(width(), height());
 		int vLeft = ((width() - vSide) / 2);
