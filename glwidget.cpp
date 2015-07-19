@@ -8,11 +8,9 @@ PlotWidget::PlotWidget(QWidget *parent)
 
 }
 
-void PlotWidget::SetOrtho(const QRectF &extents, const QPointF &lookAt)
+void PlotWidget::SetOrtho(const QRectF &extents)
 {
 	m_extents = extents;
-	m_lookAt = lookAt;
-
 	m_hasExtents = true;
 }
 

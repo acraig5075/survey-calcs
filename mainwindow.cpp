@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	m_pCalcsTab = new CalcsTab(this);
 	m_pPlanTab = new PlanTab(this);
 	m_statusLabel = new QLabel("Ready", this);
+
 	statusBar()->addWidget(m_statusLabel);
 
 	ui->w_coordsLayout->addWidget(m_pCoordsTab);
@@ -38,6 +39,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(this, SIGNAL(databaseClosed()), m_pStationsTab, SLOT(onClear()));
 	connect(this, SIGNAL(databaseClosed()), m_pCalcsTab, SLOT(onClear()));
 	connect(this, SIGNAL(databaseClosed()), m_pPlanTab, SLOT(onClear()));
+
+	connect(this, SIGNAL(updatePlanView()), m_pPlanTab, SLOT(onLoad()));
 }
 
 MainWindow::~MainWindow()
@@ -78,6 +81,10 @@ void MainWindow::on_actionClose_triggered()
 	on_w_tabs_currentChanged(ui->w_tabs->currentIndex());
 }
 
+void MainWindow::on_actionExit_triggered()
+{
+	QApplication::quit();
+}
 
 void MainWindow::writePositionSettings()
 {
@@ -115,6 +122,11 @@ void MainWindow::readPositionSettings()
 void MainWindow::closeEvent( QCloseEvent* )
 {
 	writePositionSettings();
+}
+
+void MainWindow::onPlanViewChanged()
+{
+	emit updatePlanView();
 }
 
 void MainWindow::on_w_tabs_currentChanged(int index)

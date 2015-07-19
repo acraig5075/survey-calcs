@@ -29,7 +29,11 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QListView" name="w_listView"/>
+      <widget class="QListView" name="w_listView">
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="w_loadButton">

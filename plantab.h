@@ -26,6 +26,7 @@ private slots:
 
 private:
 	Ui::PlanTab *ui;
+	int m_nPoints = 0;
 };
 
 #endif // PLANWIDGET_H

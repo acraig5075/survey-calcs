@@ -20,6 +20,7 @@ CoordsTab::CoordsTab(QWidget *parent) :
 	ui->w_tableView->setContextMenuPolicy(Qt::CustomContextMenu);
 
 	connect(ui->w_tableView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)));
+	connect(this, SIGNAL(coordPlotChanged()), parent, SLOT(onPlanViewChanged()));
 }
 
 
@@ -110,6 +111,8 @@ void CoordsTab::onTogglePlot()
 				qDebug() << query.lastError();
 
 			m_pModel->query().exec();
+
+			emit coordPlotChanged();
 		}
 	}
 }

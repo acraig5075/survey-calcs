@@ -26,15 +26,21 @@ public:
 	void readPositionSettings();
 protected:
 	void closeEvent(QCloseEvent *);
+
+public slots:
+	void onPlanViewChanged();
+
 private slots:
 	void on_actionOpen_triggered();
 	void on_actionClose_triggered();
-
 	void on_w_tabs_currentChanged(int index);
+
+	void on_actionExit_triggered();
 
 signals:
 	void databaseChanged();
 	void databaseClosed();
+	void updatePlanView();
 
 private:
 	Ui::MainWindow *ui;

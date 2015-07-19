@@ -11,7 +11,7 @@ class PlotWidget : public QWidget
 public:
 	PlotWidget(QWidget *parent = 0);
 
-	void SetOrtho(const QRectF &extents, const QPointF &lookAt);
+	void SetOrtho(const QRectF &extents);
 	void SetPointList(QVector<QPointF> &points);
 
 	void paintEvent(QPaintEvent *);

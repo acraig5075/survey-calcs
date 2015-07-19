@@ -79,6 +79,8 @@
     </property>
     <addaction name="actionOpen"/>
     <addaction name="actionClose"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <addaction name="menuOpen"/>
   </widget>
@@ -99,6 +101,11 @@
   <action name="actionClose">
    <property name="text">
     <string>Close</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
    </property>
   </action>
  </widget>

@@ -19,22 +19,28 @@ PlanTab::~PlanTab()
 
 QString PlanTab::GetStatus() const
 {
-	return QString("View ready");
+	if (m_nPoints <= 0)
+		return QString("View ready");
+	else
+		return QString("%1 points").arg(m_nPoints);
 }
 
 void PlanTab::onClear()
 {
+	m_nPoints = 0;
 }
 
 void PlanTab::onLoad()
 {
+	m_nPoints = 0;
+
 	QSqlDatabase db = QSqlDatabase::database();
 	if (db.isOpen())
 	{
 		QString whereFilter = "WHERE plot IS NOT NULL";
 
 		QSqlQuery query1(db);
-		query1.prepare(QString("SELECT MIN(y) AS lowEasting, MAX(y) AS highEasting, MIN(x) AS lowNorthing, MAX(x) AS highNorthing, AVG(y) AS midEasting, AVG(x) AS midNorthing FROM coord %1").arg(whereFilter));
+		query1.prepare(QString("SELECT MIN(y) AS lowEasting, MAX(y) AS highEasting, MIN(x) AS lowNorthing, MAX(x) AS highNorthing FROM coord %1").arg(whereFilter));
 		query1.exec();
 
 		if (query1.first())
@@ -45,11 +51,7 @@ void PlanTab::onLoad()
 			bounds.setRight(query1.value("highEasting").toReal());
 			bounds.setBottom(query1.value("lowNorthing").toReal());
 
-			QPointF center;
-			center.setX(query1.value("midEasting").toReal());
-			center.setY(query1.value("midNorthing").toReal());
-
-			ui->w_plotWidget->SetOrtho(bounds, center);
+			ui->w_plotWidget->SetOrtho(bounds);
 		}
 
 		QSqlQuery query2(db);
@@ -66,9 +68,10 @@ void PlanTab::onLoad()
 			points.push_back(p);
 		}
 
+		m_nPoints = points.size();
+
 		ui->w_plotWidget->SetPointList(points);
 	}
-
 }
 
 void PlanTab::on_w_loadButton_clicked()
