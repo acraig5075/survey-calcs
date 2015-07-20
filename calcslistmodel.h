@@ -1,7 +1,7 @@
 #ifndef CALCLISTMODEL_H
 #define CALCLISTMODEL_H
 
-#include "QAbstractListModel"
+#include <QAbstractListModel>
 
 class CalcsListModel : public QAbstractListModel
 {

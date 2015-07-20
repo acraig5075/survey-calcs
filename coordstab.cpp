@@ -1,13 +1,13 @@
 #include "coordstab.h"
 #include "ui_coordstab.h"
 #include "coordquerymodel.h"
-#include "QtSql/QSqlDatabase"
-#include "QtSql/QSqlQuery"
-#include "QtSql/QSqlError"
-#include "QDebug"
-#include "QMenu"
-#include "QSqlRecord"
-#include "QStringList"
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlError>
+#include <QDebug>
+#include <QMenu>
+#include <QSqlRecord>
+#include <QStringList>
 
 CoordsTab::CoordsTab(QWidget *parent) :
 	QWidget(parent),

@@ -1,7 +1,7 @@
 #ifndef CALC_H
 #define CALC_H
 
-#include "QString"
+#include <QString>
 
 class Calc
 {

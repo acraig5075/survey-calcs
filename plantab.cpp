@@ -1,8 +1,8 @@
 #include "plantab.h"
 #include "ui_plantab.h"
-#include "QSqlDatabase"
-#include "QSqlQuery"
-#include "QDebug"
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QDebug>
 #include <QVector>
 
 PlanTab::PlanTab(QWidget *parent) :

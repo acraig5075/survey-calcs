@@ -1,8 +1,8 @@
 #ifndef GLWIDGET_H
 #define GLWIDGET_H
 
-#include "QWidget"
-#include "QVector"
+#include <QWidget>
+#include <QVector>
 
 class PlotWidget : public QWidget
 {

@@ -1,5 +1,5 @@
 #include "calcslistmodel.h"
-#include "QDebug"
+#include <QDebug>
 
 CalcsListModel::CalcsListModel(QObject *parent)
 	: QAbstractListModel(parent)

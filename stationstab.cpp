@@ -1,10 +1,10 @@
 #include "stationstab.h"
 #include "ui_stationstab.h"
 #include "stationsquerymodel.h"
-#include "QtSql/QSqlDatabase"
-#include "QtSql/QSqlQuery"
-#include "QtSql/QSqlError"
-#include "QDebug"
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlError>
+#include <QDebug>
 
 StationsTab::StationsTab(QWidget *parent) :
 	QWidget(parent),

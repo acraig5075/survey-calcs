@@ -1,7 +1,7 @@
 #ifndef COORDQUERYMODEL_H
 #define COORDQUERYMODEL_H
 
-#include "QSqlQueryModel"
+#include <QSqlQueryModel>
 
 class CoordQueryModel : public QSqlQueryModel
 {

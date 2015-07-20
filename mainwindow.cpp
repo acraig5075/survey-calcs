@@ -4,10 +4,12 @@
 #include "stationstab.h"
 #include "calcstab.h"
 #include "plantab.h"
-#include "QFileDialog"
-#include "QDebug"
-#include "QErrorMessage"
-#include "QSettings"
+#include "utils.h"
+#include <QFileDialog>
+#include <QDebug>
+#include <QErrorMessage>
+#include <QMessageBox>
+#include <QSettings>
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -35,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(this, SIGNAL(databaseChanged()), m_pCalcsTab, SLOT(onLoad()));
 	connect(this, SIGNAL(databaseChanged()), m_pPlanTab, SLOT(onLoad()));
 
+	connect(this, SIGNAL(databaseClosed()), this, SLOT(onCloseDatabase()));
 	connect(this, SIGNAL(databaseClosed()), m_pCoordsTab, SLOT(onClear()));
 	connect(this, SIGNAL(databaseClosed()), m_pStationsTab, SLOT(onClear()));
 	connect(this, SIGNAL(databaseClosed()), m_pCalcsTab, SLOT(onClear()));
@@ -55,22 +58,29 @@ void MainWindow::on_actionOpen_triggered()
 
 	if (!filename.isEmpty())
 	{
-		if (m_db.isOpen())
-			m_db.close();
-
 		emit databaseClosed();
 
-		m_db.setDatabaseName(filename);
-		if (m_db.open())
+		QString backupName = Utils::MakeWorkingCopy(filename);
+		if (!backupName.isEmpty())
 		{
-			emit databaseChanged();
-			on_w_tabs_currentChanged(ui->w_tabs->currentIndex());
+			m_db.setDatabaseName(backupName);
+			if (m_db.open())
+			{
+				emit databaseChanged();
+				on_w_tabs_currentChanged(ui->w_tabs->currentIndex());
+				m_filenames = qMakePair(filename, backupName);
+			}
+			else
+			{
+				QErrorMessage msg(this);
+				msg.showMessage(QString("Could not open database %1").arg(backupName));
+				m_db.setDatabaseName("");
+			}
 		}
 		else
 		{
-			QErrorMessage msg(this);
-			msg.showMessage(QString("Could not open database %1").arg(filename));
-			m_db.setDatabaseName("");
+			QString msg = QString("Unable to create working database %1").arg(backupName);
+			QMessageBox::critical(this, "Error", msg, QMessageBox::Ok);
 		}
 	}
 }
@@ -83,6 +93,7 @@ void MainWindow::on_actionClose_triggered()
 
 void MainWindow::on_actionExit_triggered()
 {
+	emit databaseClosed();
 	QApplication::quit();
 }
 
@@ -121,6 +132,7 @@ void MainWindow::readPositionSettings()
 
 void MainWindow::closeEvent( QCloseEvent* )
 {
+	emit databaseClosed();
 	writePositionSettings();
 }
 
@@ -145,5 +157,29 @@ void MainWindow::on_w_tabs_currentChanged(int index)
 	case 3:
 		m_statusLabel->setText(m_pPlanTab->GetStatus());
 		break;
+	}
+}
+
+void MainWindow::onCloseDatabase()
+{
+	if (m_db.isOpen())
+	{
+		m_db.close();
+
+		auto backup = m_filenames.second;
+
+		QString text = "Save changes to database?";
+		if (QMessageBox::Save == QMessageBox::question(this, "Confirm", text, QMessageBox::Save|QMessageBox::Discard, QMessageBox::Discard))
+		{
+			auto original = m_filenames.first;
+
+			if (!Utils::CopyAndOverwrite(backup, original))
+			{
+				QString msg = QString("Unable to save database %1").arg(original);
+				QMessageBox::critical(this, "Error", msg, QMessageBox::Ok);
+			}
+		}
+
+		QFile::remove(backup);
 	}
 }

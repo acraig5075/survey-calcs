@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     coordquerymodel.cpp \
     glwidget.cpp \
     coordstab.cpp \
-    calcstab.cpp
+    calcstab.cpp \
+    utils.cpp
 
 HEADERS  += mainwindow.h \
     calc.h \
@@ -35,7 +36,8 @@ HEADERS  += mainwindow.h \
     calcslistmodel.h \
     glwidget.h \
     coordstab.h \
-    calcstab.h
+    calcstab.h \
+    utils.h
 
 FORMS    += mainwindow.ui \
     stationstab.ui \

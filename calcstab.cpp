@@ -3,10 +3,10 @@
 #include "calc.h"
 #include "calcfactory.h"
 #include "calcslistmodel.h"
-#include "QtSql/QSqlDatabase"
-#include "QtSql/QSqlQuery"
-#include "QtSql/QSqlError"
-#include "QDebug"
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlError>
+#include <QDebug>
 
 CalcsTab::CalcsTab(QWidget *parent) :
 	QWidget(parent),

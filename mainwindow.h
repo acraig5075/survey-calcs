@@ -2,8 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "QSqlDatabase"
-#include "QLabel"
+#include <QSqlDatabase>
+#include <QLabel>
+#include <QPair>
 
 class CoordsTab;
 class StationsTab;
@@ -34,8 +35,8 @@ private slots:
 	void on_actionOpen_triggered();
 	void on_actionClose_triggered();
 	void on_w_tabs_currentChanged(int index);
-
 	void on_actionExit_triggered();
+	void onCloseDatabase();
 
 signals:
 	void databaseChanged();
@@ -45,6 +46,7 @@ signals:
 private:
 	Ui::MainWindow *ui;
 	QSqlDatabase m_db;
+	QPair<QString, QString> m_filenames;
 	CoordsTab *m_pCoordsTab;
 	StationsTab *m_pStationsTab;
 	CalcsTab *m_pCalcsTab;
