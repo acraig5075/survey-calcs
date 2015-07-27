@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     glwidget.cpp \
     coordstab.cpp \
     calcstab.cpp \
-    utils.cpp
+    utils.cpp \
+    Dialogs/coordclassdlg.cpp
 
 HEADERS  += mainwindow.h \
     calc.h \
@@ -37,10 +38,12 @@ HEADERS  += mainwindow.h \
     glwidget.h \
     coordstab.h \
     calcstab.h \
-    utils.h
+    utils.h \
+    Dialogs/coordclassdlg.h
 
 FORMS    += mainwindow.ui \
     stationstab.ui \
     plantab.ui \
     coordstab.ui \
-    calcstab.ui
+    calcstab.ui \
+    Dialogs/coordclassdlg.ui

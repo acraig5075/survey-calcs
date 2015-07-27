@@ -5,6 +5,7 @@
 #include "calcstab.h"
 #include "plantab.h"
 #include "utils.h"
+#include "Dialogs/coordclassdlg.h"
 #include <QFileDialog>
 #include <QDebug>
 #include <QErrorMessage>
@@ -51,7 +52,7 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
-void MainWindow::on_actionOpen_triggered()
+void MainWindow::on_actionFileOpen_triggered()
 {
 	auto filename = QFileDialog::getOpenFileName(this,
 												 tr("Open File"), "", tr("sqlite3 database (*.sqlite)"));
@@ -85,13 +86,13 @@ void MainWindow::on_actionOpen_triggered()
 	}
 }
 
-void MainWindow::on_actionClose_triggered()
+void MainWindow::on_actionFileClose_triggered()
 {
 	emit databaseClosed();
 	on_w_tabs_currentChanged(ui->w_tabs->currentIndex());
 }
 
-void MainWindow::on_actionExit_triggered()
+void MainWindow::on_actionFileExit_triggered()
 {
 	emit databaseClosed();
 	QApplication::quit();
@@ -182,4 +183,10 @@ void MainWindow::onCloseDatabase()
 
 		QFile::remove(backup);
 	}
+}
+
+void MainWindow::on_actionCoordClass_triggered()
+{
+	CoordClassDlg dlg(this);
+	dlg.exec();
 }

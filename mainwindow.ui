@@ -77,12 +77,20 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionOpen"/>
-    <addaction name="actionClose"/>
+    <addaction name="actionFileOpen"/>
+    <addaction name="actionFileClose"/>
     <addaction name="separator"/>
-    <addaction name="actionExit"/>
+    <addaction name="actionFileExit"/>
+   </widget>
+   <widget class="QMenu" name="menu_Coordinates">
+    <property name="title">
+     <string>&amp;Coordinates</string>
+    </property>
+    <addaction name="actionCoordClass"/>
+    <addaction name="actionCoordDescr"/>
    </widget>
    <addaction name="menuOpen"/>
+   <addaction name="menu_Coordinates"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -93,19 +101,29 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionOpen">
+  <action name="actionFileOpen">
    <property name="text">
     <string>Open</string>
    </property>
   </action>
-  <action name="actionClose">
+  <action name="actionFileClose">
    <property name="text">
     <string>Close</string>
    </property>
   </action>
-  <action name="actionExit">
+  <action name="actionFileExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionCoordClass">
+   <property name="text">
+    <string>Classifications</string>
+   </property>
+  </action>
+  <action name="actionCoordDescr">
+   <property name="text">
+    <string>Descriptions</string>
    </property>
   </action>
  </widget>

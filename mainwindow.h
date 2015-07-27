@@ -32,11 +32,13 @@ public slots:
 	void onPlanViewChanged();
 
 private slots:
-	void on_actionOpen_triggered();
-	void on_actionClose_triggered();
+	void on_actionFileOpen_triggered();
+	void on_actionFileClose_triggered();
+	void on_actionFileExit_triggered();
 	void on_w_tabs_currentChanged(int index);
-	void on_actionExit_triggered();
 	void onCloseDatabase();
+
+	void on_actionCoordClass_triggered();
 
 signals:
 	void databaseChanged();
