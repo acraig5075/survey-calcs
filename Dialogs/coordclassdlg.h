@@ -4,6 +4,7 @@
 #include <QDialog>
 
 class QSqlQueryModel;
+class QItemSelection;
 
 namespace Ui {
 class CoordClassDlg;
@@ -17,6 +18,8 @@ public:
 	explicit CoordClassDlg(QWidget *parent = 0);
 	~CoordClassDlg();
 
+protected slots:
+	void onSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
 private:
 	Ui::CoordClassDlg *ui;
 	QSqlQueryModel *m_pModel;

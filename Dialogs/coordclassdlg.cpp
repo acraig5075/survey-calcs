@@ -4,6 +4,7 @@
 #include <QSqlQuery>
 #include <QDebug>
 #include <QSqlError>
+#include <QItemSelection>
 
 CoordClassDlg::CoordClassDlg(QWidget *parent) :
 	QDialog(parent),
@@ -17,6 +18,8 @@ CoordClassDlg::CoordClassDlg(QWidget *parent) :
 	ui->m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
 	Init();
+
+	connect(ui->m_tableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(onSelectionChanged(QItemSelection,QItemSelection)));
 }
 
 CoordClassDlg::~CoordClassDlg()
@@ -42,5 +45,28 @@ void CoordClassDlg::Init()
 
 		ui->m_tableView->setModel(m_pModel);
 		ui->m_tableView->show();
+	}
+}
+
+void CoordClassDlg::onSelectionChanged(const QItemSelection & /*selected*/, const QItemSelection & /*deselected*/)
+{
+	QItemSelectionModel *selection = ui->m_tableView->selectionModel();
+	if (selection)
+	{
+		bool canMoveUp = false;
+		bool canMoveDown = false;
+
+		QModelIndexList selRows = selection->selectedRows();
+		if (selRows.size() == 1)
+		{
+			QModelIndex modelIndex = selRows.at(0);
+			if (modelIndex.row() > 0)
+				canMoveUp = true;
+			if (modelIndex.row() < this->m_pModel->rowCount() - 1)
+				canMoveDown = true;
+		}
+
+		ui->m_upButton->setEnabled(canMoveUp);
+		ui->m_downButton->setEnabled(canMoveDown);
 	}
 }
