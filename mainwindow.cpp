@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "coordscontroller.h"
 #include "coordstab.h"
 #include "stationstab.h"
 #include "calcstab.h"
@@ -20,7 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	m_db = QSqlDatabase::addDatabase("QSQLITE");
 
-	m_pCoordsTab = new CoordsTab(this);
+	m_pCoordsController = new CoordsController(this);
+
+	m_pCoordsTab = new CoordsTab(*m_pCoordsController, this);
 	m_pStationsTab = new StationsTab(this);
 	m_pCalcsTab = new CalcsTab(this);
 	m_pPlanTab = new PlanTab(this);

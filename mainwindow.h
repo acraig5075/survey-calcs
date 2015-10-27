@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QPair>
 
+class CoordsController;
 class CoordsTab;
 class StationsTab;
 class CalcsTab;
@@ -49,6 +50,7 @@ private:
 	Ui::MainWindow *ui;
 	QSqlDatabase m_db;
 	QPair<QString, QString> m_filenames;
+	CoordsController *m_pCoordsController;
 	CoordsTab *m_pCoordsTab;
 	StationsTab *m_pStationsTab;
 	CalcsTab *m_pCalcsTab;

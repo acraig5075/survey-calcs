@@ -4,6 +4,7 @@
 #include <QWidget>
 
 class CoordQueryModel;
+class CoordsController;
 
 namespace Ui {
 class CoordsTab;
@@ -14,7 +15,7 @@ class CoordsTab : public QWidget
 	Q_OBJECT
 
 public:
-	explicit CoordsTab(QWidget *parent = 0);
+	explicit CoordsTab(CoordsController &coordsController, QWidget *parent = 0);
 	~CoordsTab();
 
 	QString GetStatus() const;
@@ -27,6 +28,7 @@ private slots:
 	void on_w_loadButton_clicked();
 	void onCustomContextMenuRequested(QPoint pos);
 	void onTogglePlot();
+	void onDoubleClick(const QModelIndex &index);
 
 signals:
 	void coordPlotChanged();
@@ -34,6 +36,7 @@ signals:
 private:
 	Ui::CoordsTab *ui;
 	CoordQueryModel *m_pModel;
+	CoordsController &m_coordsController;
 };
 
 #endif // COORDSTAB_H

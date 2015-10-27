@@ -1,6 +1,8 @@
 #include "coordstab.h"
 #include "ui_coordstab.h"
 #include "coordquerymodel.h"
+#include "coordscontroller.h"
+#include "coord.h"
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
@@ -9,9 +11,10 @@
 #include <QSqlRecord>
 #include <QStringList>
 
-CoordsTab::CoordsTab(QWidget *parent) :
+CoordsTab::CoordsTab(CoordsController &coordsController, QWidget *parent) :
 	QWidget(parent),
-	ui(new Ui::CoordsTab)
+	ui(new Ui::CoordsTab),
+	m_coordsController(coordsController)
 {
 	ui->setupUi(this);
 	m_pModel = new CoordQueryModel(this);
@@ -20,6 +23,7 @@ CoordsTab::CoordsTab(QWidget *parent) :
 	ui->w_tableView->setContextMenuPolicy(Qt::CustomContextMenu);
 
 	connect(ui->w_tableView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)));
+	connect(ui->w_tableView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(onDoubleClick(const QModelIndex&)));
 	connect(this, SIGNAL(coordPlotChanged()), parent, SLOT(onPlanViewChanged()));
 }
 
@@ -115,4 +119,13 @@ void CoordsTab::onTogglePlot()
 			emit coordPlotChanged();
 		}
 	}
+}
+
+void CoordsTab::onDoubleClick(const QModelIndex& index)
+{
+	QSqlRecord record = m_pModel->record(index.row());
+
+	Coord coord(record);
+
+	m_coordsController.EditCoord(this, coord);
 }

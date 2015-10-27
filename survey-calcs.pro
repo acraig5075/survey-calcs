@@ -25,7 +25,10 @@ SOURCES += main.cpp\
     coordstab.cpp \
     calcstab.cpp \
     utils.cpp \
-    Dialogs/coordclassdlg.cpp
+    Dialogs/coordclassdlg.cpp \
+    Dialogs/editcoorddlg.cpp \
+    coordscontroller.cpp \
+    coord.cpp
 
 HEADERS  += mainwindow.h \
     calc.h \
@@ -39,11 +42,15 @@ HEADERS  += mainwindow.h \
     coordstab.h \
     calcstab.h \
     utils.h \
-    Dialogs/coordclassdlg.h
+    Dialogs/coordclassdlg.h \
+    Dialogs/editcoorddlg.h \
+    coordscontroller.h \
+    coord.h
 
 FORMS    += mainwindow.ui \
     stationstab.ui \
     plantab.ui \
     coordstab.ui \
     calcstab.ui \
-    Dialogs/coordclassdlg.ui
+    Dialogs/coordclassdlg.ui \
+    Dialogs/editcoorddlg.ui
