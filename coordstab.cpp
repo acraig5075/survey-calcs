@@ -127,5 +127,8 @@ void CoordsTab::onDoubleClick(const QModelIndex& index)
 
 	Coord coord(record);
 
-	m_coordsController.EditCoord(this, coord);
+	if (m_coordsController.EditCoord(this, coord))
+	{
+		m_pModel->query().exec();
+	}
 }

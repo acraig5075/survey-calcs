@@ -1,29 +1,53 @@
 #include "editcoorddlg.h"
 #include "ui_editcoorddlg.h"
 #include "coord.h"
-#include "coordscontroller.h"
-#include <QStringListModel>
-#include <functional>
+#include <QSqlQueryModel>
+#include <QSqlQuery>
+#include <QMessageBox>
+#include <QDebug>
+#include <QSqlError>
 
 namespace
 {
-	int IndexOf(const QStringList &list, const QString &str)
-	{
-		if (list.contains(str))
-			return list.indexOf(str);
-		return -1;
-	}
-
-	void ComboboxSelection(QWidget *parent, const CoordsController &controller, QStringList (CoordsController::*func)() const, QComboBox *comboBox, const std::string &initial)
-	{
-		auto stringList = (controller.*func)();
-		auto stringModel = new QStringListModel(stringList, parent);
-		comboBox->setModel(stringModel);
-		comboBox->setCurrentIndex(IndexOf(stringList, QString::fromStdString(initial)));
-	}
+void ComboboxSelection(QWidget *parent, const QString &query, QComboBox *comboBox, const std::string &initial)
+{
+	auto model = new QSqlQueryModel(parent);
+	model->setQuery(query);
+	comboBox->setModel(model);
+	int index = comboBox->findText(QString::fromStdString(initial));
+	comboBox->setCurrentIndex(index);
 }
 
-EditCoordDlg::EditCoordDlg(QWidget *parent, Coord &coord, const CoordsController &controller) :
+bool ModelContains(const QComboBox *comboBox, const QString &value)
+{
+	auto model = static_cast<QSqlQueryModel *>(comboBox->model());
+	for (int i = 0; i < model->rowCount(); ++i)
+	{
+		if (value == model->record(i).value(0).toString())
+			return true;
+	}
+	return false;
+}
+
+bool TableContains(QWidget *parent, const QString &value)
+{
+	QSqlQuery query;
+	query.prepare("SELECT `name` from coord WHERE `name` = :name");
+	query.bindValue(":name", value);
+	if (query.exec())
+	{
+		if (query.next())
+		{
+			QString msg = QString("%1 already exists in the database").arg(value);
+			QMessageBox::critical(parent, "Error", msg, QMessageBox::Ok);
+			return true;
+		}
+	}
+	return false;
+}
+}
+
+EditCoordDlg::EditCoordDlg(QWidget *parent, Coord &coord) :
 	QDialog(parent),
 	ui(new Ui::EditCoordDlg),
 	m_coord(coord)
@@ -35,8 +59,8 @@ EditCoordDlg::EditCoordDlg(QWidget *parent, Coord &coord, const CoordsController
 	ui->northingEdit->setText(QString::number(coord.m_northing, 'f', 3));
 	ui->elevationEdit->setText(QString::number(coord.m_elevation, 'f', 3));
 
-	ComboboxSelection(this, controller, &CoordsController::GetDescriptionList, ui->descriptionCombo, coord.m_desc);
-	ComboboxSelection(this, controller, &CoordsController::GetClassificationList, ui->classificationCombo, coord.m_class);
+	ComboboxSelection(this, "SELECT `desc` FROM desc ORDER BY `desc`", ui->descriptionCombo, coord.m_desc);
+	ComboboxSelection(this, "SELECT `class` FROM class ORDER BY `order`", ui->classificationCombo, coord.m_class);
 
 	auto validator = new QDoubleValidator(-10000000.0, 10000000.0, 3, this);
 	validator->setNotation(QDoubleValidator::StandardNotation);
@@ -51,12 +75,78 @@ EditCoordDlg::~EditCoordDlg()
 	delete ui;
 }
 
-void EditCoordDlg::on_buttonBox_accepted()
+void EditCoordDlg::done(int r)
 {
-	m_coord.m_name = ui->nameEdit->text().toStdString();
-	m_coord.m_easting = ui->eastingEdit->text().toDouble();
-	m_coord.m_northing = ui->northingEdit->text().toDouble();
-	m_coord.m_elevation = ui->elevationEdit->text().toDouble();
-	m_coord.m_desc = ui->descriptionCombo->currentText().toStdString();
-	m_coord.m_class = ui->classificationCombo->currentText().toStdString();
+	if (QDialog::Accepted == r)
+	{
+		QString name = ui->nameEdit->text();
+		QString desc = ui->descriptionCombo->currentText().toUpper();
+		QString clas = ui->classificationCombo->currentText().toUpper();
+
+		if (!ValidateName(name))
+		{
+			ui->nameEdit->selectAll();
+			ui->nameEdit->setFocus();
+			return;
+		}
+
+		if (!HandleNewMnemonics(desc, clas))
+		{
+			desc = QString::fromStdString(m_coord.m_desc);
+			clas = QString::fromStdString(m_coord.m_class);
+		}
+
+		m_coord.m_name = name.toStdString();
+		m_coord.m_easting = ui->eastingEdit->text().toDouble();
+		m_coord.m_northing = ui->northingEdit->text().toDouble();
+		m_coord.m_elevation = ui->elevationEdit->text().toDouble();
+		m_coord.m_desc = desc.toStdString();
+		m_coord.m_class = clas.toStdString();
+	}
+
+	QDialog::done(r);
+}
+
+bool EditCoordDlg::ValidateName(const QString &name)
+{
+	if (name != QString::fromStdString(m_coord.m_name))
+	{
+		if (name.isEmpty() || TableContains(this, name))
+			return false;
+	}
+	return true;
+}
+
+bool EditCoordDlg::HandleNewMnemonics(const QString &desc, const QString &clas)
+{
+	bool newDesc = !ModelContains(ui->descriptionCombo, desc);
+	bool newClass = !ModelContains(ui->classificationCombo, clas);
+
+	if (newDesc || newClass)
+	{
+		QSqlDatabase db = QSqlDatabase::database();
+		db.transaction();
+		if (newDesc)
+		{
+			QSqlQuery query;
+			query.prepare("INSERT INTO desc (`desc`) VALUES (:value)");
+			query.bindValue(":value", desc);
+			if (!query.exec())
+				qDebug() << query.lastError();
+		}
+		if (newClass)
+		{
+			QSqlQuery query;
+			query.prepare("INSERT INTO class (`class`) VALUES (:value)");
+			query.bindValue(":value", clas);
+			if (!query.exec())
+				qDebug() << query.lastError();
+		}
+		if (!db.commit())
+		{
+			QMessageBox::critical(this, "Error", "Failed to add new description or classification", QMessageBox::Ok);
+			return false;
+		}
+	}
+	return true;
 }

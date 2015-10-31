@@ -4,45 +4,41 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QVariant>
+#include <QDebug>
+#include <QSqlError>
 
 CoordsController::CoordsController(QObject *parent) : QObject(parent)
 {
 
 }
 
-void CoordsController::EditCoord(QWidget *parent, const Coord &coord)
+bool CoordsController::EditCoord(QWidget *parent, const Coord &coord)
 {
 	Coord newCoord(coord);
-	EditCoordDlg dlg(parent, newCoord, *this);
+	EditCoordDlg dlg(parent, newCoord);
 	if (QDialog::Accepted == dlg.exec())
 	{
+		QString update = newCoord.GetUpdateQueryString(QString::fromStdString(coord.m_name));
+		return ModifyCoordTable(update);
 	}
+
+	return false;
 }
 
-QStringList CoordsController::GetClassificationList() const
+bool CoordsController::ModifyCoordTable(const QString &sql)
 {
-	return GetMnemonicList("SELECT `class` FROM class ORDER BY `order`");
-}
-
-QStringList CoordsController::GetDescriptionList() const
-{
-	return GetMnemonicList("SELECT `desc` FROM desc ORDER BY `desc`");
-}
-
-QStringList CoordsController::GetMnemonicList(const QString &select) const
-{
-	QStringList descList;
-
 	QSqlDatabase db = QSqlDatabase::database();
 	if (db.isOpen())
 	{
 		QSqlQuery query(db);
-		query.prepare(select);
-		query.exec();
+		query.prepare(sql);
+		bool ok = query.exec();
 
-		while (query.next())
-			descList.push_back(query.value(0).toString());
+		qDebug() << "Update query returned " << ok;
+		if (!ok)
+			qDebug() << query.lastError();
+		return ok;
 	}
 
-	return descList;
+	return false;
 }

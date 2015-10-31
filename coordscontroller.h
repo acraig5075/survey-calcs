@@ -9,14 +9,12 @@ class Coord;
 class CoordsController : public QObject
 {
 	Q_OBJECT
+	bool ModifyCoordTable(const QString &sql);
+
 public:
 	explicit CoordsController(QObject *parent = 0);
 
-	void EditCoord(QWidget *parent, const Coord &coord);
-
-	QStringList GetDescriptionList() const;
-	QStringList GetClassificationList() const;
-	QStringList GetMnemonicList(const QString &select) const;
+	bool EditCoord(QWidget *parent, const Coord &coord);
 
 signals:
 
