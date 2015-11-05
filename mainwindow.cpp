@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "coordscontroller.h"
+#include "calcscontroller.h"
 #include "coordstab.h"
 #include "stationstab.h"
 #include "calcstab.h"
@@ -22,10 +23,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	m_db = QSqlDatabase::addDatabase("QSQLITE");
 
 	m_pCoordsController = new CoordsController(this);
+	m_pCalcsController = new CalcsController(this);
 
 	m_pCoordsTab = new CoordsTab(*m_pCoordsController, this);
 	m_pStationsTab = new StationsTab(this);
-	m_pCalcsTab = new CalcsTab(this);
+	m_pCalcsTab = new CalcsTab(*m_pCalcsController, this);
 	m_pPlanTab = new PlanTab(this);
 	m_statusLabel = new QLabel("Ready", this);
 
@@ -70,6 +72,8 @@ void MainWindow::on_actionFileOpen_triggered()
 			m_db.setDatabaseName(backupName);
 			if (m_db.open())
 			{
+				m_pCalcsController->Read();
+
 				emit databaseChanged();
 				on_w_tabs_currentChanged(ui->w_tabs->currentIndex());
 				m_filenames = qMakePair(filename, backupName);

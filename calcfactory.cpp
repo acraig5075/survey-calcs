@@ -2,27 +2,27 @@
 #include "calc.h"
 
 
-Calc* CalcFactory::Instance(int typeId)
+std::unique_ptr<Calc> CalcFactory::Instance(int typeId)
 {
 	switch (typeId)
 	{
 	case 1:
-		return new JoinsCalc;
+		return std::make_unique<JoinsCalc>();
 	case 2:
-		return new PolarsCalc;
+		return std::make_unique<PolarsCalc>();
 	case 3:
-		return new IntersCalc;
+		return std::make_unique<IntersCalc>();
 	case 8:
-		return new DpObsCalc;
+		return std::make_unique<DpObsCalc>();
 	case 15:
-		return new SpObsCalc;
+		return std::make_unique<SpObsCalc>();
 	case 17:
-		return new OffsetsCalc;
+		return std::make_unique<OffsetsCalc>();
 	case 18:
-		return new XFormCalc;
+		return std::make_unique<XFormCalc>();
 	case 20:
-		return new BeaconsCalc;
+		return std::make_unique<BeaconsCalc>();
 	default:
-		return new UnknownCalc;
+		return std::make_unique<UnknownCalc>();
 	}
 }

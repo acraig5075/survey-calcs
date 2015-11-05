@@ -4,6 +4,7 @@
 #include <QWidget>
 
 class CalcsListModel;
+class CalcsController;
 
 namespace Ui {
 class CalcsTab;
@@ -14,7 +15,7 @@ class CalcsTab : public QWidget
 	Q_OBJECT
 
 public:
-	explicit CalcsTab(QWidget *parent = 0);
+	explicit CalcsTab(CalcsController &calcsController, QWidget *parent = 0);
 	~CalcsTab();
 
 	QString GetStatus() const;
@@ -29,6 +30,7 @@ private slots:
 private:
 	Ui::CalcsTab *ui;
 	CalcsListModel *m_pModel;
+	CalcsController &m_calcsController;
 };
 
 #endif // CALCSTAB_H

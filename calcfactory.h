@@ -1,6 +1,8 @@
 #ifndef CALCFACTORY_H
 #define CALCFACTORY_H
 
+#include <memory>
+
 class Calc;
 
 class CalcFactory
@@ -8,7 +10,7 @@ class CalcFactory
 public:
 	CalcFactory() = delete;
 
-	static Calc* Instance(int typeId);
+	static std::unique_ptr<Calc> Instance(int typeId);
 };
 
 #endif // CALCFACTORY_H

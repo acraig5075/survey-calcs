@@ -7,6 +7,7 @@
 #include <QPair>
 
 class CoordsController;
+class CalcsController;
 class CoordsTab;
 class StationsTab;
 class CalcsTab;
@@ -51,6 +52,7 @@ private:
 	QSqlDatabase m_db;
 	QPair<QString, QString> m_filenames;
 	CoordsController *m_pCoordsController;
+	CalcsController *m_pCalcsController;
 	CoordsTab *m_pCoordsTab;
 	StationsTab *m_pStationsTab;
 	CalcsTab *m_pCalcsTab;
