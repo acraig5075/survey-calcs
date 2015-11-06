@@ -3,14 +3,22 @@
 
 #include <QString>
 #include <QSqlRecord>
+#include <memory>
 
 class Calc
 {
+	using CalcPtr = std::unique_ptr<Calc>;
+
+protected:
+	int m_calcref = 0;
+
 public:
 	Calc();
 
 	virtual ~Calc() = default;
 	virtual QString desc() const = 0;
+
+	static bool SortFunc(CalcPtr const& a, CalcPtr const& b);
 };
 
 
@@ -64,7 +72,6 @@ public:
 
 class JoinsCalc : public Calc
 {
-	int m_calcref;
 	QString m_fromname;
 	QString m_toname;
 	double m_fy = 0, m_fx = 0;
@@ -92,8 +99,17 @@ public:
 
 class PolarsCalc : public Calc
 {
+	QString m_fromname;
+	QString m_toname;
+	double m_fy = 0, m_fx = 0;
+	double m_ty = 0, m_tx = 0;
+	double m_dirc = 0, m_dist = 0, m_oc = 0;
+
 public:
-	virtual QString desc() const override { return "Polar\n\tMy new line"; }
+	PolarsCalc() = default;
+	PolarsCalc(const QSqlRecord &record);
+	static const QString SqlSelectQuery;
+	virtual QString desc() const override;
 };
 
 class ResecsCalc : public Calc

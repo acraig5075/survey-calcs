@@ -1,5 +1,6 @@
 #include "calcslistmodel.h"
 #include <QDebug>
+#include <QFont>
 
 CalcsListModel::CalcsListModel(QObject *parent)
 	: QAbstractListModel(parent)
@@ -15,11 +16,14 @@ int CalcsListModel::rowCount(const QModelIndex & parent) const
 
 QVariant CalcsListModel::data(const QModelIndex & index, int role) const
 {
+	if (!index.isValid())
+		return QVariant();
+
 	if (role == Qt::DisplayRole)
-	{
-		if (index.isValid())
-			return static_cast<QVariant>(m_stringList.at(index.row()));
-	}
+		return static_cast<QVariant>(m_stringList.at(index.row()));
+	else if (role == Qt::FontRole)
+		return QVariant::fromValue(QFont("Courier", 9, QFont::Normal | QFont::Courier));
+
 	return QVariant();
 }
 
