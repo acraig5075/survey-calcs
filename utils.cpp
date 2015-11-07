@@ -3,19 +3,17 @@
 #include <QDebug>
 #include <QtMath>
 
-Utils::Utils()
+namespace Utils
 {
-}
-
-QString Utils::MakeWorkingCopy(const QString &filename)
+QString MakeWorkingCopy(const QString &filename)
 {
 	QString backup;
 
 	{
-	QTemporaryFile tempFile;
-	tempFile.open();
-	backup = tempFile.fileName();
-	tempFile.close();
+		QTemporaryFile tempFile;
+		tempFile.open();
+		backup = tempFile.fileName();
+		tempFile.close();
 	}
 
 	if (!backup.isEmpty())
@@ -29,7 +27,7 @@ QString Utils::MakeWorkingCopy(const QString &filename)
 }
 
 
-bool Utils::CopyAndOverwrite(const QString &source, const QString destination)
+bool CopyAndOverwrite(const QString &source, const QString destination)
 {
 	qDebug() << QString("Copying %1 to %2").arg(source, destination);
 
@@ -43,7 +41,7 @@ bool Utils::CopyAndOverwrite(const QString &source, const QString destination)
 	return false;
 }
 
-QString Utils::Rad2Dms(double radians)
+QString Rad2Dms(double radians)
 {
 	int sign = radians < 0 ? -1 : 1;
 	double degrees = fabs(qRadiansToDegrees(radians));
@@ -54,4 +52,5 @@ QString Utils::Rad2Dms(double radians)
 	int s = static_cast<int>(floor(seconds));
 
 	return QString("%1:%2:%3").arg(d).arg(m, 2, 10, QChar('0')).arg(s, 2, 10, QChar('0'));
+}
 }

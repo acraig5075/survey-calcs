@@ -3,15 +3,11 @@
 
 #include <QString>
 
-class Utils
+namespace Utils
 {
-public:
-	Utils();
-
-	static QString MakeWorkingCopy(const QString &filename);
-	static bool CopyAndOverwrite(const QString &source, const QString destination);
-	static QString Rad2Dms(double radians);
-
-};
+	QString MakeWorkingCopy(const QString &filename);
+	bool CopyAndOverwrite(const QString &source, const QString destination);
+	QString Rad2Dms(double radians);
+}
 
 #endif // UTILS_H

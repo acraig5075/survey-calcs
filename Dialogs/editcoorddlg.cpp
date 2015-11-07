@@ -9,12 +9,12 @@
 
 namespace
 {
-void ComboboxSelection(QWidget *parent, const QString &query, QComboBox *comboBox, const std::string &initial)
+void ComboboxSelection(QWidget *parent, const QString &query, QComboBox *comboBox, const QString &initial)
 {
 	auto model = new QSqlQueryModel(parent);
 	model->setQuery(query);
 	comboBox->setModel(model);
-	int index = comboBox->findText(QString::fromStdString(initial));
+	int index = comboBox->findText(initial);
 	comboBox->setCurrentIndex(index);
 }
 
@@ -54,7 +54,7 @@ EditCoordDlg::EditCoordDlg(QWidget *parent, Coord &coord) :
 {
 	ui->setupUi(this);
 
-	ui->nameEdit->setText(QString::fromStdString(coord.m_name));
+	ui->nameEdit->setText(coord.m_name);
 	ui->eastingEdit->setText(QString::number(coord.m_easting, 'f', 3));
 	ui->northingEdit->setText(QString::number(coord.m_northing, 'f', 3));
 	ui->elevationEdit->setText(QString::number(coord.m_elevation, 'f', 3));
@@ -92,16 +92,16 @@ void EditCoordDlg::done(int r)
 
 		if (!HandleNewMnemonics(desc, clas))
 		{
-			desc = QString::fromStdString(m_coord.m_desc);
-			clas = QString::fromStdString(m_coord.m_class);
+			desc = m_coord.m_desc;
+			clas = m_coord.m_class;
 		}
 
-		m_coord.m_name = name.toStdString();
+		m_coord.m_name = name;
+		m_coord.m_desc = desc;
+		m_coord.m_class = clas;
 		m_coord.m_easting = ui->eastingEdit->text().toDouble();
 		m_coord.m_northing = ui->northingEdit->text().toDouble();
 		m_coord.m_elevation = ui->elevationEdit->text().toDouble();
-		m_coord.m_desc = desc.toStdString();
-		m_coord.m_class = clas.toStdString();
 	}
 
 	QDialog::done(r);
@@ -109,7 +109,7 @@ void EditCoordDlg::done(int r)
 
 bool EditCoordDlg::ValidateName(const QString &name)
 {
-	if (name != QString::fromStdString(m_coord.m_name))
+	if (name != m_coord.m_name)
 	{
 		if (name.isEmpty() || TableContains(this, name))
 			return false;
