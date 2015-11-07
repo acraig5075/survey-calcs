@@ -17,6 +17,7 @@ public:
 
 	virtual ~Calc() = default;
 	virtual QString desc() const = 0;
+	virtual bool Edit() { return false; };
 
 	static bool SortFunc(CalcPtr const& a, CalcPtr const& b);
 };
@@ -80,9 +81,10 @@ class JoinsCalc : public Calc
 
 public:
 	JoinsCalc() = default;
-	JoinsCalc(const QSqlRecord &record);
+	explicit JoinsCalc(const QSqlRecord &record);
 	static const QString SqlSelectQuery;
 	virtual QString desc() const override;
+	virtual bool Edit() override;
 };
 
 class OffsetLnCalc : public Calc
@@ -107,7 +109,7 @@ class PolarsCalc : public Calc
 
 public:
 	PolarsCalc() = default;
-	PolarsCalc(const QSqlRecord &record);
+	explicit PolarsCalc(const QSqlRecord &record);
 	static const QString SqlSelectQuery;
 	virtual QString desc() const override;
 };

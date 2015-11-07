@@ -36,3 +36,20 @@ QStringList CalcsController::GetDescriptions() const
 		descriptions.push_back(calc->desc());
 	return descriptions;
 }
+
+QString CalcsController::GetDescriptionAt(int i) const
+{
+	if (i >= 0 && i < m_calcList.size())
+		return m_calcList.at(i)->desc();
+	else
+		return "";
+}
+
+
+bool CalcsController::EditCalcAt(int i)
+{
+	if (i >= 0 && i < m_calcList.size())
+		return m_calcList.at(i)->Edit();
+	else
+		return false;
+}

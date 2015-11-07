@@ -43,3 +43,9 @@ void CalcsListModel::clear()
 {
 	m_stringList.clear();
 }
+
+void CalcsListModel::editDesc(int i, const QString &desc)
+{
+	m_stringList.replace(i, desc);
+	emit dataChanged(index(i), index(i));
+}

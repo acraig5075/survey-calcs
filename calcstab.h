@@ -27,6 +27,8 @@ public slots:
 private slots:
 	void on_w_loadButton_clicked();
 
+	void on_w_listView_doubleClicked(const QModelIndex &index);
+
 private:
 	Ui::CalcsTab *ui;
 	CalcsListModel *m_pModel;

@@ -16,6 +16,8 @@ public:
 
 	void clear();
 
+	void editDesc(int i, const QString &desc);
+
 private:
 	QStringList m_stringList;
 };

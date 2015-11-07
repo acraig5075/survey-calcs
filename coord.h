@@ -7,7 +7,7 @@ class Coord
 {
 public:
 	Coord();
-	Coord(const QSqlRecord &record);
+	explicit Coord(const QSqlRecord &record);
 
 public:
 	QString m_name;
