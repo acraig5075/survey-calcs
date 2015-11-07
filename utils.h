@@ -7,6 +7,7 @@ namespace Utils
 {
 	QString MakeWorkingCopy(const QString &filename);
 	bool CopyAndOverwrite(const QString &source, const QString destination);
+	bool UpdateDatabase(const QString &sql);
 	QString Rad2Dms(double radians);
 }
 

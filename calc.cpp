@@ -57,6 +57,20 @@ bool JoinsCalc::Edit(QWidget *parent)
 	return false;
 }
 
+QString JoinsCalc::GetUpdateQueryString() const
+{
+	return QString("UPDATE joins SET `fromname`='%1', `fy`=%2, `fx`=%3, `toname`='%4', `ty`=%5, `tx`=%6, `dirc`=%7, `dist`='%8' WHERE `calcref`='%9'")
+			.arg(m_fromname)
+			.arg(QString::number(m_fy, 'f', 6))
+			.arg(QString::number(m_fx, 'f', 6))
+			.arg(m_toname)
+			.arg(QString::number(m_ty, 'f', 6))
+			.arg(QString::number(m_tx, 'f', 6))
+			.arg(m_dirc)
+			.arg(m_dist)
+			.arg(m_calcref);
+}
+
 PolarsCalc::PolarsCalc(const QSqlRecord &record)
 {
 	m_calcref = record.value("calcref").toInt();

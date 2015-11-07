@@ -19,6 +19,7 @@ public:
 	virtual ~Calc() = default;
 	virtual QString desc() const = 0;
 	virtual bool Edit(QWidget *) { return false; };
+	virtual QString GetUpdateQueryString() const { return ""; }
 
 	static bool SortFunc(CalcPtr const& a, CalcPtr const& b);
 };
@@ -86,6 +87,7 @@ public:
 	static const QString SqlSelectQuery;
 	virtual QString desc() const override;
 	virtual bool Edit(QWidget *parent) override;
+	virtual QString GetUpdateQueryString() const override;
 };
 
 class OffsetLnCalc : public Calc

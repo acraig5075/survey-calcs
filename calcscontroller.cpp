@@ -1,5 +1,6 @@
 #include "calcscontroller.h"
 #include "calcfactory.h"
+#include "utils.h"
 #include <QSqlQuery>
 #include <QDebug>
 
@@ -49,7 +50,14 @@ QString CalcsController::GetDescriptionAt(int i) const
 bool CalcsController::EditCalcAt(int i, QWidget *parent)
 {
 	if (i >= 0 && i < m_calcList.size())
-		return m_calcList.at(i)->Edit(parent);
-	else
-		return false;
+	{
+		auto &calc = m_calcList.at(i);
+		if (calc->Edit(parent))
+		{
+			QString update = calc->GetUpdateQueryString();
+			return Utils::UpdateDatabase(update);
+		}
+	}
+
+	return false;
 }

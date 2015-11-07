@@ -2,6 +2,11 @@
 #include <QTemporaryFile>
 #include <QDebug>
 #include <QtMath>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QVariant>
+#include <QDebug>
+#include <QSqlError>
 
 namespace Utils
 {
@@ -41,9 +46,28 @@ bool CopyAndOverwrite(const QString &source, const QString destination)
 	return false;
 }
 
+
+bool UpdateDatabase(const QString &sql)
+{
+	QSqlDatabase db = QSqlDatabase::database();
+	if (db.isOpen())
+	{
+		QSqlQuery query(db);
+		query.prepare(sql);
+		bool ok = query.exec();
+
+		qDebug() << "Update query returned " << ok;
+		if (!ok)
+			qDebug() << query.lastError();
+		return ok;
+	}
+
+	return false;
+}
+
 QString Rad2Dms(double radians)
 {
-	int sign = radians < 0 ? -1 : 1;
+	int sign = (radians < 0 ? -1 : 1);
 	double degrees = fabs(qRadiansToDegrees(radians));
 	int d = static_cast<int>(floor(degrees)) * sign;
 	double minutes = (degrees - d) * 60.0;
@@ -51,6 +75,9 @@ QString Rad2Dms(double radians)
 	double seconds = (minutes - m) * 60.0;
 	int s = static_cast<int>(floor(seconds));
 
-	return QString("%1:%2:%3").arg(d).arg(m, 2, 10, QChar('0')).arg(s, 2, 10, QChar('0'));
+	return QString("%1:%2:%3")
+			.arg(d)
+			.arg(m, 2, 10, QChar('0'))
+			.arg(s, 2, 10, QChar('0'));
 }
 }

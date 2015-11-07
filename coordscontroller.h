@@ -9,7 +9,6 @@ class Coord;
 class CoordsController : public QObject
 {
 	Q_OBJECT
-	bool ModifyCoordTable(const QString &sql);
 
 public:
 	explicit CoordsController(QObject *parent = 0);
