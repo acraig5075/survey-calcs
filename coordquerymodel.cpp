@@ -1,5 +1,7 @@
 #include "coordquerymodel.h"
 
+const QString CoordQueryModel::ModelQueryString = "SELECT name AS Name, y AS Y, x AS X, h AS H, desc AS Desc, class AS Class, plot AS Plot FROM coord ORDER BY class, name";
+
 CoordQueryModel::CoordQueryModel(QObject *parent)
 	: QSqlQueryModel(parent)
 {}

@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "Dialogs/selectcoorddlg.h"
 #include <QTemporaryFile>
 #include <QDebug>
 #include <QtMath>
@@ -7,6 +8,8 @@
 #include <QVariant>
 #include <QDebug>
 #include <QSqlError>
+#include <QLineEdit>
+
 
 namespace Utils
 {
@@ -80,4 +83,27 @@ QString Rad2Dms(double radians)
 			.arg(m, 2, 10, QChar('0'))
 			.arg(s, 2, 10, QChar('0'));
 }
+
+bool LoadCoord(QWidget *parent, QPair<QString, QLineEdit *> &name, QPair<double, QLineEdit *> &y, QPair<double, QLineEdit *> &x)
+{
+	SelectCoordDlg dlg(parent);
+	if (dlg.exec() == QDialog::Accepted)
+	{
+		Coord coord = dlg.GetSingleSelection();
+		if (!coord.m_name.isEmpty())
+		{
+			// update variables
+			name.first = coord.m_name;
+			y.first = coord.m_easting;
+			x.first = coord.m_northing;
+			// update controls
+			name.second->setText(name.first);
+			y.second->setText(QString::number(y.first, 'f', 3));
+			x.second->setText(QString::number(x.first, 'f', 3));
+			return true;
+		}
+	}
+	return false;
+}
+
 }

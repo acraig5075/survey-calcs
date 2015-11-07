@@ -51,7 +51,7 @@ void CoordsTab::onLoad()
 	if (db.isOpen())
 	{
 		QSqlQuery query(db);
-		query.prepare("SELECT name AS Name, y AS Y, x AS X, h AS H, desc AS Desc, class AS Class, plot AS Plot FROM coord ORDER BY class, name");
+		query.prepare(CoordQueryModel::ModelQueryString);
 		query.exec();
 
 		m_pModel->setQuery(query);

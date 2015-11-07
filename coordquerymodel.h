@@ -9,6 +9,8 @@ public:
 	CoordQueryModel(QObject *parent = 0);
 
 	QVariant data(const QModelIndex& index, int role) const override;
+
+	static const QString CoordQueryModel::ModelQueryString;
 };
 
 

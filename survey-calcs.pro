@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     coordscontroller.cpp \
     coord.cpp \
     calcscontroller.cpp \
-    Dialogs/editjoindlg.cpp
+    Dialogs/editjoindlg.cpp \
+    Dialogs/selectcoorddlg.cpp
 
 HEADERS  += mainwindow.h \
     calc.h \
@@ -49,7 +50,8 @@ HEADERS  += mainwindow.h \
     coordscontroller.h \
     coord.h \
     calcscontroller.h \
-    Dialogs/editjoindlg.h
+    Dialogs/editjoindlg.h \
+    Dialogs/selectcoorddlg.h
 
 FORMS    += mainwindow.ui \
     stationstab.ui \
@@ -58,4 +60,5 @@ FORMS    += mainwindow.ui \
     calcstab.ui \
     Dialogs/coordclassdlg.ui \
     Dialogs/editcoorddlg.ui \
-    Dialogs/editjoindlg.ui
+    Dialogs/editjoindlg.ui \
+    Dialogs/selectcoorddlg.ui

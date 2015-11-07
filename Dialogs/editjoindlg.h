@@ -4,6 +4,8 @@
 #include <QDialog>
 #include "calc.h"
 
+class QLineEdit;
+
 namespace Ui {
 class EditJoinDlg;
 }
@@ -18,6 +20,10 @@ public:
 
 private slots:
 	void on_calculateButton_clicked();
+
+	void on_fromButton_clicked();
+
+	void on_toButton_clicked();
 
 private:
 	Ui::EditJoinDlg *ui;

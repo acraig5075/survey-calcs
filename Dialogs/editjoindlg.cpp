@@ -1,13 +1,15 @@
 #include "editjoindlg.h"
 #include "ui_editjoindlg.h"
+#include "utils.h"
+
 
 namespace Compute
 {
-	void Join(JoinsCalc &join)
-	{
-		join.m_dist = _hypot(join.m_fy - join.m_ty, join.m_fx - join.m_tx);
-		join.m_dirc = 0.0;
-	}
+void Join(JoinsCalc &join)
+{
+	join.m_dist = _hypot(join.m_fy - join.m_ty, join.m_fx - join.m_tx);
+	join.m_dirc = 0.0;
+}
 }
 
 EditJoinDlg::EditJoinDlg(QWidget *parent, JoinsCalc &join) :
@@ -56,4 +58,24 @@ void EditJoinDlg::on_calculateButton_clicked()
 
 	Compute::Join(m_join);
 	ui->previewEdit->setText(m_join.desc());
+}
+
+void EditJoinDlg::on_fromButton_clicked()
+{
+	auto p1 = qMakePair(m_join.m_fromname, ui->fromNameEdit);
+	auto p2 = qMakePair(m_join.m_fy, ui->fromEastingEdit);
+	auto p3 = qMakePair(m_join.m_fx, ui->fromNorthingEdit);
+
+	if (Utils::LoadCoord(this, p1, p2, p3))
+		ui->previewEdit->clear();
+}
+
+void EditJoinDlg::on_toButton_clicked()
+{
+	auto p1 = qMakePair(m_join.m_toname, ui->toNameEdit);
+	auto p2 = qMakePair(m_join.m_ty, ui->toEastingEdit);
+	auto p3 = qMakePair(m_join.m_tx, ui->toNorthingEdit);
+
+	if (Utils::LoadCoord(this, p1, p2, p3))
+		ui->previewEdit->clear();
 }
