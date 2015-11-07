@@ -22,7 +22,7 @@ public:
 	void Read();
 	QStringList GetDescriptions() const;
 	QString GetDescriptionAt(int i) const;
-	bool EditCalcAt(int i);
+	bool EditCalcAt(int i, QWidget *parent);
 
 signals:
 

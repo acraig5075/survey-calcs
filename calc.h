@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QSqlRecord>
+#include <QWidget>
 #include <memory>
 
 class Calc
@@ -17,7 +18,7 @@ public:
 
 	virtual ~Calc() = default;
 	virtual QString desc() const = 0;
-	virtual bool Edit() { return false; };
+	virtual bool Edit(QWidget *) { return false; };
 
 	static bool SortFunc(CalcPtr const& a, CalcPtr const& b);
 };
@@ -73,18 +74,18 @@ public:
 
 class JoinsCalc : public Calc
 {
+public:
 	QString m_fromname;
 	QString m_toname;
 	double m_fy = 0, m_fx = 0;
 	double m_ty = 0, m_tx = 0;
 	double m_dirc = 0, m_dist = 0;
 
-public:
 	JoinsCalc() = default;
 	explicit JoinsCalc(const QSqlRecord &record);
 	static const QString SqlSelectQuery;
 	virtual QString desc() const override;
-	virtual bool Edit() override;
+	virtual bool Edit(QWidget *parent) override;
 };
 
 class OffsetLnCalc : public Calc

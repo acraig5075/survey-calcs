@@ -1,5 +1,6 @@
 #include "calc.h"
 #include "utils.h"
+#include "Dialogs/editjoindlg.h"
 #include <QVariant>
 
 const QString JoinsCalc::SqlSelectQuery = "SELECT calcref, fromname, fy, fx, toname, ty, tx, dirc, dist FROM joins ORDER BY calcref";
@@ -43,12 +44,17 @@ QString JoinsCalc::desc() const
 	return QString("Join\n%1\n%2\n%3").arg(label1, label2, label3);
 }
 
-bool JoinsCalc::Edit()
+bool JoinsCalc::Edit(QWidget *parent)
 {
 	JoinsCalc localCopy = *this;
-	localCopy.m_fromname = "Modified";
-	*this = localCopy;
-	return true;
+	EditJoinDlg dlg(parent, localCopy);
+	if (dlg.exec() == QDialog::Accepted)
+	{
+		*this = localCopy;
+		return true;
+	}
+
+	return false;
 }
 
 PolarsCalc::PolarsCalc(const QSqlRecord &record)

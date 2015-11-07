@@ -14,7 +14,7 @@ class EditCoordDlg : public QDialog
 	Q_OBJECT
 
 public:
-	explicit EditCoordDlg(QWidget *parent, Coord &coord);
+	EditCoordDlg(QWidget *parent, Coord &coord);
 	~EditCoordDlg();
 
 private slots:

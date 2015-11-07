@@ -46,10 +46,10 @@ QString CalcsController::GetDescriptionAt(int i) const
 }
 
 
-bool CalcsController::EditCalcAt(int i)
+bool CalcsController::EditCalcAt(int i, QWidget *parent)
 {
 	if (i >= 0 && i < m_calcList.size())
-		return m_calcList.at(i)->Edit();
+		return m_calcList.at(i)->Edit(parent);
 	else
 		return false;
 }

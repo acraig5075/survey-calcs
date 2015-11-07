@@ -52,7 +52,7 @@ void CalcsTab::on_w_listView_doubleClicked(const QModelIndex &index)
 {
 	int i = index.row();
 
-	if (m_calcsController.EditCalcAt(i))
+	if (m_calcsController.EditCalcAt(i, this))
 	{
 		QString desc = m_calcsController.GetDescriptionAt(i);
 
