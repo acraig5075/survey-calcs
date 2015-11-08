@@ -71,15 +71,15 @@ bool UpdateDatabase(const QString &sql)
 QString Rad2Dms(double radians)
 {
 	int sign = (radians < 0 ? -1 : 1);
-	double degrees = fabs(qRadiansToDegrees(radians));
-	int d = static_cast<int>(floor(degrees)) * sign;
+	double degrees = qRadiansToDegrees(fabs(radians));
+	int d = static_cast<int>(floor(degrees));
 	double minutes = (degrees - d) * 60.0;
 	int m = static_cast<int>(floor(minutes));
 	double seconds = (minutes - m) * 60.0;
 	int s = static_cast<int>(floor(seconds));
 
 	return QString("%1:%2:%3")
-			.arg(d)
+			.arg(d * sign)
 			.arg(m, 2, 10, QChar('0'))
 			.arg(s, 2, 10, QChar('0'));
 }

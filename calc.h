@@ -51,12 +51,13 @@ public:
 	double m_y1 = 0, m_x1 = 0, m_y2 = 0, m_x2 = 0, m_ay = 0, m_ax;
 	QString m_adopt;
 	QString m_from1, m_from2;
-	double m_fy1 = 0, m_fx1 = 0, m_fy2 = 0, m_fx2 ;
+	double m_fy1 = 0, m_fx1 = 0, m_fy2 = 0, m_fx2 = 0, m_oc1 = 0, m_oc2 = 0;
 
 	DpObsCalc() = default;
 	explicit DpObsCalc(const QSqlRecord &record);
-	virtual QString desc() const override;
 	static const QString DpObsCalc::SqlSelectQuery;
+	virtual QString desc() const override;
+	virtual bool Edit(QWidget *parent) override;
 };
 
 class DpStnsCalc : public Calc

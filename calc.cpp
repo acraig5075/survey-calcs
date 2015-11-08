@@ -1,11 +1,12 @@
 #include "calc.h"
 #include "utils.h"
 #include "Dialogs/editjoindlg.h"
+#include "Dialogs/doublepolardlg.h"
 #include <QVariant>
 
 const QString JoinsCalc::SqlSelectQuery = "SELECT calcref, fromname, fy, fx, toname, ty, tx, dirc, dist FROM joins ORDER BY calcref";
 const QString PolarsCalc::SqlSelectQuery = "SELECT calcref, fromname, fy, fx, toname, ty, tx, dirc, dist, oc FROM polars ORDER BY calcref";
-const QString DpObsCalc::SqlSelectQuery = "SELECT dpobs.calcref, dpobs.trg1, dpobs.dir1, dpobs.ver1, dpobs.dis1, dpobs.y1, dpobs.x1, dpobs.trg2, dpobs.dir2, dpobs.ver2, dpobs.dis2, dpobs.y2, dpobs.x2, dpobs.aname, dpobs.ay, dpobs.ax, dpobs.adopt, dpstns.from1, dpstns.fy1, dpstns.fx1, dpstns.from2, dpstns.fy2, dpstns.fx2 FROM dpobs JOIN dpstns ON dpobs.calcref = dpstns.calcref ORDER BY dpobs.calcref";
+const QString DpObsCalc::SqlSelectQuery = "SELECT dpobs.calcref, dpobs.trg1, dpobs.dir1, dpobs.ver1, dpobs.dis1, dpobs.y1, dpobs.x1, dpobs.trg2, dpobs.dir2, dpobs.ver2, dpobs.dis2, dpobs.y2, dpobs.x2, dpobs.aname, dpobs.ay, dpobs.ax, dpobs.adopt, dpstns.from1, dpstns.fy1, dpstns.fx1, dpstns.from2, dpstns.fy2, dpstns.fx2, dpstns.oc1, dpstns.oc2 FROM dpobs JOIN dpstns ON dpobs.calcref = dpstns.calcref ORDER BY dpobs.calcref";
 
 Calc::Calc()
 {
@@ -14,6 +15,20 @@ Calc::Calc()
 bool Calc::SortFunc(CalcPtr const& a, CalcPtr const& b)
 {
 	return a->m_calcref < b->m_calcref;
+}
+
+template <typename TDlg, typename TCalc>
+bool EditDialog(QWidget *parent, TCalc &calc)
+{
+	TCalc localCopy = calc;
+	TDlg dlg(parent, localCopy);
+	if (dlg.exec() == QDialog::Accepted)
+	{
+		calc = localCopy;
+		return true;
+	}
+
+	return false;
 }
 
 DpObsCalc::DpObsCalc(const QSqlRecord &record)
@@ -41,6 +56,8 @@ DpObsCalc::DpObsCalc(const QSqlRecord &record)
 	m_from2 = record.value("from2").toString();
 	m_fy2 = record.value("fy2").toDouble();
 	m_fx2 = record.value("fx2").toDouble();
+	m_oc1 = record.value("oc1").toDouble();
+	m_oc2 = record.value("oc2").toDouble();
 }
 
 QString DpObsCalc::desc() const
@@ -74,6 +91,11 @@ QString DpObsCalc::desc() const
 			.arg(label1, label2, label4, label5, label3, label6, label7);
 }
 
+bool DpObsCalc::Edit(QWidget *parent)
+{
+	return EditDialog<DoublePolarDlg>(parent, *this);
+}
+
 JoinsCalc::JoinsCalc(const QSqlRecord &record)
 {
 	m_calcref = record.value("calcref").toInt();
@@ -105,15 +127,16 @@ QString JoinsCalc::desc() const
 
 bool JoinsCalc::Edit(QWidget *parent)
 {
-	JoinsCalc localCopy = *this;
-	EditJoinDlg dlg(parent, localCopy);
-	if (dlg.exec() == QDialog::Accepted)
-	{
-		*this = localCopy;
-		return true;
-	}
+//	JoinsCalc localCopy = *this;
+//	EditJoinDlg dlg(parent, localCopy);
+//	if (dlg.exec() == QDialog::Accepted)
+//	{
+//		*this = localCopy;
+//		return true;
+//	}
 
-	return false;
+//	return false;
+	return EditDialog<EditJoinDlg>(parent, *this);
 }
 
 QString JoinsCalc::GetUpdateQueryString() const

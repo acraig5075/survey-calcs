@@ -4,8 +4,6 @@
 #include <QDialog>
 #include "calc.h"
 
-class QLineEdit;
-
 namespace Ui {
 class EditJoinDlg;
 }
