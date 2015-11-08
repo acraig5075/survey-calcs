@@ -26,6 +26,7 @@ void CalcsController::Read()
 {
 	ReadCalc<JoinsCalc>();
 	ReadCalc<PolarsCalc>();
+	ReadCalc<DpObsCalc>();
 
 	std::sort(m_calcList.begin(), m_calcList.end(), Calc::SortFunc);
 }

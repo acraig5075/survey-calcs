@@ -5,6 +5,7 @@
 
 const QString JoinsCalc::SqlSelectQuery = "SELECT calcref, fromname, fy, fx, toname, ty, tx, dirc, dist FROM joins ORDER BY calcref";
 const QString PolarsCalc::SqlSelectQuery = "SELECT calcref, fromname, fy, fx, toname, ty, tx, dirc, dist, oc FROM polars ORDER BY calcref";
+const QString DpObsCalc::SqlSelectQuery = "SELECT dpobs.calcref, dpobs.trg1, dpobs.dir1, dpobs.ver1, dpobs.dis1, dpobs.y1, dpobs.x1, dpobs.trg2, dpobs.dir2, dpobs.ver2, dpobs.dis2, dpobs.y2, dpobs.x2, dpobs.aname, dpobs.ay, dpobs.ax, dpobs.adopt, dpstns.from1, dpstns.fy1, dpstns.fx1, dpstns.from2, dpstns.fy2, dpstns.fx2 FROM dpobs JOIN dpstns ON dpobs.calcref = dpstns.calcref ORDER BY dpobs.calcref";
 
 Calc::Calc()
 {
@@ -13,6 +14,64 @@ Calc::Calc()
 bool Calc::SortFunc(CalcPtr const& a, CalcPtr const& b)
 {
 	return a->m_calcref < b->m_calcref;
+}
+
+DpObsCalc::DpObsCalc(const QSqlRecord &record)
+{
+	m_calcref = record.value("calcref").toInt();
+	m_trg1 = record.value("trg1").toString();
+	m_dir1 = record.value("dir1").toDouble();
+	m_ver1 = record.value("ver1").toDouble();
+	m_dis1 = record.value("dis1").toDouble();
+	m_y1 = record.value("y1").toDouble();
+	m_x1 = record.value("x1").toDouble();
+	m_trg2 = record.value("trg2").toString();
+	m_dir2 = record.value("dir2").toDouble();
+	m_ver2 = record.value("ver2").toDouble();
+	m_dis2 = record.value("dis2").toDouble();
+	m_y2 = record.value("y2").toDouble();
+	m_x2 = record.value("x2").toDouble();
+	m_aname = record.value("aname").toString();
+	m_ay = record.value("ay").toDouble();
+	m_ax = record.value("ax").toDouble();
+	m_adopt = record.value("adopt").toString();
+	m_from1 = record.value("from1").toString();
+	m_fy1 = record.value("fy1").toDouble();
+	m_fx1 = record.value("fx1").toDouble();
+	m_from2 = record.value("from2").toString();
+	m_fy2 = record.value("fy2").toDouble();
+	m_fx2 = record.value("fx2").toDouble();
+}
+
+QString DpObsCalc::desc() const
+{
+	auto label1 = QString("\tFrom 1:\t%1\t%2\t%3")
+			.arg(m_from1)
+			.arg(m_fy1, 0, 'f', 2)
+			.arg(m_fx1, 0, 'f', 2);
+	auto label2 = QString("\t\t\t%1\t%2")
+			.arg(m_dis1, 0, 'f', 2)
+			.arg(Utils::Rad2Dms(m_dir1));
+	auto label3 = QString("\tTarget 1:\t\t%1\t%2")
+			.arg(m_y1, 0, 'f', 2)
+			.arg(m_x1, 0, 'f', 2);
+	auto label4 = QString("\tFrom 2:\t%1\t%2\t%3")
+			.arg(m_from2)
+			.arg(m_fy2, 0, 'f', 2)
+			.arg(m_fx2, 0, 'f', 2);
+	auto label5 = QString("\t\t\t%1\t%2")
+			.arg(m_dis2, 0, 'f', 2)
+			.arg(Utils::Rad2Dms(m_dir2));
+	auto label6 = QString("\tTarget 2:\t\t%1\t%2")
+			.arg(m_y2, 0, 'f', 2)
+			.arg(m_x2, 0, 'f', 2);
+	auto label7 = QString("\tAdopt (%1):\t%2\t%3\t%4")
+			.arg(m_adopt)
+			.arg(m_aname)
+			.arg(m_ay, 0, 'f', 2)
+			.arg(m_ax, 0, 'f', 2);
+	return QString("Double Polar\n%1\n%2\n%3\n%4\n%5\n%6\n%7")
+			.arg(label1, label2, label4, label5, label3, label6, label7);
 }
 
 JoinsCalc::JoinsCalc(const QSqlRecord &record)

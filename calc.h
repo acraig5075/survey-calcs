@@ -46,7 +46,17 @@ public:
 class DpObsCalc : public Calc
 {
 public:
-	virtual QString desc() const override { return "Double Polar\n\tMy new line"; }
+	QString m_trg1, m_trg2, m_aname;
+	double m_dir1 = 0, m_ver1 = 0, m_dis1 = 0, m_dir2 = 0, m_ver2 = 0, m_dis2 = 0;
+	double m_y1 = 0, m_x1 = 0, m_y2 = 0, m_x2 = 0, m_ay = 0, m_ax;
+	QString m_adopt;
+	QString m_from1, m_from2;
+	double m_fy1 = 0, m_fx1 = 0, m_fy2 = 0, m_fx2 ;
+
+	DpObsCalc() = default;
+	explicit DpObsCalc(const QSqlRecord &record);
+	virtual QString desc() const override;
+	static const QString DpObsCalc::SqlSelectQuery;
 };
 
 class DpStnsCalc : public Calc
