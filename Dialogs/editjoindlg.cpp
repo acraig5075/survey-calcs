@@ -7,8 +7,7 @@ namespace Compute
 {
 void Join(JoinsCalc &join)
 {
-	join.m_dist = _hypot(join.m_fy - join.m_ty, join.m_fx - join.m_tx);
-	join.m_dirc = 0.0;
+	Utils::Join(join.m_fy, join.m_fx, join.m_ty, join.m_tx, join.m_dist, join.m_dirc);
 }
 }
 
@@ -18,6 +17,11 @@ EditJoinDlg::EditJoinDlg(QWidget *parent, JoinsCalc &join) :
 	m_join(join)
 {
 	ui->setupUi(this);
+
+	QAction *coordAction1 = ui->fromNameEdit->addAction(QIcon(":/yellow-hand-16.png"), QLineEdit::TrailingPosition);
+	QAction *coordAction2 = ui->toNameEdit->addAction(QIcon(":/yellow-hand-16.png"), QLineEdit::TrailingPosition);
+	connect(coordAction1, &QAction::triggered, this, &EditJoinDlg::onCoordAction1);
+	connect(coordAction2, &QAction::triggered, this, &EditJoinDlg::onCoordAction2);
 
 	ui->fromNameEdit->setText(join.m_fromname);
 	ui->fromEastingEdit->setText(QString::number(join.m_fy, 'f', 3));
@@ -60,7 +64,7 @@ void EditJoinDlg::on_calculateButton_clicked()
 	ui->previewEdit->setText(m_join.desc());
 }
 
-void EditJoinDlg::on_fromButton_clicked()
+void EditJoinDlg::onCoordAction1()
 {
 	auto p1 = qMakePair(m_join.m_fromname, ui->fromNameEdit);
 	auto p2 = qMakePair(m_join.m_fy, ui->fromEastingEdit);
@@ -70,7 +74,7 @@ void EditJoinDlg::on_fromButton_clicked()
 		ui->previewEdit->clear();
 }
 
-void EditJoinDlg::on_toButton_clicked()
+void EditJoinDlg::onCoordAction2()
 {
 	auto p1 = qMakePair(m_join.m_toname, ui->toNameEdit);
 	auto p2 = qMakePair(m_join.m_ty, ui->toEastingEdit);

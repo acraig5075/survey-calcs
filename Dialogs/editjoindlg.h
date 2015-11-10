@@ -18,10 +18,8 @@ public:
 
 private slots:
 	void on_calculateButton_clicked();
-
-	void on_fromButton_clicked();
-
-	void on_toButton_clicked();
+	void onCoordAction1();
+	void onCoordAction2();
 
 private:
 	Ui::EditJoinDlg *ui;

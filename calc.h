@@ -52,6 +52,7 @@ public:
 	QString m_adopt;
 	QString m_from1, m_from2;
 	double m_fy1 = 0, m_fx1 = 0, m_fy2 = 0, m_fx2 = 0, m_oc1 = 0, m_oc2 = 0;
+	int m_setup1 = 0, m_setup2 = 0;
 
 	DpObsCalc() = default;
 	explicit DpObsCalc(const QSqlRecord &record);

@@ -6,7 +6,7 @@
 
 const QString JoinsCalc::SqlSelectQuery = "SELECT calcref, fromname, fy, fx, toname, ty, tx, dirc, dist FROM joins ORDER BY calcref";
 const QString PolarsCalc::SqlSelectQuery = "SELECT calcref, fromname, fy, fx, toname, ty, tx, dirc, dist, oc FROM polars ORDER BY calcref";
-const QString DpObsCalc::SqlSelectQuery = "SELECT dpobs.calcref, dpobs.trg1, dpobs.dir1, dpobs.ver1, dpobs.dis1, dpobs.y1, dpobs.x1, dpobs.trg2, dpobs.dir2, dpobs.ver2, dpobs.dis2, dpobs.y2, dpobs.x2, dpobs.aname, dpobs.ay, dpobs.ax, dpobs.adopt, dpstns.from1, dpstns.fy1, dpstns.fx1, dpstns.from2, dpstns.fy2, dpstns.fx2, dpstns.oc1, dpstns.oc2 FROM dpobs JOIN dpstns ON dpobs.calcref = dpstns.calcref ORDER BY dpobs.calcref";
+const QString DpObsCalc::SqlSelectQuery = "SELECT dpobs.calcref, dpobs.trg1, dpobs.dir1, dpobs.ver1, dpobs.dis1, dpobs.y1, dpobs.x1, dpobs.trg2, dpobs.dir2, dpobs.ver2, dpobs.dis2, dpobs.y2, dpobs.x2, dpobs.aname, dpobs.ay, dpobs.ax, dpobs.adopt, dpstns.from1, dpstns.setup1, dpstns.fy1, dpstns.fx1, dpstns.from2, dpstns.setup2, dpstns.fy2, dpstns.fx2, dpstns.oc1, dpstns.oc2 FROM dpobs JOIN dpstns ON dpobs.calcref = dpstns.calcref ORDER BY dpobs.calcref";
 
 Calc::Calc()
 {
@@ -51,9 +51,11 @@ DpObsCalc::DpObsCalc(const QSqlRecord &record)
 	m_ax = record.value("ax").toDouble();
 	m_adopt = record.value("adopt").toString();
 	m_from1 = record.value("from1").toString();
+	m_setup1 = record.value("setup1").toInt();
 	m_fy1 = record.value("fy1").toDouble();
 	m_fx1 = record.value("fx1").toDouble();
 	m_from2 = record.value("from2").toString();
+	m_setup2 = record.value("setup1").toInt();
 	m_fy2 = record.value("fy2").toDouble();
 	m_fx2 = record.value("fx2").toDouble();
 	m_oc1 = record.value("oc1").toDouble();
@@ -69,7 +71,7 @@ QString DpObsCalc::desc() const
 	auto label2 = QString("\t\t\t%1\t%2")
 			.arg(m_dis1, 0, 'f', 2)
 			.arg(Utils::Rad2Dms(m_dir1));
-	auto label3 = QString("\tTarget 1:\t\t%1\t%2")
+	auto label3 = QString("\t(1)\t\t%1\t%2")
 			.arg(m_y1, 0, 'f', 2)
 			.arg(m_x1, 0, 'f', 2);
 	auto label4 = QString("\tFrom 2:\t%1\t%2\t%3")
@@ -79,7 +81,7 @@ QString DpObsCalc::desc() const
 	auto label5 = QString("\t\t\t%1\t%2")
 			.arg(m_dis2, 0, 'f', 2)
 			.arg(Utils::Rad2Dms(m_dir2));
-	auto label6 = QString("\tTarget 2:\t\t%1\t%2")
+	auto label6 = QString("\t(2)\t\t%1\t%2")
 			.arg(m_y2, 0, 'f', 2)
 			.arg(m_x2, 0, 'f', 2);
 	auto label7 = QString("\tAdopt (%1):\t%2\t%3\t%4")

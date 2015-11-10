@@ -65,3 +65,8 @@ FORMS    += mainwindow.ui \
     Dialogs/editjoindlg.ui \
     Dialogs/selectcoorddlg.ui \
     Dialogs/doublepolardlg.ui
+
+DISTFILES +=
+
+RESOURCES += \
+    Resources/icons.qrc

@@ -84,6 +84,23 @@ QString Rad2Dms(double radians)
 			.arg(s, 2, 10, QChar('0'));
 }
 
+double Dms2Rad(QString dms)
+{
+	int d = 0, m = 0, s = 0;
+	auto tokens = dms.split(QChar(':'));
+	size_t count = tokens.size();
+
+	if (count > 0)
+		d = tokens.at(0).toInt();
+	if  (count > 1)
+		m = tokens.at(1).toInt();
+	if (count > 2)
+		s = tokens.at(2).toInt();
+	int sign = (d < 0 ? -1 : 1);
+
+	return sign * qDegreesToRadians(abs(d) + m / 60.0 + s / 3600.0);
+}
+
 bool LoadCoord(QWidget *parent, QPair<QString, QLineEdit *> &name, QPair<double, QLineEdit *> &y, QPair<double, QLineEdit *> &x)
 {
 	SelectCoordDlg dlg(parent);
@@ -97,13 +114,65 @@ bool LoadCoord(QWidget *parent, QPair<QString, QLineEdit *> &name, QPair<double,
 			y.first = coord.m_easting;
 			x.first = coord.m_northing;
 			// update controls
-			name.second->setText(name.first);
-			y.second->setText(QString::number(y.first, 'f', 3));
-			x.second->setText(QString::number(x.first, 'f', 3));
+			if (name.second)
+				name.second->setText(name.first);
+			if (y.second)
+				y.second->setText(QString::number(y.first, 'f', 3));
+			if (x.second)
+				x.second->setText(QString::number(x.first, 'f', 3));
 			return true;
 		}
 	}
 	return false;
 }
 
+double Angle(double x, double y)
+{
+	double angle;
+
+	if (x == 0.0)
+		{
+		if (y > 0.0)
+			angle = M_PI_2;
+		else
+			{
+			if (y < 0.0)
+				angle = -M_PI_2;
+			else
+				angle = 0.0;
+			}
+		}
+	else
+		{
+		if (y == 0.0)
+			{
+			if (x > 0.0)
+				angle = 0.0;
+			else
+				angle = M_PI;
+			}
+		else
+			angle = atan2(y, x);
+		}
+
+	return angle;
+}
+
+void Join(double e1, double n1, double e2, double n2, double &dist, double &dirn)
+{
+	double de = e2 - e1;
+	double dn = n2 - n1;
+
+	dist = _hypot(de, dn);
+	dirn = M_PI + Angle(dn, de);
+
+	if (dirn >= 2.0 * M_PI)
+		dirn = dirn - M_PI - M_PI;
+}
+
+void Polar(double e1, double n1, double dist, double dirn, double &e2, double &n2)
+{
+	e2 = e1 + dist * sin(dirn);
+	n2 = n1 + dist * cos(dirn);
+}
 }

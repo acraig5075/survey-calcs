@@ -18,6 +18,10 @@ public:
 
 private slots:
 	void on_calculateButton_clicked();
+	void onStation1Action();
+	void onStation2Action();
+	void onTarget1Action();
+	void onTarget2Action();
 
 private:
 	Ui::DoublePolarDlg *ui;
