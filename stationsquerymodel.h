@@ -7,6 +7,7 @@ class StationsQueryModel : public QSqlQueryModel
 {
 public:
 	StationsQueryModel(QObject *parent = 0);
+	static const QString ModelQueryString;
 };
 
 #endif // STATIONSQUERYMODEL_H

@@ -1,9 +1,6 @@
 #include "coord.h"
 #include <QtCore/QVariant>
 
-Coord::Coord()
-{
-}
 
 Coord::Coord(const QSqlRecord &record)
 {

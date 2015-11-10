@@ -38,7 +38,7 @@ void StationsTab::onLoad()
 	if (db.isOpen())
 	{
 		QSqlQuery query(db);
-		query.prepare("SELECT station AS Name, setupno AS Setup, insthgt AS `Instr. hgt`, date AS Date FROM occupied ORDER BY station, setupno");
+		query.prepare(StationsQueryModel::ModelQueryString);
 		query.exec();
 
 		m_pModel->setQuery(query);

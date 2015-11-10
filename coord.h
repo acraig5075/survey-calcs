@@ -6,7 +6,7 @@
 class Coord
 {
 public:
-	Coord();
+	Coord() = default;
 	explicit Coord(const QSqlRecord &record);
 
 public:

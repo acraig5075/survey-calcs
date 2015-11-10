@@ -84,23 +84,21 @@ void DoublePolarDlg::on_calculateButton_clicked()
 
 void DoublePolarDlg::onStation1Action()
 {
-	QLineEdit *unused = nullptr;
 	auto p1 = qMakePair(m_dpObs.m_from1, ui->from1Edit);
-	auto p2 = qMakePair(m_dpObs.m_fy1, unused);
-	auto p3 = qMakePair(m_dpObs.m_fx1, unused);
+	auto p2 = qMakePair(m_dpObs.m_setup1, ui->setup1Edit);
+	auto p3 = qMakePair(m_dpObs.m_oc1, ui->oc1Edit);
 
-	if (Utils::LoadCoord(this, p1, p2, p3))
+	if (Utils::LoadStation(this, p1, p2, p3))
 		ui->previewEdit->clear();
 }
 
 void DoublePolarDlg::onStation2Action()
 {
-	QLineEdit *unused = nullptr;
 	auto p1 = qMakePair(m_dpObs.m_from2, ui->from2Edit);
-	auto p2 = qMakePair(m_dpObs.m_fy2, unused);
-	auto p3 = qMakePair(m_dpObs.m_fx2, unused);
+	auto p2 = qMakePair(m_dpObs.m_setup2, ui->setup2Edit);
+	auto p3 = qMakePair(m_dpObs.m_oc2, ui->oc2Edit);
 
-	if (Utils::LoadCoord(this, p1, p2, p3))
+	if (Utils::LoadStation(this, p1, p2, p3))
 		ui->previewEdit->clear();
 }
 

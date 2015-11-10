@@ -1,4 +1,8 @@
 #include "utils.h"
+#include "coord.h"
+#include "coordquerymodel.h"
+#include "occupied.h"
+#include "stationsquerymodel.h"
 #include "Dialogs/selectcoorddlg.h"
 #include <QTemporaryFile>
 #include <QDebug>
@@ -103,7 +107,9 @@ double Dms2Rad(QString dms)
 
 bool LoadCoord(QWidget *parent, QPair<QString, QLineEdit *> &name, QPair<double, QLineEdit *> &y, QPair<double, QLineEdit *> &x)
 {
-	SelectCoordDlg dlg(parent);
+	QVector<int> hideColumns = {1, 2, 3, 6}; // y, x, z, plot
+
+	SelectionDlg<Coord, CoordQueryModel> dlg(parent, "Coordinate Selection", false, hideColumns);
 	if (dlg.exec() == QDialog::Accepted)
 	{
 		Coord coord = dlg.GetSingleSelection();
@@ -120,6 +126,33 @@ bool LoadCoord(QWidget *parent, QPair<QString, QLineEdit *> &name, QPair<double,
 				y.second->setText(QString::number(y.first, 'f', 3));
 			if (x.second)
 				x.second->setText(QString::number(x.first, 'f', 3));
+			return true;
+		}
+	}
+	return false;
+}
+
+bool LoadStation(QWidget *parent, QPair<QString, QLineEdit *> &name, QPair<int, QLineEdit *> &setup, QPair<double, QLineEdit *> &oc)
+{
+	QVector<int> hideColumns = {};
+
+	SelectionDlg<Occupied, StationsQueryModel> dlg(parent, "Station Selection", false, hideColumns);
+	if (dlg.exec() == QDialog::Accepted)
+	{
+		Occupied station = dlg.GetSingleSelection();
+		if (!station.m_name.isEmpty())
+		{
+			// update variables
+			name.first = station.m_name;
+			setup.first = station.m_setup;
+			oc.first = station.m_oc;
+			// update controls
+			if (name.second)
+				name.second->setText(name.first);
+			if (setup.second)
+				setup.second->setText(QString::number(setup.first));
+			if (oc.second)
+				oc.second->setText(Rad2Dms(setup.first));
 			return true;
 		}
 	}

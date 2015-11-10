@@ -31,8 +31,9 @@ SOURCES += main.cpp\
     coord.cpp \
     calcscontroller.cpp \
     Dialogs/editjoindlg.cpp \
-    Dialogs/selectcoorddlg.cpp \
-    Dialogs/doublepolardlg.cpp
+    Dialogs/doublepolardlg.cpp \
+    occupied.cpp \
+    Dialogs/selectcoorddlg.cpp
 
 HEADERS  += mainwindow.h \
     calc.h \
@@ -53,7 +54,8 @@ HEADERS  += mainwindow.h \
     calcscontroller.h \
     Dialogs/editjoindlg.h \
     Dialogs/selectcoorddlg.h \
-    Dialogs/doublepolardlg.h
+    Dialogs/doublepolardlg.h \
+    occupied.h
 
 FORMS    += mainwindow.ui \
     stationstab.ui \
