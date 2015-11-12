@@ -3,5 +3,9 @@
         <file>blue-hand-16.png</file>
         <file>green-hand-16.png</file>
         <file>yellow-hand-16.png</file>
+        <file>axes-32.png</file>
+        <file>calculator-32.png</file>
+        <file>direction-east-32.png</file>
+        <file>pin-map-32.png</file>
     </qresource>
 </RCC>

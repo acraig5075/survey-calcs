@@ -38,6 +38,12 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->w_calcsLayout->addWidget(m_pCalcsTab);
 	ui->w_planLayout->addWidget(m_pPlanTab);
 
+	ui->w_tabs->setIconSize(QSize(20, 20));
+	ui->w_tabs->setTabIcon(0, QIcon(":/axes-32.png"));
+	ui->w_tabs->setTabIcon(1, QIcon(":/calculator-32.png"));
+	ui->w_tabs->setTabIcon(2, QIcon(":/direction-east-32.png"));
+	ui->w_tabs->setTabIcon(3, QIcon(":/pin-map-32.png"));
+
 	connect(this, SIGNAL(databaseChanged()), m_pCoordsTab, SLOT(onLoad()));
 	connect(this, SIGNAL(databaseChanged()), m_pStationsTab, SLOT(onLoad()));
 	connect(this, SIGNAL(databaseChanged()), m_pCalcsTab, SLOT(onLoad()));
