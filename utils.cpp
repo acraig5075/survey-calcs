@@ -1,8 +1,10 @@
 #include "utils.h"
 #include "coord.h"
-#include "coordquerymodel.h"
 #include "occupied.h"
+#include "Types/observation.h"
+#include "coordquerymodel.h"
 #include "stationsquerymodel.h"
+#include "Models/observationsquerymodel.h"
 #include "Dialogs/selectcoorddlg.h"
 #include <QTemporaryFile>
 #include <QDebug>
@@ -108,8 +110,9 @@ double Dms2Rad(QString dms)
 bool LoadCoord(QWidget *parent, QPair<QString, QLineEdit *> &name, QPair<double, QLineEdit *> &y, QPair<double, QLineEdit *> &x)
 {
 	QVector<int> hideColumns = {1, 2, 3, 6}; // y, x, z, plot
+	QString query = CoordQueryModel::ModelQueryString;
 
-	SelectionDlg<Coord, CoordQueryModel> dlg(parent, "Coordinate Selection", false, hideColumns);
+	SelectionDlg<Coord, CoordQueryModel> dlg(parent, "Coordinate Selection", false, query, hideColumns);
 	if (dlg.exec() == QDialog::Accepted)
 	{
 		Coord coord = dlg.GetSingleSelection();
@@ -135,8 +138,9 @@ bool LoadCoord(QWidget *parent, QPair<QString, QLineEdit *> &name, QPair<double,
 bool LoadStation(QWidget *parent, QPair<QString, QLineEdit *> &name, QPair<int, QLineEdit *> &setup, QPair<double, QLineEdit *> &oc)
 {
 	QVector<int> hideColumns = {};
+	QString query = StationsQueryModel::ModelQueryString;
 
-	SelectionDlg<Occupied, StationsQueryModel> dlg(parent, "Station Selection", false, hideColumns);
+	SelectionDlg<Occupied, StationsQueryModel> dlg(parent, "Station Selection", false, query, hideColumns);
 	if (dlg.exec() == QDialog::Accepted)
 	{
 		Occupied station = dlg.GetSingleSelection();
@@ -155,6 +159,21 @@ bool LoadStation(QWidget *parent, QPair<QString, QLineEdit *> &name, QPair<int, 
 				oc.second->setText(Rad2Dms(setup.first));
 			return true;
 		}
+	}
+	return false;
+}
+
+bool LoadObs(QWidget *parent, const QString &station, int setup, Observation &obs)
+{
+	QVector<int> hideColumns = {};
+	QString query = ObservationsQueryModel::ModelQueryString.arg(station).arg(setup);
+
+	SelectionDlg<Observation, ObservationsQueryModel> dlg(parent, "Observation Selection", false, query, hideColumns);
+	if (dlg.exec() == QDialog::Accepted)
+	{
+		obs = dlg.GetSingleSelection();
+		if (!obs.m_target.isEmpty())
+			return true;
 	}
 	return false;
 }

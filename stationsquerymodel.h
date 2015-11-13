@@ -6,7 +6,7 @@
 class StationsQueryModel : public QSqlQueryModel
 {
 public:
-	StationsQueryModel(QObject *parent = 0);
+	explicit StationsQueryModel(QObject *parent = 0);
 
 	QVariant data(const QModelIndex& index, int role) const override;
 

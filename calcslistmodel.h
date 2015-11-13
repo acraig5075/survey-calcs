@@ -6,7 +6,7 @@
 class CalcsListModel : public QAbstractListModel
 {
 public:
-	CalcsListModel(QObject *parent = 0);
+	explicit CalcsListModel(QObject *parent = 0);
 
 	int rowCount(const QModelIndex & parent = QModelIndex()) const override;
 

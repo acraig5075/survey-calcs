@@ -1,6 +1,7 @@
 #include "stationstab.h"
 #include "ui_stationstab.h"
 #include "stationsquerymodel.h"
+#include "occupied.h"
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
@@ -13,6 +14,8 @@ StationsTab::StationsTab(QWidget *parent) :
 	ui->setupUi(this);
 	m_pModel = new StationsQueryModel(this);
 	ui->w_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+	connect(ui->w_tableView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(onDoubleClick(const QModelIndex&)));
 }
 
 StationsTab::~StationsTab()
@@ -53,4 +56,12 @@ void StationsTab::onLoad()
 void StationsTab::on_w_loadButton_clicked()
 {
 	onLoad();
+}
+
+void StationsTab::onDoubleClick(const QModelIndex& index)
+{
+	QSqlRecord record = m_pModel->record(index.row());
+
+	Occupied station(record);
+
 }

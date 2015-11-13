@@ -76,11 +76,11 @@ template <typename T, typename U>
 class SelectionDlg : public SelectCoordDlg
 {
 public:
-	SelectionDlg(QWidget *parent, const QString title, bool multiSelection, const QVector<int> &hiddenColumns)
+	SelectionDlg(QWidget *parent, const QString title, bool multiSelection, const QString &query, const QVector<int> &hiddenColumns)
 		: SelectCoordDlg(parent, title, multiSelection)
 	{
 		m_pModel = new U(this);
-		m_pModel->setQuery(U::ModelQueryString);
+		m_pModel->setQuery(query);
 
 		ui->tableView->setModel(m_pModel);
 		for (auto col: hiddenColumns)

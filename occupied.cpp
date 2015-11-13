@@ -1,6 +1,7 @@
 #include "occupied.h"
 #include <QVariant>
 
+
 Occupied::Occupied(const QSqlRecord &record)
 {
 	m_name = record.value(0).toString();

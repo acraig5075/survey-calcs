@@ -25,6 +25,7 @@ private slots:
 
 public slots:
 	void on_w_loadButton_clicked();
+	void onDoubleClick(const QModelIndex &index);
 
 private:
 	Ui::StationsTab *ui;

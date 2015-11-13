@@ -4,6 +4,7 @@
 #include <QPair>
 class QWidget;
 class QLineEdit;
+class Observation;
 
 namespace Utils
 {
@@ -14,6 +15,7 @@ namespace Utils
 	double Dms2Rad(QString dms);
 	bool LoadCoord(QWidget *parent, QPair<QString, QLineEdit *> &p1, QPair<double, QLineEdit *> &p2, QPair<double, QLineEdit *> &p3);
 	bool LoadStation(QWidget *parent, QPair<QString, QLineEdit *> &name, QPair<int, QLineEdit *> &setup, QPair<double, QLineEdit *> &oc);
+	bool LoadObs(QWidget *parent, const QString &station, int setup, Observation &obs);
 	void Join(double e1, double n1, double e2, double n2, double &dist, double &dirn);
 	void Polar(double e1, double n1, double dist, double dirn, double &e2, double &n2);
 }

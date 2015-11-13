@@ -4,6 +4,10 @@
 #include <QDialog>
 #include "calc.h"
 
+class Occupied;
+class Observation;
+class QLineEdit;
+
 namespace Ui {
 class DoublePolarDlg;
 }
@@ -22,10 +26,15 @@ private slots:
 	void onStation2Action();
 	void onTarget1Action();
 	void onTarget2Action();
+	void onStationAction(Occupied &station, QLineEdit *nameEdit, QLineEdit *setupEdit, QLineEdit *corrEdit);
+	void onTargetAction(Observation &obs, const QLineEdit *nameEdit, const QLineEdit *setupEdit, QLineEdit *targetEdit, QLineEdit *dircEdit, QLineEdit *vertEdit, QLineEdit *distEdit);
 
 private:
 	Ui::DoublePolarDlg *ui;
 	DpObsCalc &m_dpObs;
+
+	void wireStation(const Occupied &station, QLineEdit *nameEdit, QLineEdit *setupEdit, QLineEdit *corrEdit);
+	void wireObservation(const Observation &obs, QLineEdit *targetEdit, QLineEdit *dircEdit, QLineEdit *vertEdit, QLineEdit *distEdit);
 };
 
 #endif // DOUBLEPOLARDLG_H

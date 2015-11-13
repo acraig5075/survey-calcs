@@ -33,7 +33,9 @@ SOURCES += main.cpp\
     Dialogs/editjoindlg.cpp \
     Dialogs/doublepolardlg.cpp \
     occupied.cpp \
-    Dialogs/selectcoorddlg.cpp
+    Dialogs/selectcoorddlg.cpp \
+    Models/observationsquerymodel.cpp \
+    Types/observation.cpp
 
 HEADERS  += mainwindow.h \
     calc.h \
@@ -55,7 +57,9 @@ HEADERS  += mainwindow.h \
     Dialogs/editjoindlg.h \
     Dialogs/selectcoorddlg.h \
     Dialogs/doublepolardlg.h \
-    occupied.h
+    occupied.h \
+    Models/observationsquerymodel.h \
+    Types/observation.h
 
 FORMS    += mainwindow.ui \
     stationstab.ui \
