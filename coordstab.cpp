@@ -1,8 +1,8 @@
 #include "coordstab.h"
 #include "ui_coordstab.h"
-#include "coordquerymodel.h"
 #include "coordscontroller.h"
-#include "coord.h"
+#include "Models/coordquerymodel.h"
+#include "Types/coord.h"
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>

@@ -1,9 +1,9 @@
 #include "utils.h"
-#include "coord.h"
-#include "occupied.h"
+#include "Types/coord.h"
+#include "Types/occupied.h"
 #include "Types/observation.h"
-#include "coordquerymodel.h"
-#include "stationsquerymodel.h"
+#include "Models/coordquerymodel.h"
+#include "Models/stationsquerymodel.h"
 #include "Models/observationsquerymodel.h"
 #include "Dialogs/selectcoorddlg.h"
 #include <QTemporaryFile>

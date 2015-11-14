@@ -1,8 +1,8 @@
 #include "calcstab.h"
 #include "ui_calcstab.h"
-#include "calc.h"
+#include "Types/calc.h"
+#include "Models/calcslistmodel.h"
 #include "calcfactory.h"
-#include "calcslistmodel.h"
 #include "calcscontroller.h"
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>

@@ -1,7 +1,7 @@
 #include "stationstab.h"
 #include "ui_stationstab.h"
-#include "stationsquerymodel.h"
-#include "occupied.h"
+#include "Models/stationsquerymodel.h"
+#include "Types/occupied.h"
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>

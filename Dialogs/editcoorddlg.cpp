@@ -1,6 +1,6 @@
 #include "editcoorddlg.h"
 #include "ui_editcoorddlg.h"
-#include "coord.h"
+#include "Types/coord.h"
 #include <QSqlQueryModel>
 #include <QSqlQuery>
 #include <QMessageBox>

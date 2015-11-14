@@ -2,7 +2,7 @@
 #define EDITJOINDLG_H
 
 #include <QDialog>
-#include "calc.h"
+#include "Types/calc.h"
 
 namespace Ui {
 class EditJoinDlg;

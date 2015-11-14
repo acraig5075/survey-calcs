@@ -14,13 +14,9 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    calc.cpp \
     calcfactory.cpp \
     stationstab.cpp \
-    stationsquerymodel.cpp \
     plantab.cpp \
-    calcslistmodel.cpp \
-    coordquerymodel.cpp \
     glwidget.cpp \
     coordstab.cpp \
     calcstab.cpp \
@@ -28,23 +24,23 @@ SOURCES += main.cpp\
     Dialogs/coordclassdlg.cpp \
     Dialogs/editcoorddlg.cpp \
     coordscontroller.cpp \
-    coord.cpp \
     calcscontroller.cpp \
     Dialogs/editjoindlg.cpp \
     Dialogs/doublepolardlg.cpp \
-    occupied.cpp \
     Dialogs/selectcoorddlg.cpp \
     Models/observationsquerymodel.cpp \
-    Types/observation.cpp
+    Types/observation.cpp \
+    Models/calcslistmodel.cpp \
+    Models/coordquerymodel.cpp \
+    Models/stationsquerymodel.cpp \
+    Types/calc.cpp \
+    Types/coord.cpp \
+    Types/occupied.cpp
 
 HEADERS  += mainwindow.h \
-    calc.h \
     calcfactory.h \
     stationstab.h \
-    stationsquerymodel.h \
     plantab.h \
-    coordquerymodel.h \
-    calcslistmodel.h \
     glwidget.h \
     coordstab.h \
     calcstab.h \
@@ -52,14 +48,18 @@ HEADERS  += mainwindow.h \
     Dialogs/coordclassdlg.h \
     Dialogs/editcoorddlg.h \
     coordscontroller.h \
-    coord.h \
     calcscontroller.h \
     Dialogs/editjoindlg.h \
     Dialogs/selectcoorddlg.h \
     Dialogs/doublepolardlg.h \
-    occupied.h \
     Models/observationsquerymodel.h \
-    Types/observation.h
+    Types/observation.h \
+    Models/calcslistmodel.h \
+    Models/coordquerymodel.h \
+    Models/stationsquerymodel.h \
+    Types/calc.h \
+    Types/coord.h \
+    Types/occupied.h
 
 FORMS    += mainwindow.ui \
     stationstab.ui \

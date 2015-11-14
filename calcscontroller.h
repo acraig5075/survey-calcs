@@ -1,7 +1,7 @@
 #ifndef CALCSCONTROLLER_H
 #define CALCSCONTROLLER_H
 
-#include "calc.h"
+#include "Types/calc.h"
 #include <QObject>
 #include <memory>
 

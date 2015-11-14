@@ -1,5 +1,5 @@
 #include "coordscontroller.h"
-#include "coord.h"
+#include "Types/coord.h"
 #include "utils.h"
 #include "Dialogs/editcoorddlg.h"
 
