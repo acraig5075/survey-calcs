@@ -1,8 +1,6 @@
 #ifndef CALC_H
 #define CALC_H
 
-#include "Types/observation.h"
-#include "occupied.h"
 #include <QString>
 #include <QSqlRecord>
 #include <QWidget>
@@ -20,7 +18,7 @@ public:
 
 	virtual ~Calc() = default;
 	virtual QString desc() const = 0;
-	virtual bool Edit(QWidget *) { return false; };
+	virtual bool Edit(QWidget *) { return false; }
 	virtual QString GetUpdateQueryString() const { return ""; }
 
 	static bool SortFunc(CalcPtr const& a, CalcPtr const& b);
@@ -43,24 +41,6 @@ class CommentCalc : public Calc
 {
 public:
 	virtual QString desc() const override { return "Comment\n\tMy new line"; }
-};
-
-class DpObsCalc : public Calc
-{
-public:
-	Occupied m_stn[2];
-	Observation m_obs[2];
-
-	QString m_aname;
-	QString m_adopt;
-	double m_y1 = 0, m_x1 = 0, m_y2 = 0, m_x2 = 0, m_ay = 0, m_ax;
-	double m_fy1 = 0, m_fx1 = 0, m_fy2 = 0, m_fx2 = 0;
-
-	DpObsCalc() = default;
-	explicit DpObsCalc(const QSqlRecord &record);
-	static const QString DpObsCalc::SqlSelectQuery;
-	virtual QString desc() const override;
-	virtual bool Edit(QWidget *parent) override;
 };
 
 class DpStnsCalc : public Calc
@@ -87,23 +67,6 @@ public:
 	virtual QString desc() const override { return "Intersection\n\tMy new line"; }
 };
 
-class JoinsCalc : public Calc
-{
-public:
-	QString m_fromname;
-	QString m_toname;
-	double m_fy = 0, m_fx = 0;
-	double m_ty = 0, m_tx = 0;
-	double m_dirc = 0, m_dist = 0;
-
-	JoinsCalc() = default;
-	explicit JoinsCalc(const QSqlRecord &record);
-	static const QString SqlSelectQuery;
-	virtual QString desc() const override;
-	virtual bool Edit(QWidget *parent) override;
-	virtual QString GetUpdateQueryString() const override;
-};
-
 class OffsetLnCalc : public Calc
 {
 public:
@@ -114,21 +77,6 @@ class OffsetsCalc : public Calc
 {
 public:
 	virtual QString desc() const override { return "Offsets\n\tMy new line"; }
-};
-
-class PolarsCalc : public Calc
-{
-	QString m_fromname;
-	QString m_toname;
-	double m_fy = 0, m_fx = 0;
-	double m_ty = 0, m_tx = 0;
-	double m_dirc = 0, m_dist = 0, m_oc = 0;
-
-public:
-	PolarsCalc() = default;
-	explicit PolarsCalc(const QSqlRecord &record);
-	static const QString SqlSelectQuery;
-	virtual QString desc() const override;
 };
 
 class ResecsCalc : public Calc

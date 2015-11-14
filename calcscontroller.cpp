@@ -1,5 +1,6 @@
 #include "calcscontroller.h"
 #include "calcfactory.h"
+#include "calctypes.h"
 #include "utils.h"
 #include <QSqlQuery>
 #include <QDebug>

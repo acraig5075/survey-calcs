@@ -1,6 +1,5 @@
 #include "calcfactory.h"
-#include "Types/calc.h"
-
+#include "calctypes.h"
 
 std::unique_ptr<Calc> CalcFactory::Instance(int typeId)
 {

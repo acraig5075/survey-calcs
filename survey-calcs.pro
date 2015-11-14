@@ -35,7 +35,10 @@ SOURCES += main.cpp\
     Models/stationsquerymodel.cpp \
     Types/calc.cpp \
     Types/coord.cpp \
-    Types/occupied.cpp
+    Types/occupied.cpp \
+    Types/joins.cpp \
+    Types/polars.cpp \
+    Types/dpolars.cpp
 
 HEADERS  += mainwindow.h \
     calcfactory.h \
@@ -59,7 +62,11 @@ HEADERS  += mainwindow.h \
     Models/stationsquerymodel.h \
     Types/calc.h \
     Types/coord.h \
-    Types/occupied.h
+    Types/occupied.h \
+    Types/joins.h \
+    Types/polars.h \
+    Types/dpolars.h \
+    calctypes.h
 
 FORMS    += mainwindow.ui \
     stationstab.ui \

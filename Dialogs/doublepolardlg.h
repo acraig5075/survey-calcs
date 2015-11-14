@@ -2,7 +2,7 @@
 #define DOUBLEPOLARDLG_H
 
 #include <QDialog>
-#include "Types/calc.h"
+#include "Types/dpolars.h"
 
 class Occupied;
 class Observation;
