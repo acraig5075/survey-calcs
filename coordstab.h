@@ -2,6 +2,7 @@
 #define COORDSTAB_H
 
 #include <QWidget>
+#include <functional>
 
 class CoordQueryModel;
 class CoordsController;
@@ -28,15 +29,20 @@ private slots:
 	void on_w_loadButton_clicked();
 	void onCustomContextMenuRequested(QPoint pos);
 	void onTogglePlot();
+	void onDelete();
 	void onDoubleClick(const QModelIndex &index);
 
 signals:
 	void coordPlotChanged();
+	void coordCountChanged();
 
 private:
 	Ui::CoordsTab *ui;
 	CoordQueryModel *m_pModel;
 	CoordsController &m_coordsController;
+
+	void OperateOnSelection(std::function<QString(const QStringList &)> operationQuery, const QString &confirmMsg = "");
+
 };
 
 #endif // COORDSTAB_H

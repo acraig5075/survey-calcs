@@ -32,6 +32,7 @@ protected:
 
 public slots:
 	void onPlanViewChanged();
+	void onStatusTextChanged();
 
 private slots:
 	void on_actionFileOpen_triggered();
@@ -46,6 +47,7 @@ signals:
 	void databaseChanged();
 	void databaseClosed();
 	void updatePlanView();
+	void coordCountChanged();
 
 private:
 	Ui::MainWindow *ui;

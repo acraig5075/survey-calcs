@@ -155,6 +155,11 @@ void MainWindow::onPlanViewChanged()
 	emit updatePlanView();
 }
 
+void MainWindow::onStatusTextChanged()
+{
+	on_w_tabs_currentChanged(ui->w_tabs->currentIndex());
+}
+
 void MainWindow::on_w_tabs_currentChanged(int index)
 {
 	switch (index)
