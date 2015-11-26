@@ -38,7 +38,9 @@ SOURCES += main.cpp\
     Types/occupied.cpp \
     Types/joins.cpp \
     Types/polars.cpp \
-    Types/dpolars.cpp
+    Types/dpolars.cpp \
+    stationscontroller.cpp \
+    Dialogs/tabledlg.cpp
 
 HEADERS  += mainwindow.h \
     calcfactory.h \
@@ -66,7 +68,9 @@ HEADERS  += mainwindow.h \
     Types/joins.h \
     Types/polars.h \
     Types/dpolars.h \
-    calctypes.h
+    calctypes.h \
+    stationscontroller.h \
+    Dialogs/tabledlg.h
 
 FORMS    += mainwindow.ui \
     stationstab.ui \
@@ -77,7 +81,8 @@ FORMS    += mainwindow.ui \
     Dialogs/editcoorddlg.ui \
     Dialogs/editjoindlg.ui \
     Dialogs/selectcoorddlg.ui \
-    Dialogs/doublepolardlg.ui
+    Dialogs/doublepolardlg.ui \
+    Dialogs/tabledlg.ui
 
 DISTFILES +=
 

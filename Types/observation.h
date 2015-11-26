@@ -9,6 +9,8 @@ public:
 	Observation() = default;
 	explicit Observation(const QSqlRecord &record);
 
+	QString m_station;
+	int m_setup = 0;
 	QString m_target;
 	QString m_desc;
 	double m_dirc = 0;

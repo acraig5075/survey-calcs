@@ -4,6 +4,7 @@
 #include <QWidget>
 
 class StationsQueryModel;
+class StationsController;
 
 namespace Ui {
 class StationsTab;
@@ -14,7 +15,7 @@ class StationsTab : public QWidget
 	Q_OBJECT
 
 public:
-	explicit StationsTab(QWidget *parent = 0);
+	explicit StationsTab(StationsController &controller, QWidget *parent = 0);
 	~StationsTab();
 
 	QString GetStatus() const;
@@ -30,6 +31,7 @@ public slots:
 private:
 	Ui::StationsTab *ui;
 	StationsQueryModel *m_pModel;
+	StationsController &m_stationsController;
 };
 
 #endif // STATIONSTAB_H

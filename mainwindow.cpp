@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "coordscontroller.h"
 #include "calcscontroller.h"
+#include "stationscontroller.h"
 #include "coordstab.h"
 #include "stationstab.h"
 #include "calcstab.h"
@@ -24,9 +25,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	m_pCoordsController = new CoordsController(this);
 	m_pCalcsController = new CalcsController(this);
+	m_pStationsController = new StationsController(this);
 
 	m_pCoordsTab = new CoordsTab(*m_pCoordsController, this);
-	m_pStationsTab = new StationsTab(this);
+	m_pStationsTab = new StationsTab(*m_pStationsController, this);
 	m_pCalcsTab = new CalcsTab(*m_pCalcsController, this);
 	m_pPlanTab = new PlanTab(this);
 	m_statusLabel = new QLabel("Ready", this);

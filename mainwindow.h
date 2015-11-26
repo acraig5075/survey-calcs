@@ -8,6 +8,7 @@
 
 class CoordsController;
 class CalcsController;
+class StationsController;
 class CoordsTab;
 class StationsTab;
 class CalcsTab;
@@ -55,6 +56,7 @@ private:
 	QPair<QString, QString> m_filenames;
 	CoordsController *m_pCoordsController;
 	CalcsController *m_pCalcsController;
+	StationsController *m_pStationsController;
 	CoordsTab *m_pCoordsTab;
 	StationsTab *m_pStationsTab;
 	CalcsTab *m_pCalcsTab;

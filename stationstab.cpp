@@ -2,14 +2,16 @@
 #include "ui_stationstab.h"
 #include "Models/stationsquerymodel.h"
 #include "Types/occupied.h"
+#include "stationscontroller.h"
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
 #include <QDebug>
 
-StationsTab::StationsTab(QWidget *parent) :
+StationsTab::StationsTab(StationsController &controller, QWidget *parent) :
 	QWidget(parent),
-	ui(new Ui::StationsTab)
+	ui(new Ui::StationsTab),
+	m_stationsController(controller)
 {
 	ui->setupUi(this);
 	m_pModel = new StationsQueryModel(this);
@@ -64,4 +66,5 @@ void StationsTab::onDoubleClick(const QModelIndex& index)
 
 	Occupied station(record);
 
+	m_stationsController.ShowObservations(this, station);
 }
