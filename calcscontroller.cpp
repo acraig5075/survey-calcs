@@ -57,7 +57,7 @@ bool CalcsController::EditCalcAt(int i, QWidget *parent)
 		if (calc->Edit(parent))
 		{
 			QString update = calc->GetUpdateQueryString();
-			return Utils::UpdateDatabase(update);
+			return Utils::ExecQuery(update);
 		}
 	}
 

@@ -15,11 +15,6 @@ public:
 	bool EditStation() {}
 	bool DeleteStation() {}
 
-	// I think an ObservationsController is needed.
-	bool Add(const Observation &obs);
-	bool Edit() {}
-	bool Delete() {}
-
 	void ShowObservations(QWidget *parent, const Occupied &station);
 };
 

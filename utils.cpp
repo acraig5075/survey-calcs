@@ -56,22 +56,43 @@ bool CopyAndOverwrite(const QString &source, const QString destination)
 }
 
 
-bool UpdateDatabase(const QString &sql)
+bool ExecQuery(const QString &sql)
 {
 	QSqlDatabase db = QSqlDatabase::database();
 	if (db.isOpen())
 	{
 		QSqlQuery query(db);
 		query.prepare(sql);
-		bool ok = query.exec();
-
-		qDebug() << "Update query returned " << ok;
-		if (!ok)
-			qDebug() << query.lastError();
-		return ok;
+		return ExecQuery(query);
 	}
+	else
+	{
+		qDebug() << "Database is not open!";
+		return false;
+	}
+}
 
-	return false;
+bool ExecQuery(QSqlQuery &query)
+{
+	QSqlDatabase db = QSqlDatabase::database();
+	if (db.isOpen())
+	{
+		if (query.exec())
+		{
+			qDebug() << query.lastQuery();
+			return true;
+		}
+		else
+		{
+			qDebug() << query.lastError();
+			return false;
+		}
+	}
+	else
+	{
+		qDebug() << "Database is not open!";
+		return false;
+	}
 }
 
 QString Rad2Dms(double radians)

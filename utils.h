@@ -2,6 +2,8 @@
 #define UTILS_H
 
 #include <QPair>
+#include <QSqlQuery>
+
 class QWidget;
 class QLineEdit;
 class Observation;
@@ -10,7 +12,8 @@ namespace Utils
 {
 	QString MakeWorkingCopy(const QString &filename);
 	bool CopyAndOverwrite(const QString &source, const QString destination);
-	bool UpdateDatabase(const QString &sql);
+	bool ExecQuery(const QString &sql);
+	bool ExecQuery(QSqlQuery &query);
 	QString Rad2Dms(double radians);
 	double Dms2Rad(QString dms);
 	bool LoadCoord(QWidget *parent, QPair<QString, QLineEdit *> &p1, QPair<double, QLineEdit *> &p2, QPair<double, QLineEdit *> &p3);

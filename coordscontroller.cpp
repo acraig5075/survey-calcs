@@ -15,7 +15,7 @@ bool CoordsController::EditCoord(QWidget *parent, const Coord &coord)
 	if (QDialog::Accepted == dlg.exec())
 	{
 		QString update = newCoord.GetUpdateQueryString(coord.m_name);
-		return Utils::UpdateDatabase(update);
+		return Utils::ExecQuery(update);
 	}
 
 	return false;

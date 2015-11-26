@@ -3,6 +3,7 @@
 #include "coordscontroller.h"
 #include "Models/coordquerymodel.h"
 #include "Types/coord.h"
+#include "utils.h"
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
@@ -114,10 +115,7 @@ void CoordsTab::OperateOnSelection(std::function<QString(const QStringList &)> o
 
 			QSqlQuery query(db);
 			query.prepare(update);
-			bool ok = query.exec();
-
-			if (!ok)
-				qDebug() << query.lastError();
+			Utils::ExecQuery(query);
 
 			m_pModel->setQuery(CoordQueryModel::ModelQueryString); // m_pModel->query()->exec() caused empty rows after underlying db had a delete performed on it. ???
 
