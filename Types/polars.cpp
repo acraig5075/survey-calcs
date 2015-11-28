@@ -24,7 +24,7 @@ QString PolarsCalc::desc() const
 			.arg(m_fx, 0, 'f', 2);
 	auto label2 = QString("\t     \t  \t%1\t%2")
 			.arg(m_dist, 0, 'f', 2)
-			.arg(Utils::Rad2Dms(m_dirc));
+			.arg(Utils::Rad2Dms(m_dirc, ':'));
 	auto label3 = QString("\tTo:\t%1\t%2\t%3")
 			.arg(m_toname)
 			.arg(m_ty, 0, 'f', 2)

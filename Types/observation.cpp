@@ -61,6 +61,30 @@ bool Observation::Add(QWidget *parent)
 
 bool Observation::Edit(QWidget *parent)
 {
+	double radians = Utils::Dms2Rad("210.4059");
+	QString dms = Utils::Rad2Dms(radians, ':');
+
+	radians = Utils::Dms2Rad("89.3359");
+	dms = Utils::Rad2Dms(radians, ':');
+
+	radians = Utils::Dms2Rad("89.3959");
+	dms = Utils::Rad2Dms(radians, ':');
+
+	radians = Utils::Dms2Rad("89.3900");
+	dms = Utils::Rad2Dms(radians, ':');
+
+	radians = Utils::Dms2Rad("89.3901");
+	dms = Utils::Rad2Dms(radians, ':');
+
+	radians = Utils::Dms2Rad("89.0001");
+	dms = Utils::Rad2Dms(radians, ':');
+
+	radians = Utils::Dms2Rad("89.0000");
+	dms = Utils::Rad2Dms(radians, ':');
+
+	radians = Utils::Dms2Rad("89.0100");
+	dms = Utils::Rad2Dms(radians, ':');
+
 	Observation original = *this;
 
 	ObsDlg *dlg = new ObsDlg(parent, original);

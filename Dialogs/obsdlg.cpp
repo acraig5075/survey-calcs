@@ -5,7 +5,6 @@
 #include <QPushButton>
 #include <QRegularExpressionValidator>
 
-using DMSValidator = QDoubleValidator;
 
 ObsDlg::ObsDlg(QWidget *parent, Observation &obs) :
 	QDialog(parent),
@@ -29,9 +28,9 @@ ObsDlg::ObsDlg(QWidget *parent, Observation &obs) :
 	auto nameValidator = new QRegularExpressionValidator(regExp, this);
 
 	ui->targetEdit->setValidator(nameValidator);
-	ui->angleEdit->setValidator(new DMSValidator(this));
-	ui->vertEdit->setValidator(new DMSValidator(this));
-	ui->distEdit->setValidator(new QDoubleValidator(this));
+	ui->angleEdit->setValidator(new QDoubleValidator(-360.0, 360.0, 4, this));
+	ui->vertEdit->setValidator(new QDoubleValidator(-360.0, 360.0, 4, this));
+	ui->distEdit->setValidator(new QDoubleValidator(0.0, 10000000.0, 3, this));
 	ui->prismEdit->setValidator(new QDoubleValidator(this));
 	ui->descCombo->setValidator(nameValidator);
 

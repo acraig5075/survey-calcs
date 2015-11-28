@@ -28,7 +28,7 @@ QVariant StationsQueryModel::data(const QModelIndex& index, int role) const
 		case 2:
 		{
 			QVariant d = QSqlQueryModel::data(index, role);
-			return static_cast<QVariant>(Utils::Rad2Dms(d.toDouble()));
+			return static_cast<QVariant>(Utils::Rad2Dms(d.toDouble(), ':'));
 		}
 		case 3:
 		{

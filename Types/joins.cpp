@@ -28,7 +28,7 @@ QString JoinsCalc::desc() const
 			.arg(m_tx, 0, 'f', 2);
 	auto label3 = QString("\t\t\t%1\t%2")
 			.arg(m_dist, 0, 'f', 2)
-			.arg(Utils::Rad2Dms(m_dirc));
+			.arg(Utils::Rad2Dms(m_dirc, ':'));
 	return QString("Join\n%1\n%2\n%3").arg(label1, label2, label3);
 }
 

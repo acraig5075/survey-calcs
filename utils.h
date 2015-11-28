@@ -15,7 +15,9 @@ namespace Utils
 	bool CopyAndOverwrite(const QString &source, const QString destination);
 	bool ExecQuery(const QString &sql);
 	bool ExecQuery(QSqlQuery &query);
+	void Rad2Dms(double radians, int &sign, int &d, int &m, int &s);
 	QString Rad2Dms(double radians);
+	QString Rad2Dms(double radians, QChar delimiter);
 	double Dms2Rad(QString dms);
 	bool LoadCoord(QWidget *parent, QPair<QString, QLineEdit *> &p1, QPair<double, QLineEdit *> &p2, QPair<double, QLineEdit *> &p3);
 	bool LoadStation(QWidget *parent, QPair<QString, QLineEdit *> &name, QPair<int, QLineEdit *> &setup, QPair<double, QLineEdit *> &oc);

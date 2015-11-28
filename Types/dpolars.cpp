@@ -42,7 +42,7 @@ QString DpObsCalc::desc() const
 			.arg(m_fx1, 0, 'f', 2);
 	auto label2 = QString("\t\t\t%1\t%2")
 			.arg(m_obs[0].m_dist, 0, 'f', 2)
-			.arg(Utils::Rad2Dms(m_obs[0].m_dirc));
+			.arg(Utils::Rad2Dms(m_obs[0].m_dirc, ':'));
 	auto label3 = QString("\t(1)\t\t%1\t%2")
 			.arg(m_y1, 0, 'f', 2)
 			.arg(m_x1, 0, 'f', 2);
@@ -52,7 +52,7 @@ QString DpObsCalc::desc() const
 			.arg(m_fx2, 0, 'f', 2);
 	auto label5 = QString("\t\t\t%1\t%2")
 			.arg(m_obs[1].m_dist, 0, 'f', 2)
-			.arg(Utils::Rad2Dms(m_obs[1].m_dirc));
+			.arg(Utils::Rad2Dms(m_obs[1].m_dirc, ':'));
 	auto label6 = QString("\t(2)\t\t%1\t%2")
 			.arg(m_y2, 0, 'f', 2)
 			.arg(m_x2, 0, 'f', 2);

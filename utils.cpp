@@ -96,37 +96,55 @@ bool ExecQuery(QSqlQuery &query)
 	}
 }
 
+
+void Rad2Dms(double radians, int &sign, int &d, int &m, int &s)
+{
+	sign = (radians < 0 ? -1 : 1);
+	double degrees = qRadiansToDegrees(fabs(radians));
+	d = static_cast<int>(floor(degrees));
+	double minutes = (degrees - d) * 60.0;
+	m = static_cast<int>(floor(minutes));
+	double seconds = (minutes - m) * 60.0;
+	s = static_cast<int>(floor(seconds + 0.5));
+}
+
 QString Rad2Dms(double radians)
 {
-	int sign = (radians < 0 ? -1 : 1);
-	double degrees = qRadiansToDegrees(fabs(radians));
-	int d = static_cast<int>(floor(degrees));
-	double minutes = (degrees - d) * 60.0;
-	int m = static_cast<int>(floor(minutes));
-	double seconds = (minutes - m) * 60.0;
-	int s = static_cast<int>(floor(seconds));
+	int sign, d, m, s;
+	Rad2Dms(radians, sign, d, m, s);
 
-	return QString("%1:%2:%3")
+	return QString("%1.%2%3")
 			.arg(d * sign)
 			.arg(m, 2, 10, QChar('0'))
 			.arg(s, 2, 10, QChar('0'));
 }
 
+QString Rad2Dms(double radians, QChar delimiter)
+{
+	int sign, d, m, s;
+	Rad2Dms(radians, sign, d, m, s);
+
+	return QString("%1%2%3%4%5")
+			.arg(d * sign)
+			.arg(delimiter)
+			.arg(m, 2, 10, QChar('0'))
+			.arg(delimiter)
+			.arg(s, 2, 10, QChar('0'));
+}
+
 double Dms2Rad(QString dms)
 {
-	int d = 0, m = 0, s = 0;
-	auto tokens = dms.split(QChar(':'));
-	size_t count = tokens.size();
+	double value = dms.toDouble();
+	int sign = (value < 0 ? -1 : 1);
+	value *= sign;
 
-	if (count > 0)
-		d = tokens.at(0).toInt();
-	if  (count > 1)
-		m = tokens.at(1).toInt();
-	if (count > 2)
-		s = tokens.at(2).toInt();
-	int sign = (d < 0 ? -1 : 1);
+	int d = static_cast<int>(floor(value));
+	double minutes = (value - d) * 100.0;
+	int m = static_cast<int>(floor(minutes));
+	double seconds = (minutes - m) * 100.0;
+	int s = static_cast<int>(floor(seconds + 0.5));
 
-	return sign * qDegreesToRadians(abs(d) + m / 60.0 + s / 3600.0);
+	return sign * qDegreesToRadians(d + m / 60.0 + s / 3600.0);
 }
 
 bool LoadCoord(QWidget *parent, QPair<QString, QLineEdit *> &name, QPair<double, QLineEdit *> &y, QPair<double, QLineEdit *> &x)
@@ -178,7 +196,7 @@ bool LoadStation(QWidget *parent, QPair<QString, QLineEdit *> &name, QPair<int, 
 			if (setup.second)
 				setup.second->setText(QString::number(setup.first));
 			if (oc.second)
-				oc.second->setText(Rad2Dms(setup.first));
+				oc.second->setText(Rad2Dms(setup.first, ':'));
 			return true;
 		}
 	}
