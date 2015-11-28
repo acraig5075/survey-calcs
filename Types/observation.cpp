@@ -1,5 +1,6 @@
 #include "observation.h"
 #include "utils.h"
+#include "Dialogs/obsdlg.h"
 #include <QVariant>
 #include <QSqlQuery>
 #include <QSqlError>
@@ -28,59 +29,71 @@ void Observation::SetFrom(const QSqlRecord &record)
 	m_prismHgt = rhs.m_prismHgt;
 }
 
-bool Observation::Add()
+bool Observation::Add(QWidget *parent)
 {
-	m_target = "DUMMY";
-	m_dirc = 3.1;
-	m_vert = 1.5;
-	m_dist = 123.45;
-	m_prismHgt = 1.5;
+	Observation original = *this;
 
-	QSqlQuery query;
-	query.prepare("INSERT INTO obs (station, setup, target, dirc, vert, dist, desc, prismhgt) "
-				  "VALUES (:station, :setup, :target, :dirc, :vert, :dist, :desc, :prismhgt)");
+	ObsDlg *dlg = new ObsDlg(parent, original);
+	if (dlg->exec() == QDialog::Accepted)
+	{
+		*this = original;
 
-	query.bindValue(":station", m_station);
-	query.bindValue(":setup", m_setup);
-	query.bindValue(":target", m_target);
-	query.bindValue(":dirc", m_dirc);
-	query.bindValue(":vert", m_vert);
-	query.bindValue(":dist", m_dist);
-	query.bindValue(":desc", m_desc);
-	query.bindValue(":prismhgt", m_prismHgt);
+		AddDescIfNotExist();
 
-	return Utils::ExecQuery(query);
+		QSqlQuery query;
+		query.prepare("INSERT INTO obs (station, setup, target, dirc, vert, dist, desc, prismhgt) "
+					  "VALUES (:station, :setup, :target, :dirc, :vert, :dist, :desc, :prismhgt)");
+
+		query.bindValue(":station", m_station);
+		query.bindValue(":setup", m_setup);
+		query.bindValue(":target", m_target);
+		query.bindValue(":dirc", m_dirc);
+		query.bindValue(":vert", m_vert);
+		query.bindValue(":dist", m_dist);
+		query.bindValue(":desc", m_desc);
+		query.bindValue(":prismhgt", m_prismHgt);
+
+		return Utils::ExecQuery(query);
+	}
+
+	return false;
 }
 
-bool Observation::Edit()
+bool Observation::Edit(QWidget *parent)
 {
-	Observation before = *this;
+	Observation original = *this;
 
-	m_target = "DUMMY";
-	m_dirc = 3.1;
-	m_vert = 1.5;
-	m_dist = 123.45;
-	m_prismHgt = 1.5;
+	ObsDlg *dlg = new ObsDlg(parent, original);
+	if (dlg->exec() == QDialog::Accepted)
+	{
+		*this = original;
 
-	QSqlQuery query;
-	query.prepare("UPDATE obs "
-				  "SET target = :target"
-				  ", dirc = :dirc"
-				  ", vert = :vert"
-				  ", dist = :dist"
-				  ", prismHgt = :prismhgt"
-				  " WHERE station = :station AND setup = :setup AND target = :target0");
+		AddDescIfNotExist();
 
-	query.bindValue(":target", m_target);
-	query.bindValue(":dirc", m_dirc);
-	query.bindValue(":vert", m_vert);
-	query.bindValue(":dist", m_dist);
-	query.bindValue(":prismhgt", m_prismHgt);
-	query.bindValue(":station", before.m_station);
-	query.bindValue(":setup", before.m_setup);
-	query.bindValue(":target0", before.m_target);
+		QSqlQuery query;
+		query.prepare("UPDATE obs "
+					  "SET target = :target"
+					  ", dirc = :dirc"
+					  ", vert = :vert"
+					  ", dist = :dist"
+					  ", prismHgt = :prismhgt"
+					  ", desc = :desc"
+					  " WHERE station = :station AND setup = :setup AND target = :target0");
 
-	return Utils::ExecQuery(query);
+		query.bindValue(":target", m_target);
+		query.bindValue(":dirc", m_dirc);
+		query.bindValue(":vert", m_vert);
+		query.bindValue(":dist", m_dist);
+		query.bindValue(":prismhgt", m_prismHgt);
+		query.bindValue(":desc", m_desc);
+		query.bindValue(":station", original.m_station);
+		query.bindValue(":setup", original.m_setup);
+		query.bindValue(":target0", original.m_target);
+
+		return Utils::ExecQuery(query);
+	}
+
+	return false;
 }
 
 bool Observation::Delete()
@@ -96,4 +109,13 @@ bool Observation::Delete()
 	query.bindValue(":target", m_target);
 
 	return Utils::ExecQuery(query);
+}
+
+void Observation::AddDescIfNotExist()
+{
+	QSqlQuery query;
+	query.prepare("INSERT INTO desc (desc) VALUES(:desc)");
+	query.bindValue(":desc", m_desc);
+
+	Utils::ExecQuery(query);
 }

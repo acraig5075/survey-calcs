@@ -100,7 +100,7 @@ template <typename Type, typename Model>
 bool TableDlg<Type, Model>::AddRow()
 {
 	Type type(m_type);
-	return type.Add();
+	return type.Add(this);
 }
 
 template <typename Type, typename Model>
@@ -108,7 +108,7 @@ bool TableDlg<Type, Model>::EditRow(QSqlRecord &record)
 {
 	Type type(m_type);
 	type.SetFrom(record);
-	return type.Edit();
+	return type.Edit(this);
 }
 
 template <typename Type, typename Model>

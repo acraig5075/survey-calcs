@@ -1,7 +1,7 @@
 #include "observationsquerymodel.h"
 #include "utils.h"
 
-const QString ObservationsQueryModel::ModelQueryString = "SELECT target AS `Target`, dirc AS `Angle`, vert AS `Zenith`, dist AS `Slope dist.`, desc AS `Desc.`, prismhgt AS `Target hgt.` FROM obs WHERE station = '%1' AND setup = %2 ORDER BY `order`";
+const QString ObservationsQueryModel::ModelQueryString = "SELECT target, dirc, vert, dist, desc, prismhgt FROM obs WHERE station = '%1' AND setup = %2 ORDER BY `order`";
 
 
 ObservationsQueryModel::ObservationsQueryModel(QObject *parent)

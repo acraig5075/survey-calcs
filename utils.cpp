@@ -15,6 +15,7 @@
 #include <QDebug>
 #include <QSqlError>
 #include <QLineEdit>
+#include <QComboBox>
 
 
 namespace Utils
@@ -248,4 +249,24 @@ void Polar(double e1, double n1, double dist, double dirn, double &e2, double &n
 	e2 = e1 + dist * sin(dirn);
 	n2 = n1 + dist * cos(dirn);
 }
+
+void ComboboxSelection(QWidget *parent, const QString &query, QComboBox *comboBox, const QString &initial)
+{
+	auto model = new QSqlQueryModel(parent);
+	model->setQuery(query);
+	comboBox->setModel(model);
+	int index = comboBox->findText(initial);
+	comboBox->setCurrentIndex(index);
+}
+
+void DescriptionCombobox(QWidget *parent, QComboBox *comboBox, const QString &initial)
+{
+	ComboboxSelection(parent, "SELECT `desc` FROM desc ORDER BY `desc`", comboBox, initial);
+}
+
+void ClassificationCombobox(QWidget *parent, QComboBox *comboBox, const QString &initial)
+{
+	ComboboxSelection(parent, "SELECT `class` FROM class ORDER BY `order`", comboBox, initial);
+}
+
 }

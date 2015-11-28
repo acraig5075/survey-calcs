@@ -6,6 +6,7 @@
 
 class QWidget;
 class QLineEdit;
+class QComboBox;
 class Observation;
 
 namespace Utils
@@ -21,6 +22,8 @@ namespace Utils
 	bool LoadObs(QWidget *parent, const QString &station, int setup, Observation &obs);
 	void Join(double e1, double n1, double e2, double n2, double &dist, double &dirn);
 	void Polar(double e1, double n1, double dist, double dirn, double &e2, double &n2);
+	void DescriptionCombobox(QWidget *parent, QComboBox *comboBox, const QString &initial);
+	void ClassificationCombobox(QWidget *parent, QComboBox *comboBox, const QString &initial);
 
 	template <typename TDlg, typename TCalc>
 	bool EditDialog(QWidget *parent, TCalc &calc)

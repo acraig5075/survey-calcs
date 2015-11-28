@@ -1,6 +1,7 @@
 #include "editcoorddlg.h"
 #include "ui_editcoorddlg.h"
 #include "Types/coord.h"
+#include "utils.h"
 #include <QSqlQueryModel>
 #include <QSqlQuery>
 #include <QMessageBox>
@@ -9,15 +10,6 @@
 
 namespace
 {
-void ComboboxSelection(QWidget *parent, const QString &query, QComboBox *comboBox, const QString &initial)
-{
-	auto model = new QSqlQueryModel(parent);
-	model->setQuery(query);
-	comboBox->setModel(model);
-	int index = comboBox->findText(initial);
-	comboBox->setCurrentIndex(index);
-}
-
 bool ModelContains(const QComboBox *comboBox, const QString &value)
 {
 	auto model = static_cast<QSqlQueryModel *>(comboBox->model());
@@ -59,8 +51,8 @@ EditCoordDlg::EditCoordDlg(QWidget *parent, Coord &coord) :
 	ui->northingEdit->setText(QString::number(coord.m_northing, 'f', 3));
 	ui->elevationEdit->setText(QString::number(coord.m_elevation, 'f', 3));
 
-	ComboboxSelection(this, "SELECT `desc` FROM desc ORDER BY `desc`", ui->descriptionCombo, coord.m_desc);
-	ComboboxSelection(this, "SELECT `class` FROM class ORDER BY `order`", ui->classificationCombo, coord.m_class);
+	Utils::DescriptionCombobox(this, ui->descriptionCombo, coord.m_desc);
+	Utils::ClassificationCombobox(this, ui->classificationCombo, coord.m_class);
 
 	auto validator = new QDoubleValidator(-10000000.0, 10000000.0, 3, this);
 	validator->setNotation(QDoubleValidator::StandardNotation);
