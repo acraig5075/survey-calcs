@@ -28,6 +28,10 @@ public:
 
 	void writePositionSettings();
 	void readPositionSettings();
+
+private:
+	void CreateRequiredTables();
+
 protected:
 	void closeEvent(QCloseEvent *);
 
@@ -36,13 +40,17 @@ public slots:
 	void onStatusTextChanged();
 
 private slots:
+	void on_actionFileNew_triggered();
 	void on_actionFileOpen_triggered();
 	void on_actionFileClose_triggered();
 	void on_actionFileExit_triggered();
-	void on_w_tabs_currentChanged(int index);
-	void onCloseDatabase();
-
 	void on_actionCoordClass_triggered();
+
+	void on_w_tabs_currentChanged(int index);
+
+	void onCloseDatabase();
+	void onChangedDatabase();
+	void SetCaption();
 
 signals:
 	void databaseChanged();

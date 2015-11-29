@@ -37,6 +37,7 @@ void CalcsTab::onClear()
 
 void CalcsTab::onLoad()
 {
+	m_calcsController.Read();
 	QStringList descList = m_calcsController.GetDescriptions();
 	m_pModel->addDesc(descList);
 	ui->w_listView->setModel(m_pModel);

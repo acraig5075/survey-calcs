@@ -2,6 +2,23 @@
 #include <QtCore/QVariant>
 
 
+const QString Coord::SqlCreateQuery = "CREATE TABLE `coord` ("
+		"`fbp` SMALLINT,"
+		"`fbp2` SMALLINT,"
+		"`name` VARCHAR(8),"
+		"`y` FLOAT,"
+		"`x` FLOAT,"
+		"`h` FLOAT,"
+		"`cp` SMALLINT,"
+		"`class` VARCHAR(8),"
+		"`desc` VARCHAR(8),"
+		"`calcref` BIGINT,"
+		"`select` VARCHAR(1),"
+		"`order` SMALLINT,"
+		"`plot` VARCHAR(1),"
+		"`note` VARCHAR(10)"
+		")";
+
 Coord::Coord(const QSqlRecord &record)
 {
 	m_name = record.value("name").toString();

@@ -77,6 +77,7 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionFileNew"/>
     <addaction name="actionFileOpen"/>
     <addaction name="actionFileClose"/>
     <addaction name="separator"/>
@@ -124,6 +125,11 @@
   <action name="actionCoordDescr">
    <property name="text">
     <string>Descriptions</string>
+   </property>
+  </action>
+  <action name="actionFileNew">
+   <property name="text">
+    <string>New</string>
    </property>
   </action>
  </widget>

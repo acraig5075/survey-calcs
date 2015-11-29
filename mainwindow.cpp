@@ -8,12 +8,19 @@
 #include "calcstab.h"
 #include "plantab.h"
 #include "utils.h"
+#include "Types/coord.h"
+#include "Types/occupied.h"
+#include "Types/calc.h"
 #include "Dialogs/coordclassdlg.h"
 #include <QFileDialog>
 #include <QDebug>
 #include <QErrorMessage>
 #include <QMessageBox>
 #include <QSettings>
+#include <functional>
+
+#define VERSION "v0.1"
+#define UNTITLED "<Untitled>"
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -46,6 +53,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->w_tabs->setTabIcon(2, QIcon(":/total-station-24.png"));
 	ui->w_tabs->setTabIcon(3, QIcon(":/pin-map-32.png"));
 
+	SetCaption();
+
+	connect(this, SIGNAL(databaseChanged()), this, SLOT(onChangedDatabase()));
 	connect(this, SIGNAL(databaseChanged()), m_pCoordsTab, SLOT(onLoad()));
 	connect(this, SIGNAL(databaseChanged()), m_pStationsTab, SLOT(onLoad()));
 	connect(this, SIGNAL(databaseChanged()), m_pCalcsTab, SLOT(onLoad()));
@@ -80,11 +90,11 @@ void MainWindow::on_actionFileOpen_triggered()
 			m_db.setDatabaseName(backupName);
 			if (m_db.open())
 			{
-				m_pCalcsController->Read();
+				m_filenames = qMakePair(filename, backupName);
 
 				emit databaseChanged();
+
 				on_w_tabs_currentChanged(ui->w_tabs->currentIndex());
-				m_filenames = qMakePair(filename, backupName);
 			}
 			else
 			{
@@ -187,12 +197,16 @@ void MainWindow::onCloseDatabase()
 	{
 		m_db.close();
 
+		auto original = m_filenames.first;
 		auto backup = m_filenames.second;
 
 		QString text = "Save changes to database?";
 		if (QMessageBox::Save == QMessageBox::question(this, "Confirm", text, QMessageBox::Save|QMessageBox::Discard, QMessageBox::Discard))
 		{
-			auto original = m_filenames.first;
+			if (original == UNTITLED)
+			{
+				original = QFileDialog::getSaveFileName(this, tr("Save File"), "", tr("sqlite3 database (*.sqlite)"));
+			}
 
 			if (!Utils::CopyAndOverwrite(backup, original))
 			{
@@ -202,11 +216,76 @@ void MainWindow::onCloseDatabase()
 		}
 
 		QFile::remove(backup);
+
+		m_filenames = qMakePair(QString(), QString());
+
+		SetCaption();
 	}
+}
+
+void MainWindow::onChangedDatabase()
+{
+	SetCaption();
+}
+
+void MainWindow::SetCaption()
+{
+	QString filename = m_filenames.first;
+	if (filename != UNTITLED)
+	{
+		QString path = m_filenames.first;
+		QStringList parts = QDir::toNativeSeparators(path).split(QDir::separator());
+		filename = parts.last();
+	}
+
+	QString title = QString("Survey Calcs ") + VERSION;
+	if (!filename.isEmpty())
+	 title += " - " + filename;
+
+	setWindowTitle(title);
 }
 
 void MainWindow::on_actionCoordClass_triggered()
 {
 	CoordClassDlg dlg(this);
 	dlg.exec();
+}
+
+void MainWindow::on_actionFileNew_triggered()
+{
+	emit databaseClosed();
+
+	QString backupName = Utils::MakeTemporaryFile();
+
+	m_db.setDatabaseName(backupName);
+	if (m_db.open())
+	{
+		CreateRequiredTables();
+
+		m_filenames = qMakePair(QString(UNTITLED), backupName);
+
+		emit databaseChanged();
+
+		on_w_tabs_currentChanged(ui->w_tabs->currentIndex());
+	}
+	else
+	{
+		QErrorMessage msg(this);
+		msg.showMessage("Could not make a new database");
+		m_db.setDatabaseName("");
+	}
+
+}
+
+template <typename T>
+void CreateTable()
+{
+	Utils::ExecQuery(T::SqlCreateQuery);
+}
+
+void MainWindow::CreateRequiredTables()
+{
+	CreateTable<Coord>();
+	CreateTable<Occupied>();
+	CreateTable<Calc>();
 }

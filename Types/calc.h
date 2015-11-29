@@ -22,6 +22,7 @@ public:
 	virtual QString GetUpdateQueryString() const { return ""; }
 
 	static bool SortFunc(CalcPtr const& a, CalcPtr const& b);
+	static const QString SqlCreateQuery;
 };
 
 

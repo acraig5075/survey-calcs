@@ -15,6 +15,8 @@ public:
 	double m_oc;
 	double m_instHgt;
 	QDate m_date;
+
+	static const QString SqlCreateQuery;
 };
 
 #endif // OCCUPIED_H

@@ -20,16 +20,18 @@
 
 namespace Utils
 {
+QString MakeTemporaryFile()
+{
+	QTemporaryFile tempFile;
+	tempFile.open();
+	QString name = tempFile.fileName();
+	tempFile.close();
+	return name;
+}
+
 QString MakeWorkingCopy(const QString &filename)
 {
-	QString backup;
-
-	{
-		QTemporaryFile tempFile;
-		tempFile.open();
-		backup = tempFile.fileName();
-		tempFile.close();
-	}
+	QString backup = MakeTemporaryFile();
 
 	if (!backup.isEmpty())
 	{
@@ -44,6 +46,12 @@ QString MakeWorkingCopy(const QString &filename)
 
 bool CopyAndOverwrite(const QString &source, const QString destination)
 {
+	if (!QFile::exists(source) || destination.isEmpty())
+	{
+		qDebug() << "File copy failed because of bad inputs";
+		return false;
+	}
+
 	qDebug() << QString("Copying %1 to %2").arg(source, destination);
 
 	if (!QFile::exists(destination) || QFile::remove(destination))

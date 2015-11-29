@@ -18,6 +18,7 @@ public:
 	double m_elevation = 0.0;
 
 	QString GetUpdateQueryString(const QString &oldName);
+	static const QString SqlCreateQuery;
 };
 
 #endif // COORD_H

@@ -11,6 +11,7 @@ class Observation;
 
 namespace Utils
 {
+	QString MakeTemporaryFile();
 	QString MakeWorkingCopy(const QString &filename);
 	bool CopyAndOverwrite(const QString &source, const QString destination);
 	bool ExecQuery(const QString &sql);
