@@ -40,3 +40,15 @@ QString Coord::GetUpdateQueryString(const QString &oldName)
 			.arg(m_desc)
 			.arg(oldName);
 }
+
+
+QString Coord::GetInsertQueryString()
+{
+	return QString("INSERT INTO coord (name, y, x, h, class, desc) VALUES ('%1', %2, %3, %4, '%5', '%6')")
+			.arg(m_name)
+			.arg(QString::number(m_easting, 'f', 6))
+			.arg(QString::number(m_northing, 'f', 6))
+			.arg(QString::number(m_elevation, 'f', 6))
+			.arg(m_class)
+			.arg(m_desc);
+}

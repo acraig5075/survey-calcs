@@ -24,6 +24,7 @@ CoordsTab::CoordsTab(CoordsController &coordsController, QWidget *parent) :
 
 	ui->w_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 	ui->w_tableView->setContextMenuPolicy(Qt::CustomContextMenu);
+	ui->w_tableView->setStyleSheet("QTableView { background: lightGray }");
 
 	connect(ui->w_tableView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)));
 	connect(ui->w_tableView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(onDoubleClick(const QModelIndex&)));
@@ -47,6 +48,7 @@ void CoordsTab::onClear()
 {
 	m_pModel->clear();
 	ui->w_tableView->setModel(nullptr);
+	ui->w_tableView->setStyleSheet("QTableView { background: lightGray }");
 }
 
 void CoordsTab::onLoad()
@@ -66,6 +68,7 @@ void CoordsTab::onLoad()
 			qDebug() << m_pModel->lastError();
 
 		ui->w_tableView->setModel(m_pModel);
+		ui->w_tableView->setStyleSheet("QTableView { background: white }");
 		ui->w_tableView->show();
 	}
 }
@@ -151,5 +154,17 @@ void CoordsTab::onDoubleClick(const QModelIndex& index)
 	if (m_coordsController.EditCoord(this, coord))
 	{
 		m_pModel->query().exec();
+	}
+}
+
+void CoordsTab::on_addButton_clicked()
+{
+	Coord coord;
+
+	if (m_coordsController.AddCoord(this, coord))
+	{
+		m_pModel->setQuery(CoordQueryModel::ModelQueryString);
+
+		emit coordCountChanged();
 	}
 }

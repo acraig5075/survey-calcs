@@ -32,6 +32,8 @@ private slots:
 	void onDelete();
 	void onDoubleClick(const QModelIndex &index);
 
+	void on_addButton_clicked();
+
 signals:
 	void coordPlotChanged();
 	void coordCountChanged();

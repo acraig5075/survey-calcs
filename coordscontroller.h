@@ -14,6 +14,7 @@ public:
 	explicit CoordsController(QObject *parent = 0);
 
 	bool EditCoord(QWidget *parent, const Coord &coord);
+	bool AddCoord(QWidget *parent, Coord &coord);
 
 signals:
 
