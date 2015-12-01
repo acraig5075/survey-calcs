@@ -41,7 +41,9 @@ SOURCES += main.cpp\
     Types/dpolars.cpp \
     stationscontroller.cpp \
     Dialogs/tabledlg.cpp \
-    Dialogs/obsdlg.cpp
+    Dialogs/obsdlg.cpp \
+    Types/desc.cpp \
+    Dialogs/descdlg.cpp
 
 HEADERS  += mainwindow.h \
     calcfactory.h \
@@ -72,7 +74,9 @@ HEADERS  += mainwindow.h \
     calctypes.h \
     stationscontroller.h \
     Dialogs/tabledlg.h \
-    Dialogs/obsdlg.h
+    Dialogs/obsdlg.h \
+    Types/desc.h \
+    Dialogs/descdlg.h
 
 FORMS    += mainwindow.ui \
     stationstab.ui \
@@ -85,7 +89,8 @@ FORMS    += mainwindow.ui \
     Dialogs/selectcoorddlg.ui \
     Dialogs/doublepolardlg.ui \
     Dialogs/tabledlg.ui \
-    Dialogs/obsdlg.ui
+    Dialogs/obsdlg.ui \
+    Dialogs/descdlg.ui
 
 DISTFILES +=
 

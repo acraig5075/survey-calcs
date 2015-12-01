@@ -1,6 +1,7 @@
 #include "tabledlg.h"
 #include "ui_tabledlg.h"
 #include "Types/Observation.h"
+#include "Types/desc.h"
 #include "stationscontroller.h"
 #include "Models/observationsquerymodel.h"
 #include <QSqlQuery>
@@ -124,3 +125,4 @@ bool TableDlg<Type, Model>::DeleteRow(QSqlRecord &record)
 
 // explicit instantiations
 template class TableDlg<Observation, ObservationsQueryModel>;
+template class TableDlg<Desc, QSqlQueryModel>;

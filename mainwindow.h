@@ -52,6 +52,8 @@ private slots:
 	void onChangedDatabase();
 	void SetCaption();
 
+	void on_actionCoordDescr_triggered();
+
 signals:
 	void databaseChanged();
 	void databaseClosed();

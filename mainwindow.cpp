@@ -11,7 +11,9 @@
 #include "Types/coord.h"
 #include "Types/occupied.h"
 #include "Types/calc.h"
+#include "Types/desc.h"
 #include "Dialogs/coordclassdlg.h"
+#include "Dialogs/tabledlg.h"
 #include <QFileDialog>
 #include <QDebug>
 #include <QErrorMessage>
@@ -251,6 +253,23 @@ void MainWindow::on_actionCoordClass_triggered()
 	dlg.exec();
 }
 
+void MainWindow::on_actionCoordDescr_triggered()
+{
+	Desc desc;
+	QString query = "SELECT desc, description FROM desc ORDER BY desc";
+
+	QSqlDatabase db = QSqlDatabase::database();
+	db.transaction();
+
+	TableDlg<Desc, QSqlQueryModel> dlg(desc, "Descriptions", query, this);
+	dlg.exec();
+
+	if (dlg.exec() == QDialog::Accepted)
+		db.commit();
+	else
+		db.rollback();
+}
+
 void MainWindow::on_actionFileNew_triggered()
 {
 	emit databaseClosed();
@@ -288,4 +307,5 @@ void MainWindow::CreateRequiredTables()
 	CreateTable<Coord>();
 	CreateTable<Occupied>();
 	CreateTable<Calc>();
+	CreateTable<Desc>();
 }
