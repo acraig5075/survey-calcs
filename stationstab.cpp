@@ -19,6 +19,7 @@ StationsTab::StationsTab(StationsController &controller, QWidget *parent) :
 	ui->w_tableView->setStyleSheet("QTableView { background: lightGray }");
 
 	connect(ui->w_tableView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(onDoubleClick(const QModelIndex&)));
+	connect(this, SIGNAL(stationCountChanged()), parent, SLOT(onStatusTextChanged()));
 }
 
 StationsTab::~StationsTab()
@@ -63,11 +64,44 @@ void StationsTab::on_w_loadButton_clicked()
 	onLoad();
 }
 
+void StationsTab::on_obsButton_clicked()
+{
+	QStringList selNames;
+	QItemSelectionModel *selection = ui->w_tableView->selectionModel();
+	if (selection)
+	{
+		QModelIndexList selRows = selection->selectedRows();
+		if (selRows.size() == 1)
+		{
+			QSqlRecord record = m_pModel->record(selRows.first().row());
+
+			Occupied station(record);
+
+			m_stationsController.ShowObservations(this, station);
+		}
+	}
+}
+
 void StationsTab::onDoubleClick(const QModelIndex& index)
 {
 	QSqlRecord record = m_pModel->record(index.row());
 
 	Occupied station(record);
 
-	m_stationsController.ShowObservations(this, station);
+	if (m_stationsController.EditStation(this, station))
+	{
+		m_pModel->query().exec();
+	}
+}
+
+void StationsTab::on_addButton_clicked()
+{
+	Occupied station;
+
+	if (m_stationsController.AddStation(this, station))
+	{
+		m_pModel->setQuery(StationsQueryModel::ModelQueryString);
+
+		emit stationCountChanged();
+	}
 }

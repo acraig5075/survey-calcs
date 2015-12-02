@@ -23,6 +23,11 @@ public:
 private slots:
 	void onClear();
 	void onLoad();
+	void on_obsButton_clicked();
+	void on_addButton_clicked();
+
+signals:
+	void stationCountChanged();
 
 public slots:
 	void on_w_loadButton_clicked();

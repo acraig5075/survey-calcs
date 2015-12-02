@@ -2,6 +2,7 @@
 #define OCCUPIED_H
 
 #include <QSqlRecord>
+#include <QSqlQuery>
 #include <QDate>
 
 class Occupied
@@ -9,6 +10,9 @@ class Occupied
 public:
 	Occupied() = default;
 	explicit Occupied(const QSqlRecord &record);
+
+	QSqlQuery GetInsertQueryString();
+	QSqlQuery GetUpdateQueryString(const QString name, int setup);
 
 	QString m_name;
 	int m_setup;

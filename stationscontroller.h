@@ -11,8 +11,8 @@ class StationsController : public QObject
 public:
 	StationsController(QObject *parent);
 
-	bool AddStation() {}
-	bool EditStation() {}
+	bool AddStation(QWidget *parent, Occupied &station);
+	bool EditStation(QWidget *parent, const Occupied &station);
 	bool DeleteStation() {}
 
 	void ShowObservations(QWidget *parent, const Occupied &station);

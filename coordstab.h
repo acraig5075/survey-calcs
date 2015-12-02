@@ -31,7 +31,6 @@ private slots:
 	void onTogglePlot();
 	void onDelete();
 	void onDoubleClick(const QModelIndex &index);
-
 	void on_addButton_clicked();
 
 signals:

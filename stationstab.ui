@@ -31,6 +31,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="obsButton">
+       <property name="text">
+        <string>Observations...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="w_loadButton">
        <property name="text">
         <string>Load</string>

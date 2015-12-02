@@ -43,7 +43,8 @@ SOURCES += main.cpp\
     Dialogs/tabledlg.cpp \
     Dialogs/obsdlg.cpp \
     Types/desc.cpp \
-    Dialogs/descdlg.cpp
+    Dialogs/descdlg.cpp \
+    Dialogs/stationdlg.cpp
 
 HEADERS  += mainwindow.h \
     calcfactory.h \
@@ -76,7 +77,8 @@ HEADERS  += mainwindow.h \
     Dialogs/tabledlg.h \
     Dialogs/obsdlg.h \
     Types/desc.h \
-    Dialogs/descdlg.h
+    Dialogs/descdlg.h \
+    Dialogs/stationdlg.h
 
 FORMS    += mainwindow.ui \
     stationstab.ui \
@@ -90,7 +92,8 @@ FORMS    += mainwindow.ui \
     Dialogs/doublepolardlg.ui \
     Dialogs/tabledlg.ui \
     Dialogs/obsdlg.ui \
-    Dialogs/descdlg.ui
+    Dialogs/descdlg.ui \
+    Dialogs/stationdlg.ui
 
 DISTFILES +=
 
