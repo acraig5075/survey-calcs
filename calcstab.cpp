@@ -55,11 +55,6 @@ void CalcsTab::onLoad()
 	}
 }
 
-void CalcsTab::on_w_loadButton_clicked()
-{
-	onLoad();
-}
-
 void CalcsTab::on_w_listView_doubleClicked(const QModelIndex &index)
 {
 	int i = index.row();

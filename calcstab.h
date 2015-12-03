@@ -25,8 +25,6 @@ public slots:
 	void onLoad();
 
 private slots:
-	void on_w_loadButton_clicked();
-
 	void on_w_listView_doubleClicked(const QModelIndex &index);
 
 private:

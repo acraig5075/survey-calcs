@@ -64,11 +64,6 @@ void StationsTab::onLoad()
 	}
 }
 
-void StationsTab::on_w_loadButton_clicked()
-{
-	onLoad();
-}
-
 void StationsTab::on_obsButton_clicked()
 {
 	QStringList selNames;

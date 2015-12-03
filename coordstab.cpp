@@ -76,11 +76,6 @@ void CoordsTab::onLoad()
 	}
 }
 
-void CoordsTab::on_w_loadButton_clicked()
-{
-	onLoad();
-}
-
 void CoordsTab::onCustomContextMenuRequested(QPoint pos)
 {
 	QMenu *menu = new QMenu(this);

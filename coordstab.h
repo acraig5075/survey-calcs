@@ -26,7 +26,6 @@ public slots:
 	void onLoad();
 
 private slots:
-	void on_w_loadButton_clicked();
 	void onCustomContextMenuRequested(QPoint pos);
 	void onTogglePlot();
 	void onDelete();
