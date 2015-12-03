@@ -44,7 +44,8 @@ SOURCES += main.cpp\
     Dialogs/obsdlg.cpp \
     Types/desc.cpp \
     Dialogs/descdlg.cpp \
-    Dialogs/stationdlg.cpp
+    Dialogs/stationdlg.cpp \
+    Models/descquerymodel.cpp
 
 HEADERS  += mainwindow.h \
     calcfactory.h \
@@ -78,7 +79,8 @@ HEADERS  += mainwindow.h \
     Dialogs/obsdlg.h \
     Types/desc.h \
     Dialogs/descdlg.h \
-    Dialogs/stationdlg.h
+    Dialogs/stationdlg.h \
+    Models/descquerymodel.h
 
 FORMS    += mainwindow.ui \
     stationstab.ui \

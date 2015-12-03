@@ -11,6 +11,7 @@ public:
 	QVariant data(const QModelIndex& index, int role) const override;
 
 	static const QString ModelQueryString;
+	static const QStringList HorizontalHeaderList;
 };
 
 #endif // OBSERVATIONSQUERYMODEL_H

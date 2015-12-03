@@ -69,6 +69,10 @@ void CoordsTab::onLoad()
 		if (m_pModel->lastError().isValid())
 			qDebug() << m_pModel->lastError();
 
+		int column = 0;
+		for (auto label: CoordQueryModel::HorizontalHeaderList)
+			m_pModel->setHeaderData(column++, Qt::Horizontal, label);
+
 		ui->w_tableView->setModel(m_pModel);
 		ui->w_tableView->setStyleSheet("QTableView { background: white }");
 		ui->w_tableView->show();
@@ -101,7 +105,7 @@ void CoordsTab::OperateOnSelection(std::function<QString(const QStringList &)> o
 		for (QModelIndex index : selRows)
 		{
 			QSqlRecord record = m_pModel->record(index.row());
-			QString name = record.value("Name").toString();
+			QString name = record.value("name").toString();
 			selNames.push_back(QString("'%1'").arg(name));
 		}
 	}

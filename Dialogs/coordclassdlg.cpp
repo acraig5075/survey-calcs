@@ -33,7 +33,7 @@ void CoordClassDlg::Init()
 	if (db.isOpen())
 	{
 		QSqlQuery query(db);
-		query.prepare("SELECT class AS Abbreviation, description AS Description, ptype AS 'Plot type' FROM class ORDER BY 'order', class");
+		query.prepare("SELECT class, description, ptype FROM class ORDER BY 'order', class");
 		query.exec();
 
 		m_pModel->setQuery(query);
@@ -42,6 +42,10 @@ void CoordClassDlg::Init()
 
 		if (m_pModel->lastError().isValid())
 			qDebug() << m_pModel->lastError();
+
+		m_pModel->setHeaderData(0, Qt::Horizontal, "Code");
+		m_pModel->setHeaderData(1, Qt::Horizontal, "Classification");
+		m_pModel->setHeaderData(2, Qt::Horizontal, "Plot type");
 
 		ui->m_tableView->setModel(m_pModel);
 		ui->m_tableView->show();

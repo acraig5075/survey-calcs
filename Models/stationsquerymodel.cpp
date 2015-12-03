@@ -1,7 +1,9 @@
 #include "stationsquerymodel.h"
 #include "utils.h"
 
-const QString StationsQueryModel::ModelQueryString = "SELECT station AS Name, setupno AS Setup, oc AS Correction, insthgt AS `Instr. hgt`, date AS Date FROM occupied ORDER BY station, setupno";
+const QString StationsQueryModel::ModelQueryString = "SELECT station, setupno, oc, insthgt, date FROM occupied ORDER BY station, setupno";
+
+const QStringList StationsQueryModel::HorizontalHeaderList = QStringList() << "Name" << "Setup" << "Correction" << "Instr. hgt" << "Date";
 
 StationsQueryModel::StationsQueryModel(QObject *parent)
 	: QSqlQueryModel(parent)

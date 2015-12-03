@@ -14,6 +14,7 @@
 #include "Types/desc.h"
 #include "Dialogs/coordclassdlg.h"
 #include "Dialogs/tabledlg.h"
+#include "Models/descquerymodel.h"
 #include <QFileDialog>
 #include <QDebug>
 #include <QErrorMessage>
@@ -21,7 +22,7 @@
 #include <QSettings>
 #include <functional>
 
-#define VERSION "v0.1"
+#define VERSION "v0.2"
 #define UNTITLED "<Untitled>"
 #define READY "Ready"
 
@@ -264,12 +265,12 @@ void MainWindow::on_actionCoordClass_triggered()
 void MainWindow::on_actionCoordDescr_triggered()
 {
 	Desc desc;
-	QString query = "SELECT desc, description FROM desc ORDER BY desc";
+	QString query = DescQueryModel::ModelQueryString;
 
 	QSqlDatabase db = QSqlDatabase::database();
 	db.transaction();
 
-	TableDlg<Desc, QSqlQueryModel> dlg(desc, "Descriptions", query, this);
+	TableDlg<Desc, DescQueryModel> dlg(desc, "Descriptions", query, this);
 	dlg.exec();
 
 	if (dlg.exec() == QDialog::Accepted)

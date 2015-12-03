@@ -82,6 +82,10 @@ public:
 		m_pModel = new U(this);
 		m_pModel->setQuery(query);
 
+		int column = 0;
+		for (auto label: U::HorizontalHeaderList)
+			m_pModel->setHeaderData(column++, Qt::Horizontal, label);
+
 		ui->tableView->setModel(m_pModel);
 		for (auto col: hiddenColumns)
 			ui->tableView->setColumnHidden(col, true);

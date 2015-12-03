@@ -3,6 +3,7 @@
 
 #include <QSqlQueryModel>
 
+
 class CoordQueryModel : public QSqlQueryModel
 {
 public:
@@ -10,7 +11,8 @@ public:
 
 	QVariant data(const QModelIndex& index, int role) const override;
 
-	static const QString CoordQueryModel::ModelQueryString;
+	static const QString ModelQueryString;
+	static const QStringList HorizontalHeaderList;
 };
 
 

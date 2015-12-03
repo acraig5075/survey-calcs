@@ -56,6 +56,10 @@ void StationsTab::onLoad()
 		if (m_pModel->lastError().isValid())
 			qDebug() << m_pModel->lastError();
 
+		int column = 0;
+		for (auto label: StationsQueryModel::HorizontalHeaderList)
+			m_pModel->setHeaderData(column++, Qt::Horizontal, label);
+
 		ui->w_tableView->setModel(m_pModel);
 		ui->w_tableView->setStyleSheet("QTableView { background: white }");
 		ui->w_tableView->show();

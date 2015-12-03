@@ -4,6 +4,7 @@
 #include "Types/desc.h"
 #include "stationscontroller.h"
 #include "Models/observationsquerymodel.h"
+#include "Models/descquerymodel.h"
 #include <QSqlQuery>
 #include <QMenu>
 #include <QMessageBox>
@@ -94,6 +95,11 @@ TableDlg<Type, Model>::TableDlg(const Type &type, const QString &caption, const 
 {
 	m_pModel = new Model(this);
 	m_pModel->setQuery(query);
+
+	int column = 0;
+	for (auto label: Model::HorizontalHeaderList)
+		m_pModel->setHeaderData(column++, Qt::Horizontal, label);
+
 	ui->tableView->setModel(m_pModel);
 }
 
@@ -125,4 +131,4 @@ bool TableDlg<Type, Model>::DeleteRow(QSqlRecord &record)
 
 // explicit instantiations
 template class TableDlg<Observation, ObservationsQueryModel>;
-template class TableDlg<Desc, QSqlQueryModel>;
+template class TableDlg<Desc, DescQueryModel>;
