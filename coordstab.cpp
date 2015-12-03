@@ -24,7 +24,8 @@ CoordsTab::CoordsTab(CoordsController &coordsController, QWidget *parent) :
 
 	ui->w_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 	ui->w_tableView->setContextMenuPolicy(Qt::CustomContextMenu);
-	ui->w_tableView->setStyleSheet("QTableView { background: lightGray }");
+
+	onClear();
 
 	connect(ui->w_tableView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)));
 	connect(ui->w_tableView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(onDoubleClick(const QModelIndex&)));
@@ -49,6 +50,7 @@ void CoordsTab::onClear()
 	m_pModel->clear();
 	ui->w_tableView->setModel(nullptr);
 	ui->w_tableView->setStyleSheet("QTableView { background: lightGray }");
+	ui->addButton->setEnabled(false);
 }
 
 void CoordsTab::onLoad()
@@ -70,6 +72,7 @@ void CoordsTab::onLoad()
 		ui->w_tableView->setModel(m_pModel);
 		ui->w_tableView->setStyleSheet("QTableView { background: white }");
 		ui->w_tableView->show();
+		ui->addButton->setEnabled(true);
 	}
 }
 

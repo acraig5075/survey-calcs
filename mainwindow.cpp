@@ -23,6 +23,7 @@
 
 #define VERSION "v0.1"
 #define UNTITLED "<Untitled>"
+#define READY "Ready"
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -40,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	m_pStationsTab = new StationsTab(*m_pStationsController, this);
 	m_pCalcsTab = new CalcsTab(*m_pCalcsController, this);
 	m_pPlanTab = new PlanTab(this);
-	m_statusLabel = new QLabel("Ready", this);
+	m_statusLabel = new QLabel(READY, this);
 
 	statusBar()->addWidget(m_statusLabel);
 
@@ -176,20 +177,27 @@ void MainWindow::onStatusTextChanged()
 
 void MainWindow::on_w_tabs_currentChanged(int index)
 {
-	switch (index)
+	if (m_db.isOpen())
 	{
-	case 0:
-		m_statusLabel->setText(m_pCoordsTab->GetStatus());
-		break;
-	case 1:
-		m_statusLabel->setText(m_pCalcsTab->GetStatus());
-		break;
-	case 2:
-		m_statusLabel->setText(m_pStationsTab->GetStatus());
-		break;
-	case 3:
-		m_statusLabel->setText(m_pPlanTab->GetStatus());
-		break;
+		switch (index)
+		{
+		case 0:
+			m_statusLabel->setText(m_pCoordsTab->GetStatus());
+			break;
+		case 1:
+			m_statusLabel->setText(m_pCalcsTab->GetStatus());
+			break;
+		case 2:
+			m_statusLabel->setText(m_pStationsTab->GetStatus());
+			break;
+		case 3:
+			m_statusLabel->setText(m_pPlanTab->GetStatus());
+			break;
+		}
+	}
+	else
+	{
+		m_statusLabel->setText(READY);
 	}
 }
 
@@ -242,7 +250,7 @@ void MainWindow::SetCaption()
 
 	QString title = QString("Survey Calcs ") + VERSION;
 	if (!filename.isEmpty())
-	 title += " - " + filename;
+		title += " - " + filename;
 
 	setWindowTitle(title);
 }

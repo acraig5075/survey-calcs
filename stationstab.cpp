@@ -16,7 +16,8 @@ StationsTab::StationsTab(StationsController &controller, QWidget *parent) :
 	ui->setupUi(this);
 	m_pModel = new StationsQueryModel(this);
 	ui->w_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-	ui->w_tableView->setStyleSheet("QTableView { background: lightGray }");
+
+	onClear();
 
 	connect(ui->w_tableView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(onDoubleClick(const QModelIndex&)));
 	connect(this, SIGNAL(stationCountChanged()), parent, SLOT(onStatusTextChanged()));
@@ -38,6 +39,8 @@ void StationsTab::onClear()
 	m_pModel->clear();
 	ui->w_tableView->setModel(nullptr);
 	ui->w_tableView->setStyleSheet("QTableView { background: lightGray }");
+	ui->addButton->setEnabled(false);
+	ui->obsButton->setEnabled(false);
 }
 
 void StationsTab::onLoad()
@@ -56,6 +59,8 @@ void StationsTab::onLoad()
 		ui->w_tableView->setModel(m_pModel);
 		ui->w_tableView->setStyleSheet("QTableView { background: white }");
 		ui->w_tableView->show();
+		ui->addButton->setEnabled(true);
+		ui->obsButton->setEnabled(true);
 	}
 }
 

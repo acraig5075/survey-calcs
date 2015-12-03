@@ -17,7 +17,8 @@ CalcsTab::CalcsTab(CalcsController &calcsController, QWidget *parent) :
 	ui->setupUi(this);
 
 	m_pModel = new CalcsListModel(this);
-	ui->w_listView->setStyleSheet("QListView { background: lightGray }");
+
+	onClear();
 }
 
 CalcsTab::~CalcsTab()
@@ -35,17 +36,23 @@ void CalcsTab::onClear()
 {
 	m_pModel->clear();
 	ui->w_listView->setStyleSheet("QListView { background: lightGray }");
+	ui->addButton->setEnabled(false);
 }
 
 void CalcsTab::onLoad()
 {
-	m_calcsController.Read();
-	QStringList descList = m_calcsController.GetDescriptions();
-	m_pModel->addDesc(descList);
+	QSqlDatabase db = QSqlDatabase::database();
+	if (db.isOpen())
+	{
+		m_calcsController.Read();
+		QStringList descList = m_calcsController.GetDescriptions();
+		m_pModel->addDesc(descList);
 
-	ui->w_listView->setModel(m_pModel);
-	ui->w_listView->setStyleSheet("QListView { background: white }");
-	ui->w_listView->show();
+		ui->w_listView->setModel(m_pModel);
+		ui->w_listView->setStyleSheet("QListView { background: white }");
+		ui->w_listView->show();
+		ui->addButton->setEnabled(true);
+	}
 }
 
 void CalcsTab::on_w_loadButton_clicked()
