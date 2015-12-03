@@ -18,7 +18,9 @@ public:
 	~StationDlg();
 
 private slots:
+	void checkLineEdits(QString text);
 	void on_StationDlg_accepted();
+	void on_nameEdit_editingFinished();
 
 private:
 	Ui::StationDlg *ui;
