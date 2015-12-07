@@ -22,6 +22,14 @@ DoublePolarDlg::DoublePolarDlg(QWidget *parent, DpObsCalc &dpObs) :
 {
 	ui->setupUi(this);
 
+	const QString dms = "ddd.mmss";
+	ui->dir1Edit->setPlaceholderText(dms);
+	ui->ver1Edit->setPlaceholderText(dms);
+	ui->dir2Edit->setPlaceholderText(dms);
+	ui->ver2Edit->setPlaceholderText(dms);
+	ui->oc1Edit->setPlaceholderText(dms);
+	ui->oc2Edit->setPlaceholderText(dms);
+
 	QAction *stationAction1 = ui->from1Edit->addAction(QIcon(":/blue-hand-16.png"), QLineEdit::TrailingPosition);
 	QAction *stationAction2 = ui->from2Edit->addAction(QIcon(":/blue-hand-16.png"), QLineEdit::TrailingPosition);
 	QAction *stationAction3 = ui->setup1Edit->addAction(QIcon(":/blue-hand-16.png"), QLineEdit::TrailingPosition);
@@ -54,17 +62,23 @@ DoublePolarDlg::~DoublePolarDlg()
 
 void DoublePolarDlg::wireStation(const Occupied &station, QLineEdit *nameEdit, QLineEdit *setupEdit, QLineEdit *corrEdit)
 {
-	nameEdit->setText(station.m_name);
-	setupEdit->setText(QString::number(station.m_setup));
-	corrEdit->setText(Utils::Rad2Dms(station.m_oc));
+	if (!station.m_name.isEmpty())
+	{
+		nameEdit->setText(station.m_name);
+		setupEdit->setText(QString::number(station.m_setup));
+		corrEdit->setText(Utils::Rad2Dms(station.m_oc));
+	}
 }
 
 void DoublePolarDlg::wireObservation(const Observation &obs, QLineEdit *targetEdit, QLineEdit *dircEdit, QLineEdit *vertEdit, QLineEdit *distEdit)
 {
-	targetEdit->setText(obs.m_target);
-	dircEdit->setText(Utils::Rad2Dms(obs.m_dirc));
-	vertEdit->setText(Utils::Rad2Dms(obs.m_vert));
-	distEdit->setText(QString::number(obs.m_dist, 'f', 3));
+	if (!obs.m_target.isEmpty())
+	{
+		targetEdit->setText(obs.m_target);
+		dircEdit->setText(Utils::Rad2Dms(obs.m_dirc));
+		vertEdit->setText(Utils::Rad2Dms(obs.m_vert));
+		distEdit->setText(QString::number(obs.m_dist, 'f', 3));
+	}
 }
 
 void DoublePolarDlg::on_calculateButton_clicked()

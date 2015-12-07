@@ -4,10 +4,12 @@
 #include "Models/calcslistmodel.h"
 #include "calcfactory.h"
 #include "calcscontroller.h"
+#include "calctypes.h"
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
 #include <QDebug>
+#include <QMenu>
 
 CalcsTab::CalcsTab(CalcsController &calcsController, QWidget *parent) :
 	QWidget(parent),
@@ -18,7 +20,18 @@ CalcsTab::CalcsTab(CalcsController &calcsController, QWidget *parent) :
 
 	m_pModel = new CalcsListModel(this);
 
+	QMenu *menu = new QMenu(this);
+	QAction *joinAction = new QAction("Join", this);
+	QAction *dpolarAction = new QAction("Double Polar", this);
+	menu->addAction(joinAction);
+	menu->addAction(dpolarAction);
+
+	ui->addButton->setMenu(menu);
+
 	onClear();
+
+	connect(joinAction, SIGNAL(triggered()), this, SLOT(onAddJoin()));
+	connect(dpolarAction, SIGNAL(triggered()), this, SLOT(onAddDPolar()));
 }
 
 CalcsTab::~CalcsTab()
@@ -65,4 +78,21 @@ void CalcsTab::on_w_listView_doubleClicked(const QModelIndex &index)
 
 		m_pModel->editDesc(i, desc);
 	}
+}
+
+template <typename T>
+void Add(QWidget *parent)
+{
+	auto calc = new T;
+	calc->Edit(parent);
+}
+
+void CalcsTab::onAddJoin()
+{
+	Add<JoinsCalc>(this);
+}
+
+void CalcsTab::onAddDPolar()
+{
+	Add<DpObsCalc>(this);
 }

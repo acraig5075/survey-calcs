@@ -15,9 +15,9 @@ public:
 	QSqlQuery GetUpdateQueryString(const QString name, int setup);
 
 	QString m_name;
-	int m_setup;
-	double m_oc;
-	double m_instHgt;
+	int m_setup = 0;
+	double m_oc = 0.0;
+	double m_instHgt = 0.0;
 	QDate m_date;
 
 	static const QString SqlCreateQuery;

@@ -2,6 +2,7 @@
 #define CALCSTAB_H
 
 #include <QWidget>
+#include <Types/calc.h>
 
 class CalcsListModel;
 class CalcsController;
@@ -26,6 +27,8 @@ public slots:
 
 private slots:
 	void on_w_listView_doubleClicked(const QModelIndex &index);
+	void onAddJoin();
+	void onAddDPolar();
 
 private:
 	Ui::CalcsTab *ui;
