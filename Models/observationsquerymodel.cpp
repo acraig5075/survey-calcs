@@ -3,7 +3,7 @@
 
 const QString ObservationsQueryModel::ModelQueryString = "SELECT target, dirc, vert, dist, desc, prismhgt FROM obs WHERE station = '%1' AND setup = %2 ORDER BY `order`";
 
-const QStringList ObservationsQueryModel::HorizontalHeaderList = QStringList() << "Target" << "Angle" << "Azimuth" << "Slope dist." << "Descr." << "Target hgt.";
+const QStringList ObservationsQueryModel::HorizontalHeaderList = QStringList() << "Target" << "Direction" << "Zenith" << "Slope dist." << "Descr." << "Target hgt.";
 
 ObservationsQueryModel::ObservationsQueryModel(QObject *parent)
 	: QSqlQueryModel(parent)

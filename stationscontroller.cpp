@@ -51,7 +51,7 @@ void StationsController::ShowObservations(QWidget *parent, const Occupied &stati
 	QSqlDatabase db = QSqlDatabase::database();
 	db.transaction();
 
-	TableDlg<Observation, ObservationsQueryModel> dlg(obs, caption, query, parent);
+	TableDlg<Observation, ObservationsQueryModel> dlg(obs, caption, query, false, parent);
 
 	if (dlg.exec() == QDialog::Accepted)
 		db.commit();

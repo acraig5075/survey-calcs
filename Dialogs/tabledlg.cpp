@@ -10,7 +10,7 @@
 #include <QMessageBox>
 
 
-TableBaseDlg::TableBaseDlg(const QString &caption, const QString &query, QWidget *parent) :
+TableBaseDlg::TableBaseDlg(const QString &caption, const QString &query, bool stretch, QWidget *parent) :
 	QDialog(parent),
 	m_query(query),
 	ui(new Ui::TableBaseDlg)
@@ -22,6 +22,10 @@ TableBaseDlg::TableBaseDlg(const QString &caption, const QString &query, QWidget
 	ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 	ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 	ui->tableView->setContextMenuPolicy(Qt::CustomContextMenu);
+	ui->tableView->horizontalHeader()->setStretchLastSection(stretch);
+	ui->tableView->setStyleSheet("QTableView { background: lightGray }"
+								 "QTableView::item { background-color: white }"
+								 "QTableView::item:selected { background-color: rgb(0,140,255) }");
 }
 
 TableBaseDlg::~TableBaseDlg()
@@ -89,8 +93,8 @@ void TableBaseDlg::on_tableView_doubleClicked(const QModelIndex &index)
 
 
 template <typename Type, typename Model>
-TableDlg<Type, Model>::TableDlg(const Type &type, const QString &caption, const QString &query, QWidget *parent)
-	: TableBaseDlg(caption, query, parent)
+TableDlg<Type, Model>::TableDlg(const Type &type, const QString &caption, const QString &query, bool stretch, QWidget *parent)
+	: TableBaseDlg(caption, query, stretch, parent)
 	, m_type(type)
 {
 	m_pModel = new Model(this);

@@ -14,7 +14,7 @@ class TableBaseDlg : public QDialog
 	Q_OBJECT
 
 public:
-	explicit TableBaseDlg(const QString &caption, const QString &query, QWidget *parent = 0);
+	explicit TableBaseDlg(const QString &caption, const QString &query, bool stretch, QWidget *parent);
 	~TableBaseDlg();
 
 private:
@@ -38,7 +38,7 @@ template <typename Type, typename Model>
 class TableDlg : public TableBaseDlg
 {
 public:
-	TableDlg(const Type &type, const QString &caption, const QString &query, QWidget *parent = 0);
+	TableDlg(const Type &type, const QString &caption, const QString &query, bool stretch, QWidget *parent);
 
 private:
 	virtual bool AddRow() override;

@@ -83,19 +83,19 @@ void DoublePolarDlg::wireObservation(const Observation &obs, QLineEdit *targetEd
 
 void DoublePolarDlg::on_calculateButton_clicked()
 {
-	m_dpObs.m_stn[1].m_name = ui->from1Edit->text();
-	m_dpObs.m_obs[1].m_target = ui->trg1Edit->text();
-	m_dpObs.m_obs[1].m_dirc = Utils::Dms2Rad(ui->dir1Edit->text());
-	m_dpObs.m_stn[1].m_oc = Utils::Dms2Rad(ui->oc1Edit->text());
-	m_dpObs.m_obs[1].m_vert = Utils::Dms2Rad(ui->ver1Edit->text());
-	m_dpObs.m_obs[1].m_dist = ui->dis1Edit->text().toDouble();
+	m_dpObs.m_stn[0].m_name = ui->from1Edit->text();
+	m_dpObs.m_obs[0].m_target = ui->trg1Edit->text();
+	m_dpObs.m_obs[0].m_dirc = Utils::Dms2Rad(ui->dir1Edit->text());
+	m_dpObs.m_stn[0].m_oc = Utils::Dms2Rad(ui->oc1Edit->text());
+	m_dpObs.m_obs[0].m_vert = Utils::Dms2Rad(ui->ver1Edit->text());
+	m_dpObs.m_obs[0].m_dist = ui->dis1Edit->text().toDouble();
 
-	m_dpObs.m_stn[2].m_name = ui->from2Edit->text();
-	m_dpObs.m_obs[2].m_target = ui->trg2Edit->text();
-	m_dpObs.m_obs[2].m_dirc = Utils::Dms2Rad(ui->dir2Edit->text());
-	m_dpObs.m_stn[2].m_oc = Utils::Dms2Rad(ui->oc2Edit->text());
-	m_dpObs.m_obs[2].m_vert = Utils::Dms2Rad(ui->ver2Edit->text());
-	m_dpObs.m_obs[2].m_dist = ui->dis2Edit->text().toDouble();
+	m_dpObs.m_stn[1].m_name = ui->from2Edit->text();
+	m_dpObs.m_obs[1].m_target = ui->trg2Edit->text();
+	m_dpObs.m_obs[1].m_dirc = Utils::Dms2Rad(ui->dir2Edit->text());
+	m_dpObs.m_stn[1].m_oc = Utils::Dms2Rad(ui->oc2Edit->text());
+	m_dpObs.m_obs[1].m_vert = Utils::Dms2Rad(ui->ver2Edit->text());
+	m_dpObs.m_obs[1].m_dist = ui->dis2Edit->text().toDouble();
 
 	Compute::DoublePolar(m_dpObs);
 	ui->previewEdit->setText(m_dpObs.desc());

@@ -270,7 +270,7 @@ void MainWindow::on_actionCoordDescr_triggered()
 	QSqlDatabase db = QSqlDatabase::database();
 	db.transaction();
 
-	TableDlg<Desc, DescQueryModel> dlg(desc, "Descriptions", query, this);
+	TableDlg<Desc, DescQueryModel> dlg(desc, "Descriptions", query, true, this);
 	dlg.exec();
 
 	if (dlg.exec() == QDialog::Accepted)
