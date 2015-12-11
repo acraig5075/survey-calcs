@@ -51,6 +51,15 @@ DoublePolarDlg::DoublePolarDlg(QWidget *parent, DpObsCalc &dpObs) :
 {
 	ui->setupUi(this);
 
+	setStyleSheet("QDialog { background: lightBlue } "
+				  "QGroupBox { "
+				  "background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 2, stop: 0 #E0E0E0, stop: 1 #FFFFFF); "
+				  "border: 2px solid gray; "
+				  "border-radius: 5px; "
+				  "margin-top: 1ex; "
+				  "}"
+				  );
+
 	const QString dms = "ddd.mmss";
 	ui->dir1Edit->setPlaceholderText(dms);
 	ui->ver1Edit->setPlaceholderText(dms);
