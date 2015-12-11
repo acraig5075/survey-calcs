@@ -28,6 +28,11 @@ private slots:
 	void onTarget2Action();
 	void onStationAction(Occupied &station, QLineEdit *nameEdit, QLineEdit *setupEdit, QLineEdit *corrEdit);
 	void onTargetAction(Observation &obs, const QLineEdit *nameEdit, const QLineEdit *setupEdit, QLineEdit *targetEdit, QLineEdit *dircEdit, QLineEdit *vertEdit, QLineEdit *distEdit);
+	void on_meanRadio_toggled(bool checked);
+	void on_station1Radio_toggled(bool checked);
+	void on_station2Radio_toggled(bool checked);
+	void on_weightedRadio_toggled(bool checked);
+	void on_radio_toggled(const QString &adopt);
 
 private:
 	Ui::DoublePolarDlg *ui;
@@ -35,6 +40,7 @@ private:
 
 	void wireStation(const Occupied &station, QLineEdit *nameEdit, QLineEdit *setupEdit, QLineEdit *corrEdit);
 	void wireObservation(const Observation &obs, QLineEdit *targetEdit, QLineEdit *dircEdit, QLineEdit *vertEdit, QLineEdit *distEdit);
+	void wireResult();
 };
 
 #endif // DOUBLEPOLARDLG_H

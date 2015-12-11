@@ -12,7 +12,7 @@ public:
 	Observation m_obs[2];
 
 	QString m_aname;
-	QString m_adopt;
+	QString m_adopt = "M";
 	double m_y1 = 0, m_x1 = 0, m_y2 = 0, m_x2 = 0, m_ay = 0, m_ax = 0;
 	double m_fy1 = 0, m_fx1 = 0, m_fy2 = 0, m_fx2 = 0;
 
