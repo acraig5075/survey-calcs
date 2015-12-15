@@ -40,18 +40,27 @@ QStringList CalcsController::GetDescriptions() const
 	return descriptions;
 }
 
-QString CalcsController::GetDescriptionAt(int i) const
+QString CalcsController::GetDescriptionAt(size_t i) const
 {
-	if (i >= 0 && i < m_calcList.size())
+	if (i < m_calcList.size())
 		return m_calcList.at(i)->desc();
 	else
 		return "";
 }
 
-
-bool CalcsController::EditCalcAt(int i, QWidget *parent)
+size_t CalcsController::numCalcs() const
 {
-	if (i >= 0 && i < m_calcList.size())
+	return m_calcList.size();
+}
+
+void CalcsController::clear()
+{
+	m_calcList.clear();
+}
+
+bool CalcsController::EditCalcAt(size_t i, QWidget *parent)
+{
+	if (i < m_calcList.size())
 	{
 		auto &calc = m_calcList.at(i);
 		if (calc->Edit(parent))
@@ -63,3 +72,57 @@ bool CalcsController::EditCalcAt(int i, QWidget *parent)
 
 	return false;
 }
+
+template <typename T>
+bool CreateTableIfNotExists()
+{
+	return Utils::ExecQuery(T::SqlCreateQuery);
+}
+
+template <typename T>
+bool CalcsController::Add(QWidget *parent)
+{
+	std::unique_ptr<T> calc(new T);
+
+	if (calc->Edit(parent))
+	{
+		QSqlDatabase db = QSqlDatabase::database();
+		db.transaction();
+		bool ok;
+
+		ok = CreateTableIfNotExists<T>();
+
+		QSqlQuery query;
+		query.prepare("INSERT INTO calcs (`type`) VALUES (:calcType)");
+		query.bindValue(":calcType", T::TypeID);
+		ok = ok && Utils::ExecQuery(query);
+
+		if (ok)
+		{
+			int calcref = query.lastInsertId().toInt(&ok);
+			if (ok)
+				calc->setCalcRef(calcref);
+		}
+
+		QString insert = calc->GetInsertQueryString();
+		ok = ok && Utils::ExecQuery(insert);
+
+		if (ok)
+		{
+			db.commit();
+			m_calcList.push_back(std::move(calc));
+		}
+		else
+		{
+			db.rollback();
+		}
+
+		return ok;
+	}
+
+	return false;
+}
+
+// explicit member function template instantiations
+template bool CalcsController::Add<JoinsCalc>(QWidget *parent);
+template bool CalcsController::Add<DpObsCalc>(QWidget *parent);

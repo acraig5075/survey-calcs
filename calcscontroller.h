@@ -21,8 +21,13 @@ public:
 
 	void Read();
 	QStringList GetDescriptions() const;
-	QString GetDescriptionAt(int i) const;
-	bool EditCalcAt(int i, QWidget *parent);
+	QString GetDescriptionAt(size_t i) const;
+	bool EditCalcAt(size_t i, QWidget *parent);
+	size_t numCalcs() const;
+	void clear();
+
+	template <typename T>
+	bool Add(QWidget *parent);
 
 signals:
 

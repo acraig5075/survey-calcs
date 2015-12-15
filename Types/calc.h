@@ -22,8 +22,9 @@ protected:
 	int m_calcref = 0;
 
 public:
-	Calc();
+	Calc() = default;
 	virtual ~Calc() = default;
+
 	void setCalcRef(int calcRef);
 	virtual QString desc() const = 0;
 	virtual bool Edit(QWidget *) { return false; }

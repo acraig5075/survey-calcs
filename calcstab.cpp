@@ -31,6 +31,7 @@ CalcsTab::CalcsTab(CalcsController &calcsController, QWidget *parent) :
 
 	onClear();
 
+	connect(this, SIGNAL(calcsCountChanged()), parent, SLOT(onStatusTextChanged()));
 	connect(joinAction, SIGNAL(triggered()), this, SLOT(onAddJoin()));
 	connect(dpolarAction, SIGNAL(triggered()), this, SLOT(onAddDPolar()));
 }
@@ -48,6 +49,7 @@ QString CalcsTab::GetStatus() const
 
 void CalcsTab::onClear()
 {
+	m_calcsController.clear();
 	m_pModel->clear();
 	ui->w_listView->setStyleSheet("QListView { background: lightGray }");
 	ui->addButton->setEnabled(false);
@@ -90,40 +92,18 @@ bool CreateTableIfNotExists()
 template <typename T>
 void CalcsTab::Add(QWidget *parent)
 {
-	auto calc = new T;
-	if (calc->Edit(parent))
+	if (m_calcsController.Add<T>(parent))
 	{
-		QSqlDatabase db = QSqlDatabase::database();
-		db.transaction();
-		bool ok;
+		size_t count = m_calcsController.numCalcs();
+		QString desc = m_calcsController.GetDescriptionAt(count - 1);
 
-		ok = CreateTableIfNotExists<T>();
+		m_pModel->addDesc(desc);
+		emit calcsCountChanged();
+		QModelIndex index = m_pModel->index(m_pModel->rowCount() - 1, 0);
 
-		QSqlQuery query;
-		query.prepare("INSERT INTO calcs (`type`) VALUES (:calcType)");
-		query.bindValue(":calcType", T::TypeID);
-		ok = ok && Utils::ExecQuery(query);
-
-		if (ok)
-		{
-			int calcref = query.lastInsertId().toInt(&ok);
-			if (ok)
-				calc->setCalcRef(calcref);
-		}
-
-		QString insert = calc->GetInsertQueryString();
-		ok = ok && Utils::ExecQuery(insert);
-
-		if (ok)
-		{
-			db.commit();
-			m_pModel->addDesc(calc->desc());
-			ui->w_listView->scrollToBottom();
-		}
-		else
-		{
-			db.rollback();
-		}
+		ui->w_listView->setFocus();
+		ui->w_listView->scrollToBottom();
+		ui->w_listView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect);
 	}
 }
 

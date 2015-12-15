@@ -29,6 +29,9 @@ public slots:
 	void onClear();
 	void onLoad();
 
+signals:
+	void calcsCountChanged();
+
 private slots:
 	void on_w_listView_doubleClicked(const QModelIndex &index);
 	void onAddJoin();
