@@ -13,6 +13,7 @@ public:
 	QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
 
 	void addDesc(const QStringList &descList);
+	void addDesc(const QString &desc);
 
 	void clear();
 

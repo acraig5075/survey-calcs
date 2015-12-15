@@ -6,6 +6,14 @@
 #include <QWidget>
 #include <memory>
 
+
+// Keep type ID numbers in one place. Have class static TypeID members refer to these.
+enum {JoinTypeID = 1
+	  , PolarTypeID = 2
+	  , DpObsTypeID = 8
+	 };
+
+
 class Calc
 {
 	using CalcPtr = std::unique_ptr<Calc>;
@@ -15,11 +23,12 @@ protected:
 
 public:
 	Calc();
-
 	virtual ~Calc() = default;
+	void setCalcRef(int calcRef);
 	virtual QString desc() const = 0;
 	virtual bool Edit(QWidget *) { return false; }
 	virtual QString GetUpdateQueryString() const { return ""; }
+	virtual QString GetInsertQueryString() const { return ""; }
 
 	static bool SortFunc(CalcPtr const& a, CalcPtr const& b);
 	static const QString SqlCreateQuery;

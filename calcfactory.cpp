@@ -5,13 +5,13 @@ std::unique_ptr<Calc> CalcFactory::Instance(int typeId)
 {
 	switch (typeId)
 	{
-	case 1:
+	case JoinsCalc::TypeID:
 		return std::make_unique<JoinsCalc>();
-	case 2:
+	case PolarsCalc::TypeID:
 		return std::make_unique<PolarsCalc>();
 	case 3:
 		return std::make_unique<IntersCalc>();
-	case 8:
+	case DpObsCalc::TypeID:
 		return std::make_unique<DpObsCalc>();
 	case 15:
 		return std::make_unique<SpObsCalc>();

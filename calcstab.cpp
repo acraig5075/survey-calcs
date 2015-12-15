@@ -5,6 +5,7 @@
 #include "calcfactory.h"
 #include "calcscontroller.h"
 #include "calctypes.h"
+#include "utils.h"
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
@@ -81,10 +82,49 @@ void CalcsTab::on_w_listView_doubleClicked(const QModelIndex &index)
 }
 
 template <typename T>
-void Add(QWidget *parent)
+bool CreateTableIfNotExists()
+{
+	return Utils::ExecQuery(T::SqlCreateQuery);
+}
+
+template <typename T>
+void CalcsTab::Add(QWidget *parent)
 {
 	auto calc = new T;
-	calc->Edit(parent);
+	if (calc->Edit(parent))
+	{
+		QSqlDatabase db = QSqlDatabase::database();
+		db.transaction();
+		bool ok;
+
+		ok = CreateTableIfNotExists<T>();
+
+		QSqlQuery query;
+		query.prepare("INSERT INTO calcs (`type`) VALUES (:calcType)");
+		query.bindValue(":calcType", T::TypeID);
+		ok = ok && Utils::ExecQuery(query);
+
+		if (ok)
+		{
+			int calcref = query.lastInsertId().toInt(&ok);
+			if (ok)
+				calc->setCalcRef(calcref);
+		}
+
+		QString insert = calc->GetInsertQueryString();
+		ok = ok && Utils::ExecQuery(insert);
+
+		if (ok)
+		{
+			db.commit();
+			m_pModel->addDesc(calc->desc());
+			ui->w_listView->scrollToBottom();
+		}
+		else
+		{
+			db.rollback();
+		}
+	}
 }
 
 void CalcsTab::onAddJoin()

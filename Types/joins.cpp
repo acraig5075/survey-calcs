@@ -3,6 +3,19 @@
 #include "Dialogs/editjoindlg.h"
 #include <QVariant>
 
+const QString JoinsCalc::SqlCreateQuery = "CREATE TABLE IF NOT EXISTS `joins` ("
+		"`calcref` BIGINT,"
+		"`fromname` VARCHAR(8),"
+		"`fy` FLOAT,"
+		"`fx` FLOAT,"
+		"`toname` VARCHAR(8),"
+		"`ty` FLOAT,"
+		"`tx` FLOAT,"
+		"`dirc` FLOAT,"
+		"`dist` FLOAT"
+		")";
+
+
 JoinsCalc::JoinsCalc(const QSqlRecord &record)
 {
 	m_calcref = record.value("calcref").toInt();
@@ -39,7 +52,7 @@ bool JoinsCalc::Edit(QWidget *parent)
 
 QString JoinsCalc::GetUpdateQueryString() const
 {
-	return QString("UPDATE joins SET `fromname`='%1', `fy`=%2, `fx`=%3, `toname`='%4', `ty`=%5, `tx`=%6, `dirc`=%7, `dist`='%8' WHERE `calcref`='%9'")
+	return QString("UPDATE `joins` SET `fromname`='%1', `fy`=%2, `fx`=%3, `toname`='%4', `ty`=%5, `tx`=%6, `dirc`=%7, `dist`=%8 WHERE `calcref`='%9'")
 			.arg(m_fromname)
 			.arg(QString::number(m_fy, 'f', 6))
 			.arg(QString::number(m_fx, 'f', 6))
@@ -51,4 +64,18 @@ QString JoinsCalc::GetUpdateQueryString() const
 			.arg(m_calcref);
 }
 
+QString JoinsCalc::GetInsertQueryString() const
+{
+	return QString("INSERT INTO `joins` (`fromname`, `fy`, `fx`, `toname`, `ty`, `tx`, `dirc`, `dist`, `calcref`) "
+			"VALUES ('%1', %2, %3, '%4', %5, %6, %7, %8, %9)")
+			.arg(m_fromname)
+			.arg(QString::number(m_fy, 'f', 6))
+			.arg(QString::number(m_fx, 'f', 6))
+			.arg(m_toname)
+			.arg(QString::number(m_ty, 'f', 6))
+			.arg(QString::number(m_tx, 'f', 6))
+			.arg(m_dirc)
+			.arg(m_dist)
+			.arg(m_calcref);
+}
 

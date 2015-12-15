@@ -39,6 +39,14 @@ void CalcsListModel::addDesc(const QStringList &descList)
 	}
 }
 
+void CalcsListModel::addDesc(const QString &desc)
+{
+	int row = m_stringList.size();
+	beginInsertRows(QModelIndex(), row, row);
+	m_stringList.push_back(desc);
+	endInsertRows();
+}
+
 void CalcsListModel::clear()
 {
 	m_stringList.clear();

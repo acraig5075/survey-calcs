@@ -21,6 +21,10 @@ public:
 
 	QString GetStatus() const;
 
+private:
+	template <typename T>
+	void Add(QWidget *parent);
+
 public slots:
 	void onClear();
 	void onLoad();

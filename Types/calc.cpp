@@ -3,7 +3,7 @@
 #include <QVariant>
 
 const QString Calc::SqlCreateQuery = "CREATE TABLE `calcs` ("
-		"`order` BIGINT,"
+		"`order` BIGINT PRIMARY KEY ASC,"
 		"`type` SMALLINT,"
 		"`lines` SMALLINT,"
 		"`page` SMALLINT,"
@@ -21,4 +21,9 @@ Calc::Calc()
 bool Calc::SortFunc(CalcPtr const& a, CalcPtr const& b)
 {
 	return a->m_calcref < b->m_calcref;
+}
+
+void Calc::setCalcRef(int calcRef)
+{
+	m_calcref = calcRef;
 }
