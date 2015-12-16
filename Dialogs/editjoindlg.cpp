@@ -29,13 +29,17 @@ EditJoinDlg::EditJoinDlg(QWidget *parent, JoinsCalc &join) :
 	ui->toNameEdit->setText(join.m_toname);
 	ui->toEastingEdit->setText(QString::number(join.m_ty, 'f', 3));
 	ui->toNorthingEdit->setText(QString::number(join.m_tx, 'f', 3));
-	ui->previewEdit->setText(join.desc());
+	ui->distEdit->setText(QString::number(join.m_dist, 'f', 3));
+	ui->dircEdit->setText(Utils::Rad2Dms(join.m_dirc));
 
 	ui->toNorthingEdit->setAlignment(Qt::AlignRight);
 	ui->toEastingEdit->setAlignment(Qt::AlignRight);
 	ui->fromNorthingEdit->setAlignment(Qt::AlignRight);
 	ui->fromEastingEdit->setAlignment(Qt::AlignRight);
-	ui->previewEdit->setFont(QFont("Courier", 8, QFont::Normal | QFont::Courier));
+	ui->distEdit->setAlignment(Qt::AlignRight);
+	ui->dircEdit->setAlignment(Qt::AlignRight);
+	ui->distEdit->setReadOnly(true);
+	ui->dircEdit->setReadOnly(true);
 
 	auto validator = new QDoubleValidator(-10000000.0, 10000000.0, 3, this);
 	validator->setNotation(QDoubleValidator::StandardNotation);
@@ -61,7 +65,9 @@ void EditJoinDlg::on_calculateButton_clicked()
 	m_join.m_tx = ui->toNorthingEdit->text().toDouble();
 
 	Compute::Join(m_join);
-	ui->previewEdit->setText(m_join.desc());
+
+	ui->distEdit->setText(QString::number(m_join.m_dist, 'f', 3));
+	ui->dircEdit->setText(Utils::Rad2Dms(m_join.m_dirc));
 }
 
 void EditJoinDlg::onCoordAction1()
@@ -70,8 +76,7 @@ void EditJoinDlg::onCoordAction1()
 	auto p2 = qMakePair(m_join.m_fy, ui->fromEastingEdit);
 	auto p3 = qMakePair(m_join.m_fx, ui->fromNorthingEdit);
 
-	if (Utils::LoadCoord(this, p1, p2, p3))
-		ui->previewEdit->clear();
+	Utils::LoadCoord(this, p1, p2, p3);
 }
 
 void EditJoinDlg::onCoordAction2()
@@ -80,6 +85,5 @@ void EditJoinDlg::onCoordAction2()
 	auto p2 = qMakePair(m_join.m_ty, ui->toEastingEdit);
 	auto p3 = qMakePair(m_join.m_tx, ui->toNorthingEdit);
 
-	if (Utils::LoadCoord(this, p1, p2, p3))
-		ui->previewEdit->clear();
+	Utils::LoadCoord(this, p1, p2, p3);
 }
