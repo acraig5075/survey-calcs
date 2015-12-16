@@ -93,7 +93,7 @@ DoublePolarDlg::DoublePolarDlg(QWidget *parent, DpObsCalc &dpObs) :
 	ui->station1Radio->setChecked(m_dpObs.m_adopt == "1");
 	ui->station2Radio->setChecked(m_dpObs.m_adopt == "2");
 	ui->weightedRadio->setChecked(m_dpObs.m_adopt == "W");
-	if (m_dpObs.m_adopt != "1" && m_dpObs.m_adopt != "w" && m_dpObs.m_adopt != "W")
+	if (m_dpObs.m_adopt != "1" && m_dpObs.m_adopt != "2" && m_dpObs.m_adopt != "W")
 		ui->meanRadio->setChecked(true);
 
 	ui->targetEdit->setText(m_dpObs.m_aname);

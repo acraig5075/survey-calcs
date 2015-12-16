@@ -18,6 +18,16 @@ public:
 	~PolarDlg();
 
 private:
+	void wireResult(const PolarsCalc &polar);
+	void pack(PolarsCalc &polar) const;
+
+private slots:
+	void onStationAction();
+	void onTargetAction();
+
+	void on_calcButton_clicked();
+
+private:
 	Ui::PolarDlg *ui;
 	PolarsCalc &m_polar;
 };

@@ -4,7 +4,6 @@
 #include "Types/calc.h"
 #include "Types/occupied.h"
 #include "Types/observation.h"
-#include <QtMath>
 
 class PolarsCalc : public Calc
 {

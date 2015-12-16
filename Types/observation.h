@@ -3,6 +3,7 @@
 
 #include <QSqlRecord>
 #include <QWidget>
+#include <QtMath>
 
 class Observation
 {
@@ -21,7 +22,7 @@ public:
 	QString m_target;
 	QString m_desc;
 	double m_dirc = 0;
-	double m_vert = 0;
+	double m_vert = M_PI_2;
 	double m_dist = 0;
 	double m_prismHgt = 0;
 
