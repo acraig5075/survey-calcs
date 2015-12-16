@@ -36,6 +36,7 @@ private slots:
 	void on_w_listView_doubleClicked(const QModelIndex &index);
 	void onAddJoin();
 	void onAddDPolar();
+	void onAddPolar();
 
 private:
 	Ui::CalcsTab *ui;

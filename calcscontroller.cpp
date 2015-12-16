@@ -126,3 +126,4 @@ bool CalcsController::Add(QWidget *parent)
 // explicit member function template instantiations
 template bool CalcsController::Add<JoinsCalc>(QWidget *parent);
 template bool CalcsController::Add<DpObsCalc>(QWidget *parent);
+template bool CalcsController::Add<PolarsCalc>(QWidget *parent);

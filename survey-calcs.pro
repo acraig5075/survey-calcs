@@ -45,7 +45,8 @@ SOURCES += main.cpp\
     Types/desc.cpp \
     Dialogs/descdlg.cpp \
     Dialogs/stationdlg.cpp \
-    Models/descquerymodel.cpp
+    Models/descquerymodel.cpp \
+    Dialogs/polardlg.cpp
 
 HEADERS  += mainwindow.h \
     calcfactory.h \
@@ -80,7 +81,8 @@ HEADERS  += mainwindow.h \
     Types/desc.h \
     Dialogs/descdlg.h \
     Dialogs/stationdlg.h \
-    Models/descquerymodel.h
+    Models/descquerymodel.h \
+    Dialogs/polardlg.h
 
 FORMS    += mainwindow.ui \
     stationstab.ui \
@@ -95,7 +97,8 @@ FORMS    += mainwindow.ui \
     Dialogs/tabledlg.ui \
     Dialogs/obsdlg.ui \
     Dialogs/descdlg.ui \
-    Dialogs/stationdlg.ui
+    Dialogs/stationdlg.ui \
+    Dialogs/polardlg.ui
 
 DISTFILES +=
 

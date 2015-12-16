@@ -23,8 +23,11 @@ CalcsTab::CalcsTab(CalcsController &calcsController, QWidget *parent) :
 
 	QMenu *menu = new QMenu(this);
 	QAction *joinAction = new QAction("Join", this);
+	QAction *polarAction = new QAction("Polar", this);
 	QAction *dpolarAction = new QAction("Double Polar", this);
+
 	menu->addAction(joinAction);
+	menu->addAction(polarAction);
 	menu->addAction(dpolarAction);
 
 	ui->addButton->setMenu(menu);
@@ -33,6 +36,7 @@ CalcsTab::CalcsTab(CalcsController &calcsController, QWidget *parent) :
 
 	connect(this, SIGNAL(calcsCountChanged()), parent, SLOT(onStatusTextChanged()));
 	connect(joinAction, SIGNAL(triggered()), this, SLOT(onAddJoin()));
+	connect(polarAction, SIGNAL(triggered()), this, SLOT(onAddPolar()));
 	connect(dpolarAction, SIGNAL(triggered()), this, SLOT(onAddDPolar()));
 }
 
@@ -115,4 +119,9 @@ void CalcsTab::onAddJoin()
 void CalcsTab::onAddDPolar()
 {
 	Add<DpObsCalc>(this);
+}
+
+void CalcsTab::onAddPolar()
+{
+	Add<PolarsCalc>(this);
 }
