@@ -2,7 +2,7 @@
 #include "ui_polardlg.h"
 #include "Types/polars.h"
 #include "utils.h"
-
+#include "compute.h"
 
 namespace
 {
@@ -34,20 +34,6 @@ public:
 		: QDoubleValidator(0.0, 10000000.0, 3, parent)
 	{}
 };
-}
-
-namespace Compute
-{
-double SlopeToHorizontal_(double slope, double zenith)
-{
-	return slope * sin(zenith);
-}
-
-void Polar(PolarsCalc &p)
-{
-	double dist = SlopeToHorizontal_(p.m_obs.m_dist, p.m_obs.m_vert);
-	Utils::Polar(p.m_fy, p.m_fx, dist, p.m_obs.m_dirc, p.m_ty, p.m_tx);
-}
 }
 
 PolarDlg::PolarDlg(QWidget *parent, PolarsCalc &polar) :

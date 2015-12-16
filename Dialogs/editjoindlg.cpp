@@ -1,15 +1,8 @@
 #include "editjoindlg.h"
 #include "ui_editjoindlg.h"
 #include "utils.h"
+#include "compute.h"
 
-
-namespace Compute
-{
-void Join(JoinsCalc &join)
-{
-	Utils::Join(join.m_fy, join.m_fx, join.m_ty, join.m_tx, join.m_dist, join.m_dirc);
-}
-}
 
 EditJoinDlg::EditJoinDlg(QWidget *parent, JoinsCalc &join) :
 	QDialog(parent),
