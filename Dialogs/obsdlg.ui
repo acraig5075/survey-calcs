@@ -62,19 +62,19 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="targetEdit"/>
+      <widget class="NameLineEdit" name="targetEdit"/>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="angleEdit"/>
+      <widget class="AngleLineEdit" name="angleEdit"/>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="vertEdit"/>
+      <widget class="AngleLineEdit" name="vertEdit"/>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="distEdit"/>
+      <widget class="LengthLineEdit" name="distEdit"/>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="prismEdit"/>
+      <widget class="DoubleLineEdit" name="prismEdit"/>
      </item>
      <item row="5" column="1">
       <widget class="QComboBox" name="descCombo">
@@ -97,6 +97,28 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>NameLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+  <customwidget>
+   <class>AngleLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+  <customwidget>
+   <class>LengthLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+  <customwidget>
+   <class>DoubleLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

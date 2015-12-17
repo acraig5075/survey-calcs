@@ -23,13 +23,13 @@
       <item>
        <layout class="QGridLayout" name="gridLayout">
         <item row="1" column="3">
-         <widget class="QLineEdit" name="fromNorthingEdit"/>
+         <widget class="DoubleLineEdit" name="fromNorthingEdit"/>
         </item>
         <item row="1" column="2">
-         <widget class="QLineEdit" name="fromEastingEdit"/>
+         <widget class="DoubleLineEdit" name="fromEastingEdit"/>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="fromNameEdit"/>
+         <widget class="NameLineEdit" name="fromNameEdit"/>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label">
@@ -82,13 +82,13 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="toNameEdit"/>
+         <widget class="NameLineEdit" name="toNameEdit"/>
         </item>
         <item>
-         <widget class="QLineEdit" name="toEastingEdit"/>
+         <widget class="DoubleLineEdit" name="toEastingEdit"/>
         </item>
         <item>
-         <widget class="QLineEdit" name="toNorthingEdit"/>
+         <widget class="DoubleLineEdit" name="toNorthingEdit"/>
         </item>
        </layout>
       </item>
@@ -159,7 +159,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="distEdit"/>
+       <widget class="LengthLineEdit" name="distEdit"/>
       </item>
       <item>
        <widget class="QLabel" name="label_4">
@@ -169,7 +169,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="dircEdit"/>
+       <widget class="AngleLineEdit" name="dircEdit"/>
       </item>
       <item>
        <spacer name="horizontalSpacer_4">
@@ -199,6 +199,28 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>NameLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+  <customwidget>
+   <class>AngleLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+  <customwidget>
+   <class>LengthLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+  <customwidget>
+   <class>DoubleLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

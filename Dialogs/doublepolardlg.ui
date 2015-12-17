@@ -42,7 +42,7 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLineEdit" name="from1Edit"/>
+         <widget class="NameLineEdit" name="from1Edit"/>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_2">
@@ -52,7 +52,7 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="setup1Edit"/>
+         <widget class="IntLineEdit" name="setup1Edit"/>
         </item>
         <item row="2" column="0">
          <widget class="QLabel" name="label_14">
@@ -62,7 +62,7 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QLineEdit" name="trg1Edit"/>
+         <widget class="NameLineEdit" name="trg1Edit"/>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="label_15">
@@ -72,7 +72,7 @@
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QLineEdit" name="dir1Edit"/>
+         <widget class="AngleLineEdit" name="dir1Edit"/>
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="label_16">
@@ -82,7 +82,7 @@
          </widget>
         </item>
         <item row="4" column="1">
-         <widget class="QLineEdit" name="oc1Edit"/>
+         <widget class="AngleLineEdit" name="oc1Edit"/>
         </item>
         <item row="5" column="0">
          <widget class="QLabel" name="label_17">
@@ -92,7 +92,7 @@
          </widget>
         </item>
         <item row="5" column="1">
-         <widget class="QLineEdit" name="ver1Edit"/>
+         <widget class="AngleLineEdit" name="ver1Edit"/>
         </item>
         <item row="6" column="0">
          <widget class="QLabel" name="label_18">
@@ -102,7 +102,7 @@
          </widget>
         </item>
         <item row="6" column="1">
-         <widget class="QLineEdit" name="dis1Edit"/>
+         <widget class="LengthLineEdit" name="dis1Edit"/>
         </item>
        </layout>
       </widget>
@@ -133,10 +133,10 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLineEdit" name="from2Edit"/>
+         <widget class="NameLineEdit" name="from2Edit"/>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="setup2Edit"/>
+         <widget class="IntLineEdit" name="setup2Edit"/>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label">
@@ -146,7 +146,7 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QLineEdit" name="trg2Edit"/>
+         <widget class="NameLineEdit" name="trg2Edit"/>
         </item>
         <item row="2" column="0">
          <widget class="QLabel" name="label_8">
@@ -156,7 +156,7 @@
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QLineEdit" name="dir2Edit"/>
+         <widget class="AngleLineEdit" name="dir2Edit"/>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="label_9">
@@ -166,7 +166,7 @@
          </widget>
         </item>
         <item row="4" column="1">
-         <widget class="QLineEdit" name="oc2Edit"/>
+         <widget class="AngleLineEdit" name="oc2Edit"/>
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="label_10">
@@ -176,7 +176,7 @@
          </widget>
         </item>
         <item row="5" column="1">
-         <widget class="QLineEdit" name="ver2Edit"/>
+         <widget class="AngleLineEdit" name="ver2Edit"/>
         </item>
         <item row="5" column="0">
          <widget class="QLabel" name="label_11">
@@ -186,7 +186,7 @@
          </widget>
         </item>
         <item row="6" column="1">
-         <widget class="QLineEdit" name="dis2Edit"/>
+         <widget class="LengthLineEdit" name="dis2Edit"/>
         </item>
         <item row="6" column="0">
          <widget class="QLabel" name="label_12">
@@ -285,7 +285,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="targetEdit"/>
+         <widget class="NameLineEdit" name="targetEdit"/>
         </item>
         <item>
          <widget class="QLabel" name="label_3">
@@ -295,7 +295,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="eastingEdit"/>
+         <widget class="DoubleLineEdit" name="eastingEdit"/>
         </item>
         <item>
          <widget class="QLabel" name="label_4">
@@ -305,7 +305,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="northingEdit"/>
+         <widget class="DoubleLineEdit" name="northingEdit"/>
         </item>
        </layout>
       </item>
@@ -321,6 +321,33 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>NameLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+  <customwidget>
+   <class>IntLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+  <customwidget>
+   <class>AngleLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+  <customwidget>
+   <class>LengthLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+  <customwidget>
+   <class>DoubleLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

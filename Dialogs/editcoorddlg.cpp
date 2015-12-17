@@ -46,20 +46,13 @@ EditCoordDlg::EditCoordDlg(QWidget *parent, Coord &coord) :
 {
 	ui->setupUi(this);
 
-	ui->nameEdit->setText(coord.m_name);
-	ui->eastingEdit->setText(QString::number(coord.m_easting, 'f', 3));
-	ui->northingEdit->setText(QString::number(coord.m_northing, 'f', 3));
-	ui->elevationEdit->setText(QString::number(coord.m_elevation, 'f', 3));
+	ui->nameEdit->setName(coord.m_name);
+	ui->eastingEdit->setValue(coord.m_easting);
+	ui->northingEdit->setValue(coord.m_northing);
+	ui->elevationEdit->setValue(coord.m_elevation);
 
 	Utils::DescriptionCombobox(this, ui->descriptionCombo, coord.m_desc);
 	Utils::ClassificationCombobox(this, ui->classificationCombo, coord.m_class);
-
-	auto validator = new QDoubleValidator(-10000000.0, 10000000.0, 3, this);
-	validator->setNotation(QDoubleValidator::StandardNotation);
-
-	ui->eastingEdit->setValidator(validator);
-	ui->northingEdit->setValidator(validator);
-	ui->elevationEdit->setValidator(validator);
 }
 
 EditCoordDlg::~EditCoordDlg()
@@ -71,7 +64,7 @@ void EditCoordDlg::done(int r)
 {
 	if (QDialog::Accepted == r)
 	{
-		QString name = ui->nameEdit->text();
+		QString name = ui->nameEdit->name();
 		QString desc = ui->descriptionCombo->currentText().toUpper();
 		QString clas = ui->classificationCombo->currentText().toUpper();
 
@@ -91,9 +84,9 @@ void EditCoordDlg::done(int r)
 		m_coord.m_name = name;
 		m_coord.m_desc = desc;
 		m_coord.m_class = clas;
-		m_coord.m_easting = ui->eastingEdit->text().toDouble();
-		m_coord.m_northing = ui->northingEdit->text().toDouble();
-		m_coord.m_elevation = ui->elevationEdit->text().toDouble();
+		m_coord.m_easting = ui->eastingEdit->value();
+		m_coord.m_northing = ui->northingEdit->value();
+		m_coord.m_elevation = ui->elevationEdit->value();
 	}
 
 	QDialog::done(r);

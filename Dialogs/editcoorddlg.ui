@@ -24,7 +24,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="nameEdit"/>
+      <widget class="NameLineEdit" name="nameEdit"/>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_2">
@@ -34,7 +34,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="eastingEdit"/>
+      <widget class="DoubleLineEdit" name="eastingEdit"/>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_3">
@@ -44,7 +44,7 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="northingEdit"/>
+      <widget class="DoubleLineEdit" name="northingEdit"/>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="label_4">
@@ -54,7 +54,7 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="elevationEdit"/>
+      <widget class="DoubleLineEdit" name="elevationEdit"/>
      </item>
      <item row="4" column="0">
       <widget class="QLabel" name="label_5">
@@ -104,6 +104,18 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>NameLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+  <customwidget>
+   <class>DoubleLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

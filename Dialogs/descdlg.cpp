@@ -8,12 +8,7 @@ DescDlg::DescDlg(QWidget *parent, Desc &desc) :
 	m_desc(desc)
 {
 	ui->setupUi(this);
-
-	QRegularExpression regExp("^.{1,8}$");
-	auto nameValidator = new QRegularExpressionValidator(regExp, this);
-
-	ui->nameEdit->setValidator(nameValidator);
-	ui->nameEdit->setText(desc.m_name);
+	ui->nameEdit->setName(desc.m_name);
 	ui->descriptionEdit->setText(desc.m_description);
 }
 
@@ -24,6 +19,6 @@ DescDlg::~DescDlg()
 
 void DescDlg::on_DescDlg_accepted()
 {
-	m_desc.m_name = ui->nameEdit->text();
+	m_desc.m_name = ui->nameEdit->name();
 	m_desc.m_description = ui->descriptionEdit->text();
 }

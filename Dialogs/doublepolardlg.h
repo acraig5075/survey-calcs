@@ -7,6 +7,10 @@
 class Occupied;
 class Observation;
 class QLineEdit;
+class NameLineEdit;
+class IntLineEdit;
+class AngleLineEdit;
+class LengthLineEdit;
 
 namespace Ui {
 class DoublePolarDlg;
@@ -27,7 +31,7 @@ private slots:
 	void onTarget1Action();
 	void onTarget2Action();
 	void onStationAction(Occupied &station, QLineEdit *nameEdit, QLineEdit *setupEdit, QLineEdit *corrEdit);
-	void onTargetAction(Observation &obs, const QLineEdit *nameEdit, const QLineEdit *setupEdit, QLineEdit *targetEdit, QLineEdit *dircEdit, QLineEdit *vertEdit, QLineEdit *distEdit);
+	void onTargetAction(Observation &obs, const NameLineEdit *nameEdit, const IntLineEdit *setupEdit, NameLineEdit *targetEdit, AngleLineEdit *dircEdit, AngleLineEdit *vertEdit, LengthLineEdit *distEdit);
 	void on_meanRadio_toggled(bool checked);
 	void on_station1Radio_toggled(bool checked);
 	void on_station2Radio_toggled(bool checked);
@@ -38,8 +42,8 @@ private:
 	Ui::DoublePolarDlg *ui;
 	DpObsCalc &m_dpObs;
 
-	void wireStation(const Occupied &station, QLineEdit *nameEdit, QLineEdit *setupEdit, QLineEdit *corrEdit);
-	void wireObservation(const Observation &obs, QLineEdit *targetEdit, QLineEdit *dircEdit, QLineEdit *vertEdit, QLineEdit *distEdit);
+	void wireStation(const Occupied &station, NameLineEdit *nameEdit, IntLineEdit *setupEdit, AngleLineEdit *corrEdit);
+	void wireObservation(const Observation &obs, NameLineEdit *targetEdit, AngleLineEdit *dircEdit, AngleLineEdit *vertEdit, LengthLineEdit *distEdit);
 	void wireResult();
 };
 

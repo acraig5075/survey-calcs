@@ -11,13 +11,11 @@ StationDlg::StationDlg(QWidget *parent, Occupied &occupied) :
 {
 	ui->setupUi(this);
 
-	ui->nameEdit->setText(m_station.m_name);
-	ui->setupEdit->setText(QString::number(m_station.m_setup));
-	ui->orientEdit->setText(Utils::Rad2Dms(m_station.m_oc));
-	ui->instrEdit->setText(QString::number(m_station.m_instHgt, 'f', 3));
+	ui->nameEdit->setName(m_station.m_name);
+	ui->setupEdit->setValue(m_station.m_setup);
+	ui->orientEdit->setAngle(m_station.m_oc);
+	ui->instrEdit->setValue(m_station.m_instHgt);
 	ui->dateEdit->setDate(m_station.m_date);
-
-	ui->orientEdit->setPlaceholderText("ddd.mmss");
 
 	bool isEditing = !m_station.m_name.isEmpty();
 	if (isEditing)
@@ -34,13 +32,6 @@ StationDlg::StationDlg(QWidget *parent, Occupied &occupied) :
 	}
 
 	ui->setupEdit->setReadOnly(true); // never editable
-
-	QRegularExpression regExp("^.{1,8}$");
-	auto nameValidator = new QRegularExpressionValidator(regExp, this);
-
-	ui->nameEdit->setValidator(nameValidator);
-	ui->orientEdit->setValidator(new QDoubleValidator(-360.0, 360.0, 4, this));
-	ui->instrEdit->setValidator(new QDoubleValidator(-1000.0, 1000.0, 3, this));
 
 	connect(ui->nameEdit, SIGNAL(textChanged(QString)), this, SLOT(checkLineEdits(QString)));
 }
@@ -60,17 +51,17 @@ void StationDlg::checkLineEdits(QString text)
 
 void StationDlg::on_StationDlg_accepted()
 {
-	m_station.m_name = ui->nameEdit->text();
-	m_station.m_setup = ui->setupEdit->text().toInt();
+	m_station.m_name = ui->nameEdit->name();
+	m_station.m_setup = ui->setupEdit->value();
 	m_station.m_date = ui->dateEdit->date();
-	m_station.m_oc = Utils::Dms2Rad(ui->orientEdit->text());
-	m_station.m_instHgt = ui->instrEdit->text().toDouble();
+	m_station.m_oc = ui->orientEdit->angle();
+	m_station.m_instHgt = ui->instrEdit->value();
 }
 
 void StationDlg::on_nameEdit_editingFinished()
 {
 	int nextSetup = 0;
-	QString name = ui->nameEdit->text();
+	QString name = ui->nameEdit->name();
 
 	int pos;
 	if (QValidator::Acceptable == ui->nameEdit->validator()->validate(name, pos))
@@ -87,5 +78,5 @@ void StationDlg::on_nameEdit_editingFinished()
 		}
 	}
 
-	ui->setupEdit->setText(QString::number(nextSetup));
+	ui->setupEdit->setValue(nextSetup);
 }

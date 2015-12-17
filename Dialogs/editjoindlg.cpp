@@ -16,14 +16,14 @@ EditJoinDlg::EditJoinDlg(QWidget *parent, JoinsCalc &join) :
 	connect(coordAction1, &QAction::triggered, this, &EditJoinDlg::onCoordAction1);
 	connect(coordAction2, &QAction::triggered, this, &EditJoinDlg::onCoordAction2);
 
-	ui->fromNameEdit->setText(join.m_fromname);
-	ui->fromEastingEdit->setText(QString::number(join.m_fy, 'f', 3));
-	ui->fromNorthingEdit->setText(QString::number(join.m_fx, 'f', 3));
-	ui->toNameEdit->setText(join.m_toname);
-	ui->toEastingEdit->setText(QString::number(join.m_ty, 'f', 3));
-	ui->toNorthingEdit->setText(QString::number(join.m_tx, 'f', 3));
-	ui->distEdit->setText(QString::number(join.m_dist, 'f', 3));
-	ui->dircEdit->setText(Utils::Rad2Dms(join.m_dirc));
+	ui->fromNameEdit->setName(join.m_fromname);
+	ui->fromEastingEdit->setValue(join.m_fy);
+	ui->fromNorthingEdit->setValue(join.m_fx);
+	ui->toNameEdit->setName(join.m_toname);
+	ui->toEastingEdit->setValue(join.m_ty);
+	ui->toNorthingEdit->setValue(join.m_tx);
+	ui->distEdit->setValue(join.m_dist);
+	ui->dircEdit->setAngle(join.m_dirc);
 
 	ui->toNorthingEdit->setAlignment(Qt::AlignRight);
 	ui->toEastingEdit->setAlignment(Qt::AlignRight);
@@ -33,14 +33,6 @@ EditJoinDlg::EditJoinDlg(QWidget *parent, JoinsCalc &join) :
 	ui->dircEdit->setAlignment(Qt::AlignRight);
 	ui->distEdit->setReadOnly(true);
 	ui->dircEdit->setReadOnly(true);
-
-	auto validator = new QDoubleValidator(-10000000.0, 10000000.0, 3, this);
-	validator->setNotation(QDoubleValidator::StandardNotation);
-
-	ui->fromEastingEdit->setValidator(validator);
-	ui->fromNorthingEdit->setValidator(validator);
-	ui->toEastingEdit->setValidator(validator);
-	ui->toNorthingEdit->setValidator(validator);
 }
 
 EditJoinDlg::~EditJoinDlg()
@@ -50,33 +42,33 @@ EditJoinDlg::~EditJoinDlg()
 
 void EditJoinDlg::on_calculateButton_clicked()
 {
-	m_join.m_fromname = ui->fromNameEdit->text();
-	m_join.m_fy = ui->fromEastingEdit->text().toDouble();
-	m_join.m_fx = ui->fromNorthingEdit->text().toDouble();
-	m_join.m_toname = ui->toNameEdit->text();
-	m_join.m_ty = ui->toEastingEdit->text().toDouble();
-	m_join.m_tx = ui->toNorthingEdit->text().toDouble();
+	m_join.m_fromname = ui->fromNameEdit->name();
+	m_join.m_fy = ui->fromEastingEdit->value();
+	m_join.m_fx = ui->fromNorthingEdit->value();
+	m_join.m_toname = ui->toNameEdit->name();
+	m_join.m_ty = ui->toEastingEdit->value();
+	m_join.m_tx = ui->toNorthingEdit->value();
 
 	Compute::Join(m_join);
 
-	ui->distEdit->setText(QString::number(m_join.m_dist, 'f', 3));
-	ui->dircEdit->setText(Utils::Rad2Dms(m_join.m_dirc));
+	ui->distEdit->setValue(m_join.m_dist);
+	ui->dircEdit->setAngle(m_join.m_dirc);
 }
 
 void EditJoinDlg::onCoordAction1()
 {
-	auto p1 = qMakePair(m_join.m_fromname, ui->fromNameEdit);
-	auto p2 = qMakePair(m_join.m_fy, ui->fromEastingEdit);
-	auto p3 = qMakePair(m_join.m_fx, ui->fromNorthingEdit);
+	auto p1 = qMakePair<QString, QLineEdit *>(m_join.m_fromname, ui->fromNameEdit);
+	auto p2 = qMakePair<double, QLineEdit *>(m_join.m_fy, ui->fromEastingEdit);
+	auto p3 = qMakePair<double, QLineEdit *>(m_join.m_fx, ui->fromNorthingEdit);
 
 	Utils::LoadCoord(this, p1, p2, p3);
 }
 
 void EditJoinDlg::onCoordAction2()
 {
-	auto p1 = qMakePair(m_join.m_toname, ui->toNameEdit);
-	auto p2 = qMakePair(m_join.m_ty, ui->toEastingEdit);
-	auto p3 = qMakePair(m_join.m_tx, ui->toNorthingEdit);
+	auto p1 = qMakePair<QString, QLineEdit *>(m_join.m_toname, ui->toNameEdit);
+	auto p2 = qMakePair<double, QLineEdit *>(m_join.m_ty, ui->toEastingEdit);
+	auto p3 = qMakePair<double, QLineEdit *>(m_join.m_tx, ui->toNorthingEdit);
 
 	Utils::LoadCoord(this, p1, p2, p3);
 }

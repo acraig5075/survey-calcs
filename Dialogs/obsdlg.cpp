@@ -13,26 +13,13 @@ ObsDlg::ObsDlg(QWidget *parent, Observation &obs) :
 {
 	ui->setupUi(this);
 
-	ui->targetEdit->setText(m_obs.m_target);
-	ui->angleEdit->setText(Utils::Rad2Dms(m_obs.m_dirc));
-	ui->vertEdit->setText(Utils::Rad2Dms(m_obs.m_vert));
-	ui->distEdit->setText(QString::number(m_obs.m_dist, 'f', 3));
-	ui->prismEdit->setText(QString::number(m_obs.m_prismHgt, 'f', 3));
+	ui->targetEdit->setName(m_obs.m_target);
+	ui->angleEdit->setAngle(m_obs.m_dirc);
+	ui->vertEdit->setAngle(m_obs.m_vert);
+	ui->distEdit->setValue(m_obs.m_dist);
+	ui->prismEdit->setValue(m_obs.m_prismHgt);
 
 	Utils::DescriptionCombobox(this, ui->descCombo, m_obs.m_desc);
-
-	ui->angleEdit->setPlaceholderText("ddd.mmss");
-	ui->vertEdit->setPlaceholderText("ddd.mmss");
-
-	QRegularExpression regExp("^.{1,8}$");
-	auto nameValidator = new QRegularExpressionValidator(regExp, this);
-
-	ui->targetEdit->setValidator(nameValidator);
-	ui->angleEdit->setValidator(new QDoubleValidator(-360.0, 360.0, 4, this));
-	ui->vertEdit->setValidator(new QDoubleValidator(-360.0, 360.0, 4, this));
-	ui->distEdit->setValidator(new QDoubleValidator(0.0, 10000000.0, 3, this));
-	ui->prismEdit->setValidator(new QDoubleValidator(this));
-	ui->descCombo->setValidator(nameValidator);
 
 	connect(ui->targetEdit, SIGNAL(textChanged(QString)), this, SLOT(checkLineEdits(QString)));
 }
@@ -52,10 +39,10 @@ void ObsDlg::checkLineEdits(QString text)
 
 void ObsDlg::on_ObsDlg_accepted()
 {
-	m_obs.m_target = ui->targetEdit->text().trimmed();
-	m_obs.m_dirc = Utils::Dms2Rad(ui->angleEdit->text());
-	m_obs.m_vert = Utils::Dms2Rad(ui->vertEdit->text());
-	m_obs.m_dist = ui->distEdit->text().toDouble();
-	m_obs.m_prismHgt = ui->distEdit->text().toDouble();
+	m_obs.m_target = ui->targetEdit->name().trimmed();
+	m_obs.m_dirc = ui->angleEdit->angle();
+	m_obs.m_vert = ui->vertEdit->angle();
+	m_obs.m_dist = ui->distEdit->value();
+	m_obs.m_prismHgt = ui->distEdit->value();
 	m_obs.m_desc = ui->descCombo->currentText().trimmed();
 }

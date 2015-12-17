@@ -1,7 +1,7 @@
 #include "doublepolardlg.h"
 #include "ui_doublepolardlg.h"
-#include "utils.h"
 #include "Types/observation.h"
+#include "utils.h"
 #include "compute.h"
 #include <QPair>
 
@@ -21,14 +21,6 @@ DoublePolarDlg::DoublePolarDlg(QWidget *parent, DpObsCalc &dpObs) :
 				  "margin-top: 1ex; "
 				  "}"
 				  );
-
-	const QString dms = "ddd.mmss";
-	ui->dir1Edit->setPlaceholderText(dms);
-	ui->ver1Edit->setPlaceholderText(dms);
-	ui->dir2Edit->setPlaceholderText(dms);
-	ui->ver2Edit->setPlaceholderText(dms);
-	ui->oc1Edit->setPlaceholderText(dms);
-	ui->oc2Edit->setPlaceholderText(dms);
 
 	QAction *stationAction1 = ui->from1Edit->addAction(QIcon(":/blue-hand-16.png"), QLineEdit::TrailingPosition);
 	QAction *stationAction2 = ui->from2Edit->addAction(QIcon(":/blue-hand-16.png"), QLineEdit::TrailingPosition);
@@ -58,7 +50,7 @@ DoublePolarDlg::DoublePolarDlg(QWidget *parent, DpObsCalc &dpObs) :
 	if (m_dpObs.m_adopt != "1" && m_dpObs.m_adopt != "2" && m_dpObs.m_adopt != "W")
 		ui->meanRadio->setChecked(true);
 
-	ui->targetEdit->setText(m_dpObs.m_aname);
+	ui->targetEdit->setName(m_dpObs.m_aname);
 	wireResult();
 }
 
@@ -67,57 +59,57 @@ DoublePolarDlg::~DoublePolarDlg()
 	delete ui;
 }
 
-void DoublePolarDlg::wireStation(const Occupied &station, QLineEdit *nameEdit, QLineEdit *setupEdit, QLineEdit *corrEdit)
+void DoublePolarDlg::wireStation(const Occupied &station, NameLineEdit *nameEdit, IntLineEdit *setupEdit, AngleLineEdit *corrEdit)
 {
 	if (!station.m_name.isEmpty())
 	{
-		nameEdit->setText(station.m_name);
-		setupEdit->setText(QString::number(station.m_setup));
-		corrEdit->setText(Utils::Rad2Dms(station.m_oc));
+		nameEdit->setName(station.m_name);
+		setupEdit->setValue(station.m_setup);
+		corrEdit->setAngle(station.m_oc);
 	}
 }
 
-void DoublePolarDlg::wireObservation(const Observation &obs, QLineEdit *targetEdit, QLineEdit *dircEdit, QLineEdit *vertEdit, QLineEdit *distEdit)
+void DoublePolarDlg::wireObservation(const Observation &obs, NameLineEdit *targetEdit, AngleLineEdit *dircEdit, AngleLineEdit *vertEdit, LengthLineEdit *distEdit)
 {
 	if (!obs.m_target.isEmpty())
 	{
-		targetEdit->setText(obs.m_target);
-		dircEdit->setText(Utils::Rad2Dms(obs.m_dirc));
-		vertEdit->setText(Utils::Rad2Dms(obs.m_vert));
-		distEdit->setText(QString::number(obs.m_dist, 'f', 3));
+		targetEdit->setName(obs.m_target);
+		dircEdit->setAngle(obs.m_dirc);
+		vertEdit->setAngle(obs.m_vert);
+		distEdit->setValue(obs.m_dist);
 	}
 }
 
 void DoublePolarDlg::wireResult()
 {
-	ui->eastingEdit->setText(QString::number(m_dpObs.m_ay, 'f', 3));
-	ui->northingEdit->setText(QString::number(m_dpObs.m_ax, 'f', 3));
+	ui->eastingEdit->setValue(m_dpObs.m_ay);
+	ui->northingEdit->setValue(m_dpObs.m_ax);
 }
 
 void DoublePolarDlg::on_calculateButton_clicked()
 {
-	m_dpObs.m_stn[0].m_name = ui->from1Edit->text();
-	m_dpObs.m_obs[0].m_target = ui->trg1Edit->text();
-	m_dpObs.m_obs[0].m_dirc = Utils::Dms2Rad(ui->dir1Edit->text());
-	m_dpObs.m_stn[0].m_oc = Utils::Dms2Rad(ui->oc1Edit->text());
-	m_dpObs.m_obs[0].m_vert = Utils::Dms2Rad(ui->ver1Edit->text());
-	m_dpObs.m_obs[0].m_dist = ui->dis1Edit->text().toDouble();
+	m_dpObs.m_stn[0].m_name = ui->from1Edit->name();
+	m_dpObs.m_obs[0].m_target = ui->trg1Edit->name();
+	m_dpObs.m_obs[0].m_dirc = ui->dir1Edit->angle();
+	m_dpObs.m_stn[0].m_oc = ui->oc1Edit->angle();
+	m_dpObs.m_obs[0].m_vert = ui->ver1Edit->angle();
+	m_dpObs.m_obs[0].m_dist = ui->dis1Edit->value();
 
-	m_dpObs.m_stn[1].m_name = ui->from2Edit->text();
-	m_dpObs.m_obs[1].m_target = ui->trg2Edit->text();
-	m_dpObs.m_obs[1].m_dirc = Utils::Dms2Rad(ui->dir2Edit->text());
-	m_dpObs.m_stn[1].m_oc = Utils::Dms2Rad(ui->oc2Edit->text());
-	m_dpObs.m_obs[1].m_vert = Utils::Dms2Rad(ui->ver2Edit->text());
-	m_dpObs.m_obs[1].m_dist = ui->dis2Edit->text().toDouble();
+	m_dpObs.m_stn[1].m_name = ui->from2Edit->name();
+	m_dpObs.m_obs[1].m_target = ui->trg2Edit->name();
+	m_dpObs.m_obs[1].m_dirc = ui->dir2Edit->angle();
+	m_dpObs.m_stn[1].m_oc = ui->oc2Edit->angle();
+	m_dpObs.m_obs[1].m_vert = ui->ver2Edit->angle();
+	m_dpObs.m_obs[1].m_dist = ui->dis2Edit->value();
 
 	Compute::DoublePolar(m_dpObs);
 
 	wireResult();
 
 	if (m_dpObs.m_aname.isEmpty())
-		ui->targetEdit->setText(m_dpObs.m_obs[0].m_target);
+		ui->targetEdit->setName(m_dpObs.m_obs[0].m_target);
 	else
-		ui->targetEdit->setText(m_dpObs.m_aname);
+		ui->targetEdit->setName(m_dpObs.m_aname);
 }
 
 void DoublePolarDlg::onStation1Action()
@@ -149,10 +141,10 @@ void DoublePolarDlg::onTarget2Action()
 	onTargetAction(m_dpObs.m_obs[1], ui->from2Edit, ui->setup2Edit, ui->trg2Edit, ui->dir2Edit, ui->ver2Edit, ui->dis2Edit);
 }
 
-void DoublePolarDlg::onTargetAction(Observation &obs, const QLineEdit *nameEdit, const QLineEdit *setupEdit, QLineEdit *targetEdit, QLineEdit *dircEdit, QLineEdit *vertEdit, QLineEdit *distEdit)
+void DoublePolarDlg::onTargetAction(Observation &obs, const NameLineEdit *nameEdit, const IntLineEdit *setupEdit, NameLineEdit *targetEdit, AngleLineEdit *dircEdit, AngleLineEdit *vertEdit, LengthLineEdit *distEdit)
 {
-	QString from = nameEdit->text();
-	int setup = setupEdit->text().toInt();
+	QString from = nameEdit->name();
+	int setup = setupEdit->value();
 
 	if (Utils::LoadObs(this, from, setup, obs))
 		wireObservation(obs, targetEdit, dircEdit, vertEdit, distEdit);

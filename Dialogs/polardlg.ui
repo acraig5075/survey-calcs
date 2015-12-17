@@ -36,7 +36,7 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLineEdit" name="fromEdit">
+         <widget class="NameLineEdit" name="fromEdit">
           <property name="maximumSize">
            <size>
             <width>100</width>
@@ -59,7 +59,7 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="setupEdit">
+         <widget class="IntLineEdit" name="setupEdit">
           <property name="maximumSize">
            <size>
             <width>100</width>
@@ -95,7 +95,7 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLineEdit" name="trgEdit">
+         <widget class="NameLineEdit" name="trgEdit">
           <property name="maximumSize">
            <size>
             <width>100</width>
@@ -118,7 +118,7 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="dirEdit">
+         <widget class="AngleLineEdit" name="dirEdit">
           <property name="maximumSize">
            <size>
             <width>100</width>
@@ -141,7 +141,7 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QLineEdit" name="ocEdit">
+         <widget class="AngleLineEdit" name="ocEdit">
           <property name="maximumSize">
            <size>
             <width>100</width>
@@ -164,7 +164,7 @@
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QLineEdit" name="vertEdit">
+         <widget class="AngleLineEdit" name="vertEdit">
           <property name="maximumSize">
            <size>
             <width>100</width>
@@ -187,7 +187,7 @@
          </widget>
         </item>
         <item row="4" column="1">
-         <widget class="QLineEdit" name="distEdit">
+         <widget class="LengthLineEdit" name="distEdit">
           <property name="maximumSize">
            <size>
             <width>100</width>
@@ -223,7 +223,7 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLineEdit" name="instrEdit">
+         <widget class="DoubleLineEdit" name="instrEdit">
           <property name="maximumSize">
            <size>
             <width>100</width>
@@ -246,7 +246,7 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="prismEdit">
+         <widget class="DoubleLineEdit" name="prismEdit">
           <property name="maximumSize">
            <size>
             <width>100</width>
@@ -319,7 +319,7 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLineEdit" name="toEdit">
+         <widget class="NameLineEdit" name="toEdit">
           <property name="maximumSize">
            <size>
             <width>100</width>
@@ -342,7 +342,7 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="northEdit">
+         <widget class="DoubleLineEdit" name="northEdit">
           <property name="maximumSize">
            <size>
             <width>100</width>
@@ -365,7 +365,7 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QLineEdit" name="eastEdit">
+         <widget class="DoubleLineEdit" name="eastEdit">
           <property name="maximumSize">
            <size>
             <width>100</width>
@@ -388,7 +388,7 @@
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QLineEdit" name="elevEdit">
+         <widget class="DoubleLineEdit" name="elevEdit">
           <property name="maximumSize">
            <size>
             <width>100</width>
@@ -414,6 +414,33 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>NameLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+  <customwidget>
+   <class>IntLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+  <customwidget>
+   <class>AngleLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+  <customwidget>
+   <class>LengthLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+  <customwidget>
+   <class>DoubleLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>customcontrols.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
