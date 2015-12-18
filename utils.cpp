@@ -6,6 +6,7 @@
 #include "Models/stationsquerymodel.h"
 #include "Models/observationsquerymodel.h"
 #include "Dialogs/selectcoorddlg.h"
+#include "Dialogs/editcoorddlg.h"
 #include <QTemporaryFile>
 #include <QDebug>
 #include <QtMath>
@@ -231,29 +232,29 @@ double Angle(double x, double y)
 	double angle;
 
 	if (x == 0.0)
-		{
+	{
 		if (y > 0.0)
 			angle = M_PI_2;
 		else
-			{
+		{
 			if (y < 0.0)
 				angle = -M_PI_2;
 			else
 				angle = 0.0;
-			}
 		}
+	}
 	else
-		{
+	{
 		if (y == 0.0)
-			{
+		{
 			if (x > 0.0)
 				angle = 0.0;
 			else
 				angle = M_PI;
-			}
+		}
 		else
 			angle = atan2(y, x);
-		}
+	}
 
 	return angle;
 }
@@ -293,6 +294,34 @@ void DescriptionCombobox(QWidget *parent, QComboBox *comboBox, const QString &in
 void ClassificationCombobox(QWidget *parent, QComboBox *comboBox, const QString &initial)
 {
 	ComboboxSelection(parent, "SELECT `class` FROM class ORDER BY `order`", comboBox, initial);
+}
+
+bool LookupCoord(QWidget *parent, const QString &fromname, Coord &from)
+{
+	QSqlQuery query;
+	query.prepare("SELECT `name`, `y`, `x`, `h`, `desc`, `class`, `plot` FROM `coord` WHERE `name` = :name");
+	query.bindValue(":name", fromname);
+
+	if (ExecQuery(query))
+	{
+		if (query.next())
+		{
+			Coord copy(query.record());
+			from = copy;
+			return true;
+		}
+	}
+
+	Coord copy;
+	copy.m_name = fromname;
+	EditCoordDlg dlg(parent, copy);
+	if (dlg.exec() == QDialog::Accepted)
+	{
+		from = copy;
+		return true;
+	}
+
+	return false;
 }
 
 }

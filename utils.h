@@ -8,6 +8,7 @@ class QWidget;
 class QLineEdit;
 class QComboBox;
 class Observation;
+class Coord;
 
 namespace Utils
 {
@@ -27,6 +28,7 @@ namespace Utils
 	void Polar(double e1, double n1, double dist, double dirn, double &e2, double &n2);
 	void DescriptionCombobox(QWidget *parent, QComboBox *comboBox, const QString &initial);
 	void ClassificationCombobox(QWidget *parent, QComboBox *comboBox, const QString &initial);
+	bool LookupCoord(QWidget *parent, const QString &fromname, Coord &from);
 
 	template <typename TDlg, typename TCalc>
 	bool EditDialog(QWidget *parent, TCalc &calc)

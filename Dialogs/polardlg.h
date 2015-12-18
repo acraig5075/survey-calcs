@@ -4,6 +4,7 @@
 #include <QDialog>
 
 class PolarsCalc;
+class Coord;
 
 namespace Ui {
 class PolarDlg;
@@ -19,10 +20,10 @@ public:
 
 private:
 	void wireResult(const PolarsCalc &polar);
-	void pack(PolarsCalc &polar) const;
+	void pack(PolarsCalc &polar, const Coord &from) const;
 
 private slots:
-	void onStationAction();
+	void onCoordAction();
 	void onTargetAction();
 
 	void on_calcButton_clicked();

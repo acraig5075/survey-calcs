@@ -1,6 +1,7 @@
 #include "polardlg.h"
 #include "ui_polardlg.h"
 #include "Types/polars.h"
+#include "Types/coord.h"
 #include "utils.h"
 #include "compute.h"
 
@@ -28,13 +29,12 @@ PolarDlg::PolarDlg(QWidget *parent, PolarsCalc &polar) :
 				  "}"
 				  );
 
-	QAction *stationAction = ui->fromEdit->addAction(QIcon(":/blue-hand-16.png"), QLineEdit::TrailingPosition);
+	QAction *coordAction = ui->fromEdit->addAction(QIcon(":/yellow-hand-16.png"), QLineEdit::TrailingPosition);
 	QAction *targetAction = ui->trgEdit->addAction(QIcon(":/green-hand-16.png"), QLineEdit::TrailingPosition);
-	connect(stationAction, &QAction::triggered, this, &PolarDlg::onStationAction);
+	connect(coordAction, &QAction::triggered, this, &PolarDlg::onCoordAction);
 	connect(targetAction, &QAction::triggered, this, &PolarDlg::onTargetAction);
 
 	ui->fromEdit->setName(polar.m_stn.m_name);
-	ui->setupEdit->setValue(polar.m_stn.m_setup);
 	ui->trgEdit->setName(polar.m_obs.m_target);
 	ui->dirEdit->setAngle(polar.m_obs.m_dirc);
 	ui->vertEdit->setAngle(polar.m_obs.m_vert);
@@ -44,6 +44,8 @@ PolarDlg::PolarDlg(QWidget *parent, PolarsCalc &polar) :
 	ui->prismEdit->setValue(polar.m_obs.m_prismHgt);
 
 	wireResult(polar);
+
+	layout()->setSizeConstraint(QLayout::SetFixedSize);
 }
 
 PolarDlg::~PolarDlg()
@@ -51,20 +53,21 @@ PolarDlg::~PolarDlg()
 	delete ui;
 }
 
-void PolarDlg::onStationAction()
+void PolarDlg::onCoordAction()
 {
-	auto p1 = qMakePair<QString, QLineEdit *>(m_polar.m_stn.m_name, ui->fromEdit);
-	auto p2 = qMakePair<int, QLineEdit *>(m_polar.m_stn.m_setup, ui->setupEdit);
-	auto p3 = qMakePair<double, QLineEdit *>(m_polar.m_stn.m_oc, ui->ocEdit);
-	// what about instrHgt ?
+	QString name;
+	double n, e;
+	auto p1 = qMakePair<QString, QLineEdit *>(name, ui->fromEdit);
+	auto p2 = qMakePair<double, QLineEdit *>(n, nullptr);
+	auto p3 = qMakePair<double, QLineEdit *>(e, nullptr);
 
-	Utils::LoadStation(this, p1, p2, p3);
+	Utils::LoadCoord(this, p1, p2, p3);
 }
 
 void PolarDlg::onTargetAction()
 {
 	QString from = ui->fromEdit->name();
-	int setup = ui->setupEdit->value();
+	int setup = 0;
 
 	Observation selection;
 	if (Utils::LoadObs(this, from, setup, selection))
@@ -85,10 +88,12 @@ void PolarDlg::wireResult(const PolarsCalc &polar)
 	ui->elevEdit->setValue(0.0);
 }
 
-void PolarDlg::pack(PolarsCalc &polar) const
+void PolarDlg::pack(PolarsCalc &polar, const Coord &from) const
 {
-	polar.m_stn.m_name = ui->fromEdit->name();
-	polar.m_stn.m_setup = ui->setupEdit->value();
+	polar.m_stn.m_name = from.m_name;
+	polar.m_fx = from.m_northing;
+	polar.m_fy = from.m_easting;
+
 	polar.m_obs.m_target = ui->trgEdit->name();
 	polar.m_obs.m_dirc = ui->dirEdit->angle();
 	polar.m_obs.m_vert = ui->vertEdit->angle();
@@ -97,14 +102,23 @@ void PolarDlg::pack(PolarsCalc &polar) const
 	polar.m_stn.m_instHgt = ui->instrEdit->value();
 	polar.m_obs.m_prismHgt = ui->prismEdit->value();
 	polar.m_obs.m_target = ui->toEdit->name();
+
 	polar.m_tx = ui->northEdit->value();
 	polar.m_ty = ui->eastEdit->value();
 }
 
 void PolarDlg::on_calcButton_clicked()
 {
-	PolarsCalc polar;
-	pack(polar);
-	Compute::Polar(polar);
-	wireResult(polar);
+	QString fromname = ui->fromEdit->name();
+	if (!fromname.isEmpty())
+	{
+		Coord from;
+		if (Utils::LookupCoord(this, fromname, from))
+		{
+			PolarsCalc polar;
+			pack(polar, from);
+			Compute::Polar(polar);
+			wireResult(polar);
+		}
+	}
 }

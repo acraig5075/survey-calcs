@@ -53,6 +53,14 @@ EditCoordDlg::EditCoordDlg(QWidget *parent, Coord &coord) :
 
 	Utils::DescriptionCombobox(this, ui->descriptionCombo, coord.m_desc);
 	Utils::ClassificationCombobox(this, ui->classificationCombo, coord.m_class);
+
+	if (!coord.m_name.isEmpty())
+	{
+		if (coord.m_easting == 0.0)
+			ui->eastingEdit->setFocus();
+		else
+			ui->nameEdit->setFocus();
+	}
 }
 
 EditCoordDlg::~EditCoordDlg()
