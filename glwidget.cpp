@@ -14,10 +14,22 @@ void PlotWidget::SetOrtho(const QRectF &extents)
 	m_hasExtents = true;
 }
 
-void PlotWidget::SetPointList(QVector<QPointF> &points)
+namespace
+{
+using PointPair = QPair<QPointF, Qt::GlobalColor>;
+
+bool SortByColor(const PointPair &a, const PointPair &b)
+{
+	return a.second < b.second;
+}
+
+}
+
+void PlotWidget::SetPointList(QVector<QPair<QPointF, Qt::GlobalColor>> &points)
 {
 	m_pointList.clear();
 	m_pointList = points;
+	qSort(m_pointList.begin(), m_pointList.end(), SortByColor);
 }
 
 void PlotWidget::paintEvent(QPaintEvent *)
@@ -39,11 +51,15 @@ void PlotWidget::paintEvent(QPaintEvent *)
 
 		painter.fillRect(wLeft, wTop, wSide, wSide, Qt::lightGray);
 
-		painter.setPen(Qt::blue);
-		painter.setFont(QFont("Arial", 300));
-		painter.drawText(rect(), Qt::AlignCenter, "Qt");
-
-		if (!m_pointList.empty())
-			painter.drawPoints(&m_pointList.at(0), m_pointList.size());
+		Qt::GlobalColor currentColor = Qt::black;
+		for (const QPair<QPointF, Qt::GlobalColor> &p : m_pointList)
+		{
+			if (p.second != currentColor)
+			{
+				currentColor = p.second;
+				painter.setPen(currentColor);
+			}
+			painter.drawPoint(p.first);
+		}
 	}
 }

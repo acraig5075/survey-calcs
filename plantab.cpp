@@ -30,6 +30,21 @@ void PlanTab::onClear()
 	m_nPoints = 0;
 }
 
+namespace
+{
+Qt::GlobalColor MatchingColor(const QString &ptype)
+{
+	if (ptype == "DR" || ptype == "SR" || ptype == "Ts")
+		return Qt::red;
+	else if (ptype == "Db" || ptype == "Sb")
+		return Qt::blue;
+	else if (ptype == "DG" || ptype == "SG")
+		return Qt::green;
+	else
+		return Qt::black;
+}
+}
+
 void PlanTab::onLoad()
 {
 	m_nPoints = 0;
@@ -55,17 +70,21 @@ void PlanTab::onLoad()
 		}
 
 		QSqlQuery query2(db);
-		query2.prepare(QString("SELECT y AS easting, x AS northing FROM coord %1").arg(whereFilter));
+		query2.prepare(QString("SELECT coord.y AS easting, coord.x AS northing, class.ptype FROM coord INNER JOIN class ON coord.class = class.class %1").arg(whereFilter));
 		query2.exec();
 
-		QVector<QPointF> points;
+		QVector<QPair<QPointF, Qt::GlobalColor>> points;
 
 		while (query2.next())
 		{
+			QString ptype = query2.value("ptype").toString();
+			Qt::GlobalColor color = MatchingColor(ptype);
+
 			QPointF p;
 			p.setX(query2.value("easting").toReal());
 			p.setY(query2.value("northing").toReal());
-			points.push_back(p);
+
+			points.push_back(qMakePair(p, color));
 		}
 
 		m_nPoints = points.size();
