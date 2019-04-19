@@ -4,6 +4,7 @@
 #include "utils.h"
 #include "compute.h"
 #include <QPair>
+#include <QAction>
 
 
 DoublePolarDlg::DoublePolarDlg(QWidget *parent, DpObsCalc &dpObs) :

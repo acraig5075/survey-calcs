@@ -2,6 +2,7 @@
 #include "ui_editjoindlg.h"
 #include "utils.h"
 #include "compute.h"
+#include <QAction>
 
 
 EditJoinDlg::EditJoinDlg(QWidget *parent, JoinsCalc &join) :

@@ -4,14 +4,8 @@
 #include "Types/coord.h"
 #include "utils.h"
 #include "compute.h"
+#include <QAction>
 
-namespace
-{
-QString FormatReal(double value)
-{
-	return QString::number(value, 'f', 3);
-}
-}
 
 PolarDlg::PolarDlg(QWidget *parent, PolarsCalc &polar) :
 	QDialog(parent),
